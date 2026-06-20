@@ -1,0 +1,67 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.23.10",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "c1b7b1d18b5ff786fb8c4d2ef4e0138a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RYWs",
+      "code_hash": "9ff2e535fc0be7558be6359ab4453864",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lprr",
+      "code_hash": "4e80a54b16fedbf9715b481fcef5f512",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "LFDr",
+      "code_hash": "7329a397ba68554d845e58ca8f06d15b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='LFDr-0' random-id='eb128a4d-7ad2-7936-b500-dbc33667bd9e'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;fencer_ID&#92;&quot;:36796,&#92;&quot;opp_ID&#92;&quot;:19574,&#92;&quot;fencer_age&#92;&quot;:23,&#92;&quot;opp_age&#92;&quot;:28,&#92;&quot;fencer_score&#92;&quot;:5,&#92;&quot;opp_score&#92;&quot;:1,&#92;&quot;winner_ID&#92;&quot;:36796,&#92;&quot;fencer_curr_pts&#92;&quot;:12.5,&#92;&quot;opp_curr_pts&#92;&quot;:7.5,&#92;&quot;tournament_ID&#92;&quot;:&#92;&quot;2021-121&#92;&quot;,&#92;&quot;pool_ID&#92;&quot;:1,&#92;&quot;upset&#92;&quot;:false,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;},{&#92;&quot;fencer_ID&#92;&quot;:36796,&#92;&quot;opp_ID&#92;&quot;:42147,&#92;&quot;fencer_age&#92;&quot;:23,&#92;&quot;opp_age&#92;&quot;:19,&#92;&quot;fencer_score&#92;&quot;:5,&#92;&quot;opp_score&#92;&quot;:2,&#92;&quot;winner_ID&#92;&quot;:36796,&#92;&quot;fencer_curr_pts&#92;&quot;:12.5,&#92;&quot;opp_curr_pts&#92;&quot;:0.75,&#92;&quot;tournament_ID&#92;&quot;:&#92;&quot;2021-121&#92;&quot;,&#92;&quot;pool_ID&#92;&quot;:1,&#92;&quot;upset&#92;&quot;:false,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;},{&#92;&quot;fencer_ID&#92;&quot;:36796,&#92;&quot;opp_ID&#92;&quot;:49116,&#92;&quot;fencer_age&#92;&quot;:23,&#92;&quot;opp_age&#92;&quot;:21,&#92;&quot;fencer_score&#92;&quot;:5,&#92;&quot;opp_score&#92;&quot;:2,&#92;&quot;winner_ID&#92;&quot;:36796,&#92;&quot;fencer_curr_pts&#92;&quot;:12.5,&#92;&quot;opp_curr_pts&#92;&quot;:22.25,&#92;&quot;tournament_ID&#92;&quot;:&#92;&quot;2021-121&#92;&quot;,&#92;&quot;pool_ID&#92;&quot;:1,&#92;&quot;upset&#92;&quot;:true,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;},{&#92;&quot;fencer_ID&#92;&quot;:36796,&#92;&quot;opp_ID&#92;&quot;:39631,&#92;&quot;fencer_age&#92;&quot;:23,&#92;&quot;opp_age&#92;&quot;:18,&#92;&quot;fencer_score&#92;&quot;:5,&#92;&quot;opp_score&#92;&quot;:4,&#92;&quot;winner_ID&#92;&quot;:36796,&#92;&quot;fencer_curr_pts&#92;&quot;:12.5,&#92;&quot;opp_curr_pts&#92;&quot;:23.0,&#92;&quot;tournament_ID&#92;&quot;:&#92;&quot;2021-121&#92;&quot;,&#92;&quot;pool_ID&#92;&quot;:1,&#92;&quot;upset&#92;&quot;:true,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;},{&#92;&quot;fencer_ID&#92;&quot;:36796,&#92;&quot;opp_ID&#92;&quot;:23447,&#92;&quot;fencer_age&#92;&quot;:23,&#92;&quot;opp_age&#92;&quot;:27,&#92;&quot;fencer_score&#92;&quot;:4,&#92;&quot;opp_score&#92;&quot;:5,&#92;&quot;winner_ID&#92;&quot;:23447,&#92;&quot;fencer_curr_pts&#92;&quot;:12.5,&#92;&quot;opp_curr_pts&#92;&quot;:79.0,&#92;&quot;tournament_ID&#92;&quot;:&#92;&quot;2021-121&#92;&quot;,&#92;&quot;pool_ID&#92;&quot;:1,&#92;&quot;upset&#92;&quot;:false,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;}]&quot;' data-total-rows='5' data-total-columns='13' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;fencer_ID&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;opp_ID&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;fencer_age&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;opp_age&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;fencer_score&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;opp_score&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;winner_ID&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;fencer_curr_pts&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;opp_curr_pts&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;tournament_ID&quot;,[&quot;string&quot;,&quot;object&quot;]],[&quot;pool_ID&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;upset&quot;,[&quot;boolean&quot;,&quot;bool&quot;]],[&quot;date&quot;,[&quot;string&quot;,&quot;object&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "wafO",
+      "code_hash": null,
+      "outputs": [],
+      "console": []
+    }
+  ]
+}
