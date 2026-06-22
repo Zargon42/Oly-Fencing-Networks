@@ -59,43 +59,29 @@
     },
     {
       "id": "lEQa",
-      "code_hash": "1637a09e54cacd07899f8b83a3dc8c1c",
+      "code_hash": "39d475e178c4601511a909fc174bd3d1",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "No module named 'tools'",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
         }
       ],
-      "console": [
-        {
-          "type": "stream",
-          "name": "stderr",
-          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;C:\\Users\\bensa\\AppData\\Local\\Temp\\marimo_27892\\__marimo__cell_lEQa_.py&quot;</span>, line <span class=\"m\">3</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"kn\">import</span><span class=\"w\"> </span><span class=\"nn\">tools</span><span class=\"w\"> </span><span class=\"k\">as</span><span class=\"w\"> </span><span class=\"nn\">tl</span>\n<span class=\"gr\">ModuleNotFoundError</span>: <span class=\"n\">No module named &#39;tools&#39;</span>\n</pre></div>\n</span>",
-          "mimetype": "application/vnd.marimo+traceback"
-        }
-      ]
+      "console": []
     },
     {
       "id": "PKri",
       "code_hash": "54d65055ac4262ba6740fc4bde56373a",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "No module named 'adjustText'",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
         }
       ],
-      "console": [
-        {
-          "type": "stream",
-          "name": "stderr",
-          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;C:\\Users\\bensa\\AppData\\Local\\Temp\\marimo_27892\\__marimo__cell_PKri_.py&quot;</span>, line <span class=\"m\">4</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"kn\">from</span><span class=\"w\"> </span><span class=\"nn\">adjustText</span><span class=\"w\"> </span><span class=\"kn\">import</span> <span class=\"n\">adjust_text</span>\n<span class=\"gr\">ModuleNotFoundError</span>: <span class=\"n\">No module named &#39;adjustText&#39;</span>\n</pre></div>\n</span>",
-          "mimetype": "application/vnd.marimo+traceback"
-        }
-      ]
+      "console": []
     },
     {
       "id": "Xref",
@@ -115,24 +101,17 @@
       "code_hash": "a2f9349dbb96a87d9507aaed1ab8b938",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "No module named 'cv_tools'",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
         }
       ],
-      "console": [
-        {
-          "type": "stream",
-          "name": "stderr",
-          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;C:\\Users\\bensa\\AppData\\Local\\Temp\\marimo_27892\\__marimo__cell_SFPL_.py&quot;</span>, line <span class=\"m\">1</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"kn\">import</span><span class=\"w\"> </span><span class=\"nn\">cv_tools</span><span class=\"w\"> </span><span class=\"k\">as</span><span class=\"w\"> </span><span class=\"nn\">cvtl</span>\n<span class=\"gr\">ModuleNotFoundError</span>: <span class=\"n\">No module named &#39;cv_tools&#39;</span>\n</pre></div>\n</span>",
-          "mimetype": "application/vnd.marimo+traceback"
-        }
-      ]
+      "console": []
     },
     {
       "id": "BYtC",
-      "code_hash": "5b29a800f5fa164f7be60fbe75db2476",
+      "code_hash": "18e184713e016529d03892518c857be9",
       "outputs": [
         {
           "type": "data",
@@ -145,7 +124,7 @@
     },
     {
       "id": "RGSE",
-      "code_hash": "baa507be5d6787eb32c1cc848f1d207b",
+      "code_hash": "5b29a800f5fa164f7be60fbe75db2476",
       "outputs": [
         {
           "type": "data",
@@ -158,6 +137,19 @@
     },
     {
       "id": "Kclp",
+      "code_hash": "baa507be5d6787eb32c1cc848f1d207b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "emfo",
       "code_hash": "20297c75f5091a61d801de0f74730131",
       "outputs": [
         {
@@ -170,7 +162,7 @@
       "console": []
     },
     {
-      "id": "emfo",
+      "id": "Hstk",
       "code_hash": "fa24836fcca49d1cbb42320d53a1e511",
       "outputs": [
         {
@@ -183,7 +175,7 @@
       "console": []
     },
     {
-      "id": "Hstk",
+      "id": "nWHF",
       "code_hash": "f226eb1f45233ee606e997c8967eca67",
       "outputs": [
         {
@@ -196,7 +188,7 @@
       "console": []
     },
     {
-      "id": "nWHF",
+      "id": "iLit",
       "code_hash": "59c7534c1efddeb42cebc26758b78118",
       "outputs": [
         {
@@ -209,34 +201,8 @@
       "console": []
     },
     {
-      "id": "iLit",
-      "code_hash": "10566d4a4db959aed8b32312473582d8",
-      "outputs": [
-        {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
-        }
-      ],
-      "console": []
-    },
-    {
       "id": "ZHCJ",
-      "code_hash": "85f2f35b5ec246cf146cd786dc39d668",
-      "outputs": [
-        {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "ROlb",
-      "code_hash": "8e1c6f12ffbf45b2cedf39cfaa381f01",
+      "code_hash": "10319f99237080c6bd7bd5af381783bf",
       "outputs": [
         {
           "type": "data",
@@ -248,39 +214,59 @@
       "console": []
     },
     {
-      "id": "qnkX",
-      "code_hash": "5738cb267c5a769d41d3a09898a9a67b",
+      "id": "ROlb",
+      "code_hash": "0d79014ff56426a2248fdb9012c17c1c",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='ROlb-0' random-id='eb39ed33-b308-69c0-180d-367281db267f'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;competition_ID&#92;&quot;:121,&#92;&quot;season&#92;&quot;:2021,&#92;&quot;name&#92;&quot;:&#92;&quot;Grand Prix&#92;&quot;,&#92;&quot;category&#92;&quot;:&#92;&quot;Senior&#92;&quot;,&#92;&quot;country&#92;&quot;:&#92;&quot;QATAR&#92;&quot;,&#92;&quot;start_date&#92;&quot;:&#92;&quot;26/03/2021&#92;&quot;,&#92;&quot;end_date&#92;&quot;:&#92;&quot;28/03/2021&#92;&quot;,&#92;&quot;weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;timezone&#92;&quot;:&#92;&quot;Asia/Qatar&#92;&quot;,&#92;&quot;url&#92;&quot;:&#92;&quot;https://fie.org/competitions/2021/121&#92;&quot;,&#92;&quot;unique_ID&#92;&quot;:&#92;&quot;2021-121&#92;&quot;,&#92;&quot;missing_results_flag&#92;&quot;:NaN},{&#92;&quot;competition_ID&#92;&quot;:41,&#92;&quot;season&#92;&quot;:2017,&#92;&quot;name&#92;&quot;:&#92;&quot;Tournoi international&#92;&quot;,&#92;&quot;category&#92;&quot;:&#92;&quot;Junior&#92;&quot;,&#92;&quot;country&#92;&quot;:&#92;&quot;GERMANY&#92;&quot;,&#92;&quot;start_date&#92;&quot;:&#92;&quot;28/10/2016&#92;&quot;,&#92;&quot;end_date&#92;&quot;:&#92;&quot;28/10/2016&#92;&quot;,&#92;&quot;weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;timezone&#92;&quot;:&#92;&quot;Europe/Berlin&#92;&quot;,&#92;&quot;url&#92;&quot;:&#92;&quot;https://fie.org/competitions/2017/41&#92;&quot;,&#92;&quot;unique_ID&#92;&quot;:&#92;&quot;2017-41&#92;&quot;,&#92;&quot;missing_results_flag&#92;&quot;:NaN},{&#92;&quot;competition_ID&#92;&quot;:800,&#92;&quot;season&#92;&quot;:2015,&#92;&quot;name&#92;&quot;:&#92;&quot;Championnats Panam&#92;&#92;u00e9ricains&#92;&quot;,&#92;&quot;category&#92;&quot;:&#92;&quot;Senior&#92;&quot;,&#92;&quot;country&#92;&quot;:&#92;&quot;CHILE&#92;&quot;,&#92;&quot;start_date&#92;&quot;:&#92;&quot;17/04/2015&#92;&quot;,&#92;&quot;end_date&#92;&quot;:&#92;&quot;26/04/2015&#92;&quot;,&#92;&quot;weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;timezone&#92;&quot;:&#92;&quot;America/Santiago&#92;&quot;,&#92;&quot;url&#92;&quot;:&#92;&quot;https://fie.org/competitions/2015/800&#92;&quot;,&#92;&quot;unique_ID&#92;&quot;:&#92;&quot;2015-800&#92;&quot;,&#92;&quot;missing_results_flag&#92;&quot;:NaN},{&#92;&quot;competition_ID&#92;&quot;:243,&#92;&quot;season&#92;&quot;:2019,&#92;&quot;name&#92;&quot;:&#92;&quot;Championnats du Monde&#92;&quot;,&#92;&quot;category&#92;&quot;:&#92;&quot;Senior&#92;&quot;,&#92;&quot;country&#92;&quot;:&#92;&quot;HUNGARY&#92;&quot;,&#92;&quot;start_date&#92;&quot;:&#92;&quot;16/07/2019&#92;&quot;,&#92;&quot;end_date&#92;&quot;:&#92;&quot;19/07/2019&#92;&quot;,&#92;&quot;weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;timezone&#92;&quot;:&#92;&quot;Europe/Budapest&#92;&quot;,&#92;&quot;url&#92;&quot;:&#92;&quot;https://fie.org/competitions/2019/243&#92;&quot;,&#92;&quot;unique_ID&#92;&quot;:&#92;&quot;2019-243&#92;&quot;,&#92;&quot;missing_results_flag&#92;&quot;:NaN},{&#92;&quot;competition_ID&#92;&quot;:237,&#92;&quot;season&#92;&quot;:2016,&#92;&quot;name&#92;&quot;:&#92;&quot;Championnats du monde juniors-cadets&#92;&quot;,&#92;&quot;category&#92;&quot;:&#92;&quot;Cadet&#92;&quot;,&#92;&quot;country&#92;&quot;:&#92;&quot;FRANCE&#92;&quot;,&#92;&quot;start_date&#92;&quot;:&#92;&quot;01/04/2016&#92;&quot;,&#92;&quot;end_date&#92;&quot;:&#92;&quot;01/04/2016&#92;&quot;,&#92;&quot;weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;timezone&#92;&quot;:&#92;&quot;Europe/Paris&#92;&quot;,&#92;&quot;url&#92;&quot;:&#92;&quot;https://fie.org/competitions/2016/237&#92;&quot;,&#92;&quot;unique_ID&#92;&quot;:&#92;&quot;2016-237&#92;&quot;,&#92;&quot;missing_results_flag&#92;&quot;:NaN}]&quot;' data-total-rows='5' data-total-columns='13' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;competition_ID&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;season&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;name&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;category&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;country&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;start_date&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;end_date&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;weapon&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;gender&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;timezone&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;url&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;unique_ID&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;missing_results_flag&quot;,[&quot;number&quot;,&quot;float64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "16d8963f2039f857fc09f276ffac039e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>&lt;StringArray&gt;\n[                                       &#x27;Grand Prix&#x27;,\n                             &#x27;Tournoi international&#x27;,\n                        &#x27;Championnats Panam\u00e9ricains&#x27;,\n                             &#x27;Championnats du Monde&#x27;,\n              &#x27;Championnats du monde juniors-cadets&#x27;,\n                            &#x27;Championnats d&#x27;Afrique&#x27;,\n           &#x27;Championnats de qualification - Afrique&#x27;,\n                 &#x27;Tournoi satellite fleuret f\u00e9minin&#x27;,\n                                 &#x27;Tournoi satellite&#x27;,\n                     &#x27;Championnats d\u2019Europe juniors&#x27;,\n                                &#x27;Reinhold-W\u00fcrth-Cup&#x27;,\n                                    &#x27;Coupe du Monde&#x27;,\n                &#x27;Championnats Panam\u00e9ricains Juniors&#x27;,\n              &#x27;Championnats du monde v\u00e9t\u00e9rans 50-59&#x27;,\n                             &#x27;Championnats d&#x27;Europe&#x27;,\n                            &#x27;Memorial de Martinengo&#x27;,\n                            &#x27;The Artus Court PKO BP&#x27;,\n                    &#x27;Championnats d&#x27;Afrique juniors&#x27;,\n        &#x27;Coupe du monde fleuret d&#x27;Alger by Ooredoo &#x27;,\n                           &#x27;Trekanten International&#x27;,\n                                 &#x27;Tournoi Satellite&#x27;,\n                     &#x27;Champ du monde juniors-cadets&#x27;,\n                 &#x27;Absolute Fencing Gear\u00ae Grand Prix&#x27;,\n              &#x27;Championnats du monde v\u00e9t\u00e9rans 60-69&#x27;,\n             &#x27;Championnats d&#x27;Afrique cadets juniors&#x27;,\n                   &#x27;Championnats Asiatiques juniors&#x27;,\n                 &#x27;Championnats Panam\u00e9ricains Cadets&#x27;,\n                    &#x27;Memorial de Martinengo Tournoi&#x27;,\n      &#x27;Coupe du Monde de fleuret d&#x27;Alger by Ooredoo&#x27;,\n                           &#x27;Championnats asiatiques&#x27;,\n                   &#x27;Championnats asiatiques juniors&#x27;,\n       &#x27;Championnats de qualification panam\u00e9ricains&#x27;,\n        &#x27;Championnats de qualification Asie-Oc\u00e9anie&#x27;,\n           &#x27;Championnats de qualification europ\u00e9ens&#x27;,\n                                    &#x27;Coupe du monde&#x27;,\n                                  &#x27;Tournoi Satelite&#x27;,\n              &#x27;Championnats du monde V\u00e9t\u00e9rans 60-69&#x27;,\n                &#x27;Championnats du monde V\u00e9t\u00e9rans 70+&#x27;,\n        &#x27;Tournoi Satellite- Trekanten International&#x27;,\n                          &#x27;2019 Summer Universiades&#x27;,\n                           &#x27;Championnats Asiatiques&#x27;,\n &#x27;2019 Absolute Fencing Gear FIE Grand Prix Anaheim&#x27;,\n                &#x27;Championnats du monde v\u00e9t\u00e9rans 70+&#x27;,\n  &#x27;Absolute Fencing Gear Long Beach Foil Grand Prix&#x27;,\n                                    &#x27;Jeux africains&#x27;,\n      &#x27;Championnats de qualifications panam\u00e9ricains&#x27;,\n                                    &#x27;Jeux Europ\u00e9ens&#x27;,\n                          &#x27;2017 Summer Universiades&#x27;]\nLength: 48, dtype: str</pre>"
+          }
         }
       ],
       "console": []
     },
     {
       "id": "TqIu",
-      "code_hash": "bb07c1d9a90a93703ad92797bfd9fede",
-      "outputs": [
-        {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "Vxnm",
-      "code_hash": "a24cbc69fa36cc39f3590facc09aa41a",
+      "code_hash": "7c6e742c27261296362f3744f7fe595f",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"12-process-into-a-matrix\">1.2 Process into a matrix</h2></span>"
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "[ 121   41  800  243  237  225  586 1061 1281 1230 1299  351  122  397\n  812  857 1105  125  740   37  127  129   35  458 1359 1356  771  444\n  457 1111   33  898 1014 1391   39   42 1073 1067 1079  118 1385 1377\n 1360 1218 1093 1307 1245]\n[2021 2017 2015 2019 2016 2018 2020 2014]\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "Vxnm",
+      "code_hash": "ed60ddc8a356e0074906bd70ff2c7320",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
           }
         }
       ],
@@ -288,20 +274,20 @@
     },
     {
       "id": "DnEU",
-      "code_hash": "5ad9cebec6c6fc369cf6f7e368542a80",
+      "code_hash": "7160a3adacc2d760729688dbda65b7e6",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
         }
       ],
       "console": []
     },
     {
       "id": "ulZA",
-      "code_hash": "9f683281048f98c615c4a60c87233a6e",
+      "code_hash": "668bae5b395e1661847d37e7ac735b72",
       "outputs": [
         {
           "type": "data",
@@ -314,19 +300,202 @@
     },
     {
       "id": "ecfG",
-      "code_hash": "1f3c613674ef668c8b3c43f7e75e5287",
+      "code_hash": "48f13f427b1a26af6851b2a9ca974633",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
         }
       ],
       "console": []
     },
     {
       "id": "Pvdt",
+      "code_hash": "b2681f9352b10bfee68d95b5c86f89e3",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='Pvdt-0' random-id='9697db0b-2dca-e6f2-6960-e7d36cc436ab'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;&#92;&quot;:0,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;,&#92;&quot;home_team&#92;&quot;:36796,&#92;&quot;away_team&#92;&quot;:19574,&#92;&quot;home_score&#92;&quot;:5,&#92;&quot;away_score&#92;&quot;:1},{&#92;&quot;&#92;&quot;:1,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;,&#92;&quot;home_team&#92;&quot;:36796,&#92;&quot;away_team&#92;&quot;:42147,&#92;&quot;home_score&#92;&quot;:5,&#92;&quot;away_score&#92;&quot;:2},{&#92;&quot;&#92;&quot;:2,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;,&#92;&quot;home_team&#92;&quot;:36796,&#92;&quot;away_team&#92;&quot;:49116,&#92;&quot;home_score&#92;&quot;:5,&#92;&quot;away_score&#92;&quot;:2},{&#92;&quot;&#92;&quot;:3,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;,&#92;&quot;home_team&#92;&quot;:36796,&#92;&quot;away_team&#92;&quot;:39631,&#92;&quot;home_score&#92;&quot;:5,&#92;&quot;away_score&#92;&quot;:4},{&#92;&quot;&#92;&quot;:4,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;,&#92;&quot;home_team&#92;&quot;:36796,&#92;&quot;away_team&#92;&quot;:23447,&#92;&quot;home_score&#92;&quot;:4,&#92;&quot;away_score&#92;&quot;:5},{&#92;&quot;&#92;&quot;:5,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;,&#92;&quot;home_team&#92;&quot;:36796,&#92;&quot;away_team&#92;&quot;:27947,&#92;&quot;home_score&#92;&quot;:5,&#92;&quot;away_score&#92;&quot;:1},{&#92;&quot;&#92;&quot;:6,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;,&#92;&quot;home_team&#92;&quot;:19574,&#92;&quot;away_team&#92;&quot;:42147,&#92;&quot;home_score&#92;&quot;:0,&#92;&quot;away_score&#92;&quot;:5},{&#92;&quot;&#92;&quot;:7,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;,&#92;&quot;home_team&#92;&quot;:19574,&#92;&quot;away_team&#92;&quot;:49116,&#92;&quot;home_score&#92;&quot;:5,&#92;&quot;away_score&#92;&quot;:0},{&#92;&quot;&#92;&quot;:8,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;,&#92;&quot;home_team&#92;&quot;:19574,&#92;&quot;away_team&#92;&quot;:39631,&#92;&quot;home_score&#92;&quot;:1,&#92;&quot;away_score&#92;&quot;:5},{&#92;&quot;&#92;&quot;:9,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;,&#92;&quot;home_team&#92;&quot;:19574,&#92;&quot;away_team&#92;&quot;:23447,&#92;&quot;home_score&#92;&quot;:1,&#92;&quot;away_score&#92;&quot;:5}]&quot;' data-total-rows='50' data-total-columns='5' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;date&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;home_team&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;away_team&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;home_score&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;away_score&quot;,[&quot;integer&quot;,&quot;int64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='true' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[[&quot;&quot;,[&quot;integer&quot;,&quot;int64&quot;]]]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZBYS",
+      "code_hash": "5a8b4f45442d7e5dcbb71ab4a7549f9f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"season-level-aggregation\">season level aggregation</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aLJB",
+      "code_hash": "a24cbc69fa36cc39f3590facc09aa41a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"12-process-into-a-matrix\">1.2 Process into a matrix</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nHfw",
+      "code_hash": "2df3c7bc457590ae02d58de72606f0cb",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "   home_team  away_team  fencer_age  opp_age  home_score  away_score  \\\n0      36796      19574          23       28           5           1   \n1      36796      42147          23       19           5           2   \n2      36796      49116          23       21           5           2   \n3      36796      39631          23       18           5           4   \n4      36796      23447          23       27           4           5   \n\n   winner_ID  fencer_curr_pts  opp_curr_pts tournament_ID  pool_ID  upset  \\\n0      36796             12.5          7.50      2021-121        1  False   \n1      36796             12.5          0.75      2021-121        1  False   \n2      36796             12.5         22.25      2021-121        1   True   \n3      36796             12.5         23.00      2021-121        1   True   \n4      23447             12.5         79.00      2021-121        1  False   \n\n         date season  \n0  2021-03-26   2021  \n1  2021-03-26   2021  \n2  2021-03-26   2021  \n3  2021-03-26   2021  \n4  2021-03-26   2021  \n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "xXTn",
+      "code_hash": "58a4be8aa1725b752c63b75318f69bb4",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h5 id=\"season-level-matrix\">season level matrix</h5></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "AjVT",
+      "code_hash": "63b3612f5a81787186d3918b9220ac61",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "[{33345, 11394, 33287, 38641, 21203, 36152, 31455}, {38849, 11074, 16486, 27693, 24822, 35704, 27806}, {27855, 31487, 36404, 29588, 27769, 38813, 33343}, {31424, 29698, 33286, 1522, 38645, 19254, 35963}]\n[{164, 3301, 19302, 27815, 38828, 11217, 42130}, {8906, 21457, 11254, 36152, 21338, 19576}, {41634, 3203, 23432, 3849, 27475, 19254, 33500}, {19232, 41604, 3046, 29583, 11314, 14290}, {19332, 23430, 2696, 41852, 9016, 16924}, {11074, 11394, 41839, 38645, 24822, 25629}, {31424, 33345, 38849, 38578, 27769, 35963, 41631}, {41699, 38923, 41582, 41679, 35696, 29588, 8184}, {41929, 31372, 27693, 20749, 33357, 33457, 35704}, {16486, 33286, 41928, 41838, 21203, 31422}, {11202, 6242, 11783, 8908, 9008, 11251, 16948}, {16903, 3498, 33325, 38829, 2680, 42299, 41949}, {17025, 3048, 1610, 8941, 19469, 3565, 9236}]\n[{31424, 43555, 45123, 33457, 44819, 8184, 31487}, {8135, 41929, 41676, 27693, 41839, 24822, 31389}, {33345, 20749, 41582, 39024, 27769, 44958}, {41928, 44814, 1522, 38645, 44731, 31422}, {44994, 44939, 41838, 27855, 38578, 35704}, {11394, 27815, 9016, 8499, 19576, 38813}, {44967, 29583, 21457, 11314, 36152, 16924}, {19232, 41604, 3046, 44971, 38828, 14290}, {23425, 23172, 3849, 33551, 11217, 21338}, {19332, 23432, 2696, 8556, 29617, 27475}, {11202, 44868, 3303, 3498, 11251}, {164, 44807, 8908, 9236, 2680, 27706}, {11200, 3048, 33325, 3565, 3152, 45010}, {14305, 6242, 1610, 6482, 2939, 41949}]\n[{48196, 48104, 44939, 33457, 44819, 38645, 44731}, {8135, 38729, 35696, 45172, 36404, 47930, 31389}, {48166, 47750, 41929, 48012, 31372, 44814, 21203}, {48163, 48135, 27693, 41679, 1522, 47964, 44958}, {44228, 41928, 41839, 48150, 48086, 35704, 35963}, {1697, 48011, 41838, 8184, 25629, 41631}, {11394, 3301, 3849, 234, 29617, 14645, 19254}, {27769, 23430, 21457, 14290, 36409, 47932, 38813}, {19232, 11201, 23172, 17799, 2696, 11314, 27475}, {44967, 11217, 9016, 11319, 36152, 21338, 15645}, {19332, 47717, 16486, 19302, 8556, 38828, 33500}, {11202, 41604, 3152, 3894, 11254, 25850}, {2918, 3303, 3498, 38829, 2680}, {3072, 17025, 3203, 23432, 3565, 38868}, {44807, 16903, 1610, 11251, 3029, 48220}, {164, 8908, 33327, 6672, 45010, 41949}]\n[{47750, 38729, 35636, 50741, 50999, 8184, 51070}, {8770, 45123, 33286, 41929, 51082, 44958}, {8864, 41582, 44814, 50995, 38645}, {48166, 20749, 33357, 38575, 50997, 36150}, {50760, 21203, 50742, 35704, 50842, 47964}, {1697, 44228, 48135, 47986, 44819, 3384}, {11394, 25741, 11217, 14290, 19576, 41852, 31389}, {51109, 23430, 17799, 47717, 21457, 21338, 47932}, {11201, 50755, 3301, 2696, 11314, 14611, 19254}, {23172, 19302, 1006, 36152, 27769, 38650}, {50851, 31372, 38828, 9016, 15645, 25629}, {23432, 27475, 9236, 3029, 11251, 2680, 25850}, {3072, 6242, 16903, 38829, 33551, 33327, 27827}, {17025, 41604, 3303, 1610, 3565, 11254, 27833}]\n[{35649, 31906, 34564, 4164, 49287, 28713, 12591}]\n2015 (710, 710)\n2016 (779, 779)\n2017 (775, 775)\n2018 (847, 847)\n2019 (831, 831)\n2020 (719, 719)\n2021 (250, 250)\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "pHFh",
+      "code_hash": "d0bb1489cbe7988417d194316b873d37",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "NCOB",
+      "code_hash": "1f3c613674ef668c8b3c43f7e75e5287",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aqbW",
+      "code_hash": "732be86a2c4648e4324eb04b5305e869",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"import-fencing-data\">import fencing data</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TRpd",
+      "code_hash": "01addd2c24c5c99dab0e2cedda77a144",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TXez",
+      "code_hash": "f8ffe6628a4a53b6395ffc7f8d6305cd",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "dNNg",
+      "code_hash": "7329a397ba68554d845e58ca8f06d15b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='dNNg-0' random-id='fbc0bf09-f6c4-6e39-27bf-c4619f65a4fd'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;fencer_ID&#92;&quot;:36796,&#92;&quot;opp_ID&#92;&quot;:19574,&#92;&quot;fencer_age&#92;&quot;:23,&#92;&quot;opp_age&#92;&quot;:28,&#92;&quot;fencer_score&#92;&quot;:5,&#92;&quot;opp_score&#92;&quot;:1,&#92;&quot;winner_ID&#92;&quot;:36796,&#92;&quot;fencer_curr_pts&#92;&quot;:12.5,&#92;&quot;opp_curr_pts&#92;&quot;:7.5,&#92;&quot;tournament_ID&#92;&quot;:&#92;&quot;2021-121&#92;&quot;,&#92;&quot;pool_ID&#92;&quot;:1,&#92;&quot;upset&#92;&quot;:false,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;},{&#92;&quot;fencer_ID&#92;&quot;:36796,&#92;&quot;opp_ID&#92;&quot;:42147,&#92;&quot;fencer_age&#92;&quot;:23,&#92;&quot;opp_age&#92;&quot;:19,&#92;&quot;fencer_score&#92;&quot;:5,&#92;&quot;opp_score&#92;&quot;:2,&#92;&quot;winner_ID&#92;&quot;:36796,&#92;&quot;fencer_curr_pts&#92;&quot;:12.5,&#92;&quot;opp_curr_pts&#92;&quot;:0.75,&#92;&quot;tournament_ID&#92;&quot;:&#92;&quot;2021-121&#92;&quot;,&#92;&quot;pool_ID&#92;&quot;:1,&#92;&quot;upset&#92;&quot;:false,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;},{&#92;&quot;fencer_ID&#92;&quot;:36796,&#92;&quot;opp_ID&#92;&quot;:49116,&#92;&quot;fencer_age&#92;&quot;:23,&#92;&quot;opp_age&#92;&quot;:21,&#92;&quot;fencer_score&#92;&quot;:5,&#92;&quot;opp_score&#92;&quot;:2,&#92;&quot;winner_ID&#92;&quot;:36796,&#92;&quot;fencer_curr_pts&#92;&quot;:12.5,&#92;&quot;opp_curr_pts&#92;&quot;:22.25,&#92;&quot;tournament_ID&#92;&quot;:&#92;&quot;2021-121&#92;&quot;,&#92;&quot;pool_ID&#92;&quot;:1,&#92;&quot;upset&#92;&quot;:true,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;},{&#92;&quot;fencer_ID&#92;&quot;:36796,&#92;&quot;opp_ID&#92;&quot;:39631,&#92;&quot;fencer_age&#92;&quot;:23,&#92;&quot;opp_age&#92;&quot;:18,&#92;&quot;fencer_score&#92;&quot;:5,&#92;&quot;opp_score&#92;&quot;:4,&#92;&quot;winner_ID&#92;&quot;:36796,&#92;&quot;fencer_curr_pts&#92;&quot;:12.5,&#92;&quot;opp_curr_pts&#92;&quot;:23.0,&#92;&quot;tournament_ID&#92;&quot;:&#92;&quot;2021-121&#92;&quot;,&#92;&quot;pool_ID&#92;&quot;:1,&#92;&quot;upset&#92;&quot;:true,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;},{&#92;&quot;fencer_ID&#92;&quot;:36796,&#92;&quot;opp_ID&#92;&quot;:23447,&#92;&quot;fencer_age&#92;&quot;:23,&#92;&quot;opp_age&#92;&quot;:27,&#92;&quot;fencer_score&#92;&quot;:4,&#92;&quot;opp_score&#92;&quot;:5,&#92;&quot;winner_ID&#92;&quot;:23447,&#92;&quot;fencer_curr_pts&#92;&quot;:12.5,&#92;&quot;opp_curr_pts&#92;&quot;:79.0,&#92;&quot;tournament_ID&#92;&quot;:&#92;&quot;2021-121&#92;&quot;,&#92;&quot;pool_ID&#92;&quot;:1,&#92;&quot;upset&#92;&quot;:false,&#92;&quot;date&#92;&quot;:&#92;&quot;2021-03-26&#92;&quot;}]&quot;' data-total-rows='5' data-total-columns='13' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;fencer_ID&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;opp_ID&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;fencer_age&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;opp_age&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;fencer_score&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;opp_score&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;winner_ID&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;fencer_curr_pts&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;opp_curr_pts&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;tournament_ID&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;pool_ID&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;upset&quot;,[&quot;boolean&quot;,&quot;bool&quot;]],[&quot;date&quot;,[&quot;string&quot;,&quot;str&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "yCnT",
+      "code_hash": "6750ba01a943854723d3e1fe16148dae",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>&lt;StringArray&gt;\n[ &#x27;2021-121&#x27;,   &#x27;2017-41&#x27;,  &#x27;2015-800&#x27;,  &#x27;2019-243&#x27;,  &#x27;2016-237&#x27;,  &#x27;2021-225&#x27;,\n  &#x27;2018-586&#x27;, &#x27;2021-1061&#x27;, &#x27;2015-1281&#x27;, &#x27;2018-1230&#x27;,\n ...\n  &#x27;2016-129&#x27;,  &#x27;2016-457&#x27;,  &#x27;2017-458&#x27;, &#x27;2019-1230&#x27;, &#x27;2017-1093&#x27;,  &#x27;2015-118&#x27;,\n &#x27;2015-1014&#x27;,  &#x27;2018-122&#x27;,  &#x27;2016-127&#x27;, &#x27;2018-1218&#x27;]\nLength: 218, dtype: str</pre>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "wlCL",
       "code_hash": "14f5353467febe2847a24fd6a2b6a235",
       "outputs": [
         {
@@ -339,7 +508,7 @@
       "console": []
     },
     {
-      "id": "ZBYS",
+      "id": "kqZH",
       "code_hash": "1b7be81638be840c3b01d003d935f535",
       "outputs": [
         {
@@ -352,20 +521,40 @@
       "console": []
     },
     {
-      "id": "aLJB",
-      "code_hash": "a4a2fade0532eb3d76dc78e135f68dfe",
+      "id": "wAgl",
+      "code_hash": "2c6a5f790a8d7f65f23a408362c9a616",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "(250, 250)\n2685.0\n897\nFalse\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "rEll",
+      "code_hash": "62f50044f2b9adba1c9e1a5d2218f5f9",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='rEll-0' random-id='6ff554b4-84ac-efc1-676b-fd237b79be7c'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2015&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Season 2015&#92;&quot;,&#92;&quot;beta&#92;&quot;:1.5782287195867097,&#92;&quot;depth&#92;&quot;:3.487608673048458,&#92;&quot;n_levels&#92;&quot;:10.020357913814674,&#92;&quot;delta_level&#92;&quot;:0.34805230542116955},{&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2016&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Season 2016&#92;&quot;,&#92;&quot;beta&#92;&quot;:1.604249841163423,&#92;&quot;depth&#92;&quot;:3.4711343278969746,&#92;&quot;n_levels&#92;&quot;:10.137455682270978,&#92;&quot;delta_level&#92;&quot;:0.3424068559892709},{&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2017&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Season 2017&#92;&quot;,&#92;&quot;beta&#92;&quot;:1.6377457073341106,&#92;&quot;depth&#92;&quot;:3.7063576418967186,&#92;&quot;n_levels&#92;&quot;:11.050434043879683,&#92;&quot;delta_level&#92;&quot;:0.33540380650925616},{&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2018&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Season 2018&#92;&quot;,&#92;&quot;beta&#92;&quot;:1.6430334659809975,&#92;&quot;depth&#92;&quot;:3.243388805390092,&#92;&quot;n_levels&#92;&quot;:9.701323033450862,&#92;&quot;delta_level&#92;&quot;:0.334324379696115},{&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2019&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Season 2019&#92;&quot;,&#92;&quot;beta&#92;&quot;:1.594379037746802,&#92;&quot;depth&#92;&quot;:2.8176462927195614,&#92;&quot;n_levels&#92;&quot;:8.178310458084106,&#92;&quot;delta_level&#92;&quot;:0.34452669743472153},{&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2020&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Season 2020&#92;&quot;,&#92;&quot;beta&#92;&quot;:1.6364087140016457,&#92;&quot;depth&#92;&quot;:3.458435106579733,&#92;&quot;n_levels&#92;&quot;:10.302840053022548,&#92;&quot;delta_level&#92;&quot;:0.3356778411371271},{&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2021&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Season 2021&#92;&quot;,&#92;&quot;beta&#92;&quot;:2.2890796606809363,&#92;&quot;depth&#92;&quot;:3.9013102433295135,&#92;&quot;n_levels&#92;&quot;:16.257618852668152,&#92;&quot;delta_level&#92;&quot;:0.2399681207121695}]&quot;' data-total-rows='7' data-total-columns='6' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;competition_id&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;competition_name&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;beta&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;depth&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;n_levels&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;delta_level&quot;,[&quot;number&quot;,&quot;float64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
         }
       ],
       "console": []
     },
     {
-      "id": "nHfw",
+      "id": "dGlV",
       "code_hash": "6d90f46a435374c1f4ad4a529e44c6e4",
       "outputs": [
         {
@@ -378,46 +567,53 @@
       "console": []
     },
     {
-      "id": "xXTn",
-      "code_hash": "b64438c56585ce3b3332f5011021f10f",
+      "id": "SdmI",
+      "code_hash": "83b8958ebae9539d66dd27d9ac612e08",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
         }
       ],
-      "console": []
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "\rSeasons:   0%|                                                                                              | 0/7 [00:00<?, ?it/s]\n\rEM fit:   0%|                                                                                             | 0/100 [00:00<?, ?it/s]\u001b[A\n\rEM fit:   9%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258b                                                                             | 9/100 [00:00<00:01, 88.84it/s]\u001b[A\n\rEM fit:  18%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588                                                                     | 18/100 [00:00<00:00, 86.89it/s]\u001b[A\n\rEM fit:  28%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c                                                            | 28/100 [00:00<00:00, 92.10it/s]\u001b[A\n\rEM fit:  38%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2589                                                    | 38/100 [00:00<00:00, 89.34it/s]\u001b[A\n\rEM fit:  47%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258d                                            | 47/100 [00:00<00:00, 84.75it/s]\u001b[A\n\rEM fit:  56%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588                                     | 56/100 [00:00<00:00, 83.16it/s]\u001b[A\n\rEM fit:  65%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c                             | 65/100 [00:00<00:00, 84.39it/s]\u001b[A\n\rEM fit:  74%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f                     | 74/100 [00:00<00:00, 85.82it/s]\u001b[A\n\rEM fit:  83%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258b              | 83/100 [00:00<00:00, 79.66it/s]\u001b[A\n\rEM fit:  94%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2589     | 94/100 [00:01<00:00, 87.79it/s]\u001b[A\rEM fit: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 100/100 [00:01<00:00, 85.97it/s]\n\rSeasons:  14%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e                                                                         | 1/7 [00:01<00:06,  1.17s/it]\n\rEM fit:   0%|                                                                                             | 0/100 [00:00<?, ?it/s]\u001b[A\n\rEM fit:   8%|\u2588\u2588\u2588\u2588\u2588\u2588\u258a                                                                              | 8/100 [00:00<00:01, 73.00it/s]\u001b[A\n\rEM fit:  16%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258d                                                                      | 16/100 [00:00<00:01, 72.34it/s]\u001b[A\n\rEM fit:  24%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f                                                               | 24/100 [00:00<00:01, 73.25it/s]\u001b[A\n\rEM fit:  32%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2589                                                         | 32/100 [00:00<00:00, 72.07it/s]\u001b[A\n\rEM fit:  40%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c                                                  | 40/100 [00:00<00:00, 69.31it/s]\u001b[A\n\rEM fit:  47%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258d                                            | 47/100 [00:00<00:00, 68.46it/s]\u001b[A\n\rEM fit:  57%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2589                                    | 57/100 [00:00<00:00, 76.19it/s]\u001b[A\n\rEM fit:  66%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258d                            | 66/100 [00:00<00:00, 76.62it/s]\u001b[A\n\rEM fit:  74%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f                     | 74/100 [00:01<00:00, 73.22it/s]\u001b[A\n\rEM fit:  83%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258b              | 83/100 [00:01<00:00, 77.14it/s]\u001b[A\n\rEM fit:  92%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e      | 92/100 [00:01<00:00, 79.31it/s]\u001b[A\rEM fit: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 100/100 [00:01<00:00, 76.06it/s]\n\rSeasons:  29%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c                                                             | 2/7 [00:02<00:06,  1.26s/it]\n\rEM fit:   0%|                                                                                             | 0/100 [00:00<?, ?it/s]\u001b[A\n\rEM fit:   9%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258b                                                                             | 9/100 [00:00<00:01, 89.78it/s]\u001b[A\n\rEM fit:  18%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588                                                                     | 18/100 [00:00<00:01, 75.27it/s]\u001b[A\n\rEM fit:  26%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a                                                              | 26/100 [00:00<00:01, 67.77it/s]\u001b[A\n\rEM fit:  33%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258b                                                        | 33/100 [00:00<00:01, 65.82it/s]\u001b[A\n\rEM fit:  41%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258d                                                 | 41/100 [00:00<00:00, 70.01it/s]\u001b[A\n\rEM fit:  49%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f                                          | 49/100 [00:00<00:00, 69.38it/s]\u001b[A\n\rEM fit:  57%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2589                                    | 57/100 [00:00<00:00, 69.67it/s]\u001b[A\n\rEM fit:  66%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258d                            | 66/100 [00:00<00:00, 74.44it/s]\u001b[A\n\rEM fit:  74%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f                     | 74/100 [00:01<00:00, 67.10it/s]\u001b[A\n\rEM fit:  81%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588                | 81/100 [00:01<00:00, 67.37it/s]\u001b[A\n\rEM fit:  88%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2589          | 88/100 [00:01<00:00, 67.94it/s]\u001b[A\n\rEM fit:  96%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258b   | 96/100 [00:01<00:00, 71.30it/s]\u001b[A\rEM fit: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 100/100 [00:01<00:00, 70.40it/s]\n\rSeasons:  43%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a                                                 | 3/7 [00:03<00:05,  1.33s/it]\n\rEM fit:   0%|                                                                                             | 0/100 [00:00<?, ?it/s]\u001b[A\n\rEM fit:   6%|\u2588\u2588\u2588\u2588\u2588                                                                                | 6/100 [00:00<00:01, 58.19it/s]\u001b[A\n\rEM fit:  12%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588                                                                          | 12/100 [00:00<00:01, 58.96it/s]\u001b[A\n\rEM fit:  18%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588                                                                     | 18/100 [00:00<00:01, 51.61it/s]\u001b[A\n\rEM fit:  24%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f                                                               | 24/100 [00:00<00:01, 51.47it/s]\u001b[A\n\rEM fit:  30%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f                                                          | 30/100 [00:00<00:01, 51.51it/s]\u001b[A\n\rEM fit:  36%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f                                                     | 36/100 [00:00<00:01, 51.94it/s]\u001b[A\n\rEM fit:  42%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e                                                | 42/100 [00:00<00:01, 53.33it/s]\u001b[A\n\rEM fit:  48%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e                                           | 48/100 [00:00<00:00, 52.48it/s]\u001b[A\n\rEM fit:  54%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e                                      | 54/100 [00:01<00:00, 51.84it/s]\u001b[A\n\rEM fit:  63%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2589                               | 63/100 [00:01<00:00, 61.38it/s]\u001b[A\n\rEM fit:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a                         | 70/100 [00:01<00:00, 63.14it/s]\u001b[A\n\rEM fit:  77%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258b                   | 77/100 [00:01<00:00, 56.86it/s]\u001b[A\n\rEM fit:  86%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f           | 86/100 [00:01<00:00, 63.34it/s]\u001b[A\n\rEM fit:  95%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a    | 95/100 [00:01<00:00, 68.21it/s]\u001b[A\rEM fit: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 100/100 [00:01<00:00, 59.47it/s]\n\rSeasons:  57%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f                                    | 4/7 [00:05<00:04,  1.47s/it]\n\rEM fit:   0%|                                                                                             | 0/100 [00:00<?, ?it/s]\u001b[A\n\rEM fit:   8%|\u2588\u2588\u2588\u2588\u2588\u2588\u258a                                                                              | 8/100 [00:00<00:01, 73.69it/s]\u001b[A\n\rEM fit:  16%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258d                                                                      | 16/100 [00:00<00:01, 67.99it/s]\u001b[A\n\rEM fit:  23%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e                                                                | 23/100 [00:00<00:01, 60.40it/s]\u001b[A\n\rEM fit:  30%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f                                                          | 30/100 [00:00<00:01, 57.21it/s]\u001b[A\n\rEM fit:  36%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f                                                     | 36/100 [00:00<00:01, 55.22it/s]\u001b[A\n\rEM fit:  42%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e                                                | 42/100 [00:00<00:01, 54.49it/s]\u001b[A\n\rEM fit:  49%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f                                          | 49/100 [00:00<00:00, 56.40it/s]\u001b[A\n\rEM fit:  55%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f                                     | 55/100 [00:00<00:00, 56.79it/s]\u001b[A\n\rEM fit:  61%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f                                | 61/100 [00:01<00:00, 54.21it/s]\u001b[A\n\rEM fit:  67%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e                           | 67/100 [00:01<00:00, 54.20it/s]\u001b[A\n\rEM fit:  74%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f                     | 74/100 [00:01<00:00, 55.94it/s]\u001b[A\n\rEM fit:  80%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f                | 80/100 [00:01<00:00, 55.60it/s]\u001b[A\n\rEM fit:  86%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f           | 86/100 [00:01<00:00, 55.45it/s]\u001b[A\n\rEM fit:  92%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e      | 92/100 [00:01<00:00, 54.46it/s]\u001b[A\n\rEM fit:  98%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e | 98/100 [00:01<00:00, 55.42it/s]\u001b[A\rEM fit: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 100/100 [00:01<00:00, 56.18it/s]\n\rSeasons:  71%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258d                        | 5/7 [00:07<00:03,  1.59s/it]\n\rEM fit:   0%|                                                                                             | 0/100 [00:00<?, ?it/s]\u001b[A\n\rEM fit:   8%|\u2588\u2588\u2588\u2588\u2588\u2588\u258a                                                                              | 8/100 [00:00<00:01, 79.24it/s]\u001b[A\n\rEM fit:  19%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2589                                                                    | 19/100 [00:00<00:00, 92.49it/s]\u001b[A\n\rEM fit:  29%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e                                                           | 29/100 [00:00<00:00, 81.48it/s]\u001b[A\n\rEM fit:  38%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2589                                                    | 38/100 [00:00<00:00, 72.70it/s]\u001b[A\n\rEM fit:  46%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258b                                             | 46/100 [00:00<00:00, 74.57it/s]\u001b[A\n\rEM fit:  56%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588                                     | 56/100 [00:00<00:00, 81.57it/s]\u001b[A\n\rEM fit:  68%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588                           | 68/100 [00:00<00:00, 91.42it/s]\u001b[A\n\rEM fit:  78%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c                  | 78/100 [00:00<00:00, 92.57it/s]\u001b[A\n\rEM fit:  89%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a         | 89/100 [00:01<00:00, 97.09it/s]\u001b[A\n\rEM fit: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 100/100 [00:01<00:00, 100.59it/s]\u001b[A\rEM fit: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 100/100 [00:01<00:00, 89.71it/s]\n\rSeasons:  86%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258b            | 6/7 [00:08<00:01,  1.43s/it]\n\rEM fit:   0%|                                                                                             | 0/100 [00:00<?, ?it/s]\u001b[A\rEM fit: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 100/100 [00:00<00:00, 2793.32it/s]\n\rSeasons: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 7/7 [00:08<00:00,  1.22s/it]\n",
+          "mimetype": "text/plain"
+        }
+      ]
     },
     {
-      "id": "AjVT",
+      "id": "lgWD",
       "code_hash": "f9453106591c5c30c03d19dfda04a9ff",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
         }
       ],
       "console": []
     },
     {
-      "id": "pHFh",
+      "id": "yOPj",
       "code_hash": "3cffd8f43accb1c0077f57af6b76fb6d",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
         }
       ],
       "console": []
     },
     {
-      "id": "NCOB",
+      "id": "fwwy",
       "code_hash": "b73ed277a71def331ae949a206ff398c",
       "outputs": [
         {
@@ -430,20 +626,20 @@
       "console": []
     },
     {
-      "id": "aqbW",
-      "code_hash": "1ee0de2b44e8769b0c763917c6c24d0e",
+      "id": "LJZf",
+      "code_hash": "2b3248ac3d34250055cbddc444d2dcfb",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='LJZf-0' random-id='b464920b-ff90-85ef-521a-5ca55b8368dc'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2015&#92;&quot;,&#92;&quot;count&#92;&quot;:710.0,&#92;&quot;mean&#92;&quot;:-2.401834599752451e-16,&#92;&quot;std&#92;&quot;:1.7153580404931565,&#92;&quot;min&#92;&quot;:-5.146345393839925,&#92;&quot;25%&#92;&quot;:-1.2517036690442311,&#92;&quot;50%&#92;&quot;:0.028205882140985114,&#92;&quot;75%&#92;&quot;:1.2119071831887316,&#92;&quot;max&#92;&quot;:4.874012519974749},{&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2016&#92;&quot;,&#92;&quot;count&#92;&quot;:779.0,&#92;&quot;mean&#92;&quot;:-7.296972896124263e-17,&#92;&quot;std&#92;&quot;:1.7148205601569266,&#92;&quot;min&#92;&quot;:-5.304790822813368,&#92;&quot;25%&#92;&quot;:-1.242740727165238,&#92;&quot;50%&#92;&quot;:0.02304402669764833,&#92;&quot;75%&#92;&quot;:1.2321754540903735,&#92;&quot;max&#92;&quot;:4.832664859457609},{&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2017&#92;&quot;,&#92;&quot;count&#92;&quot;:775.0,&#92;&quot;mean&#92;&quot;:-1.4669269383434326e-16,&#92;&quot;std&#92;&quot;:1.7557936981238742,&#92;&quot;min&#92;&quot;:-4.452163482453006,&#92;&quot;25%&#92;&quot;:-1.3458512123192583,&#92;&quot;50%&#92;&quot;:-0.05537515125713846,&#92;&quot;75%&#92;&quot;:1.3006449148731438,&#92;&quot;max&#92;&quot;:6.598270561426679},{&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2018&#92;&quot;,&#92;&quot;count&#92;&quot;:847.0,&#92;&quot;mean&#92;&quot;:-6.711147445195751e-17,&#92;&quot;std&#92;&quot;:1.6865875685550593,&#92;&quot;min&#92;&quot;:-5.348007590880247,&#92;&quot;25%&#92;&quot;:-1.1798797229929177,&#92;&quot;50%&#92;&quot;:-0.09481168304297553,&#92;&quot;75%&#92;&quot;:1.2701959730400154,&#92;&quot;max&#92;&quot;:4.353315442570613},{&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2019&#92;&quot;,&#92;&quot;count&#92;&quot;:831.0,&#92;&quot;mean&#92;&quot;:-6.840363280482313e-17,&#92;&quot;std&#92;&quot;:1.6037711608512601,&#92;&quot;min&#92;&quot;:-4.114926052707013,&#92;&quot;25%&#92;&quot;:-1.2964298333174673,&#92;&quot;50%&#92;&quot;:0.015989730871172326,&#92;&quot;75%&#92;&quot;:1.1868968217957105,&#92;&quot;max&#92;&quot;:4.063384405377091},{&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2020&#92;&quot;,&#92;&quot;count&#92;&quot;:719.0,&#92;&quot;mean&#92;&quot;:0.0,&#92;&quot;std&#92;&quot;:1.7317474511363524,&#92;&quot;min&#92;&quot;:-5.516721576382678,&#92;&quot;25%&#92;&quot;:-1.3191496155252467,&#92;&quot;50%&#92;&quot;:0.12783536328314957,&#92;&quot;75%&#92;&quot;:1.2470485689123492,&#92;&quot;max&#92;&quot;:4.78611847663987},{&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2021&#92;&quot;,&#92;&quot;count&#92;&quot;:250.0,&#92;&quot;mean&#92;&quot;:-8.526512829121202e-17,&#92;&quot;std&#92;&quot;:3.234043876202582,&#92;&quot;min&#92;&quot;:-8.341609107390898,&#92;&quot;25%&#92;&quot;:-2.115115776179478,&#92;&quot;50%&#92;&quot;:0.12431830814135564,&#92;&quot;75%&#92;&quot;:2.3017291794053243,&#92;&quot;max&#92;&quot;:7.916009745277253}]&quot;' data-total-rows='7' data-total-columns='9' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;competition_id&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;count&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;mean&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;std&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;min&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;25%&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;50%&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;75%&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;max&quot;,[&quot;number&quot;,&quot;float64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
         }
       ],
       "console": []
     },
     {
-      "id": "TRpd",
+      "id": "urSm",
       "code_hash": "5dc5fb137b8ae5a4041e38d229df4b34",
       "outputs": [
         {
@@ -456,190 +652,8 @@
       "console": []
     },
     {
-      "id": "TXez",
-      "code_hash": "f7782ea77b31a4952ff5b164109776e8",
-      "outputs": [
-        {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "dNNg",
-      "code_hash": "319b73b90a503d47ab09ee68aa4ef9d2",
-      "outputs": [
-        {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "yCnT",
-      "code_hash": "db5e7d166836e19e42f9d883d6f43e4f",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "wlCL",
-      "code_hash": "6a78e3b3ebae9283ad828c74dbcf18e6",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Plot score distribution over different leagues</span></span>"
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "kqZH",
-      "code_hash": "6b996290a91addddc23652c9582fa7d5",
-      "outputs": [
-        {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "wAgl",
-      "code_hash": "7a27f3e0c89af654b0a6c44b90d05bf1",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"31-how-is-this-related-to-the-actual-points-attained-by-each-team\">3.1 How is this related to the actual points attained by each team?</h2>\n<span class=\"paragraph\">Let's merge datasets of learned scores and official league standings</span></span>"
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "rEll",
-      "code_hash": "54e73ea6939ed5fa96837aaae69c3d7a",
-      "outputs": [
-        {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "dGlV",
-      "code_hash": "9e52cda752fc548be4934bafe5e91560",
-      "outputs": [
-        {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "SdmI",
-      "code_hash": "5030f0ed45bead2622cb2a7d56958665",
-      "outputs": [
-        {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "lgWD",
-      "code_hash": "b4774340df575a83071dc8ce7db46ef7",
-      "outputs": [
-        {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "yOPj",
-      "code_hash": "4d4d61273f47a01d91c061276e0db799",
-      "outputs": [
-        {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "fwwy",
-      "code_hash": "9baf5c427b1ec211221e0f481bfd2785",
-      "outputs": [
-        {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "LJZf",
-      "code_hash": "d92b4b912a9d1124b8294052feab4eda",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"32-simulate-games\">3.2 Simulate games</h2></span>"
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "urSm",
-      "code_hash": "b25e297cb458f868b12b026b6afdb148",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">We are ready to generate games from the main model parameters.</span></span>"
-          }
-        }
-      ],
-      "console": []
-    },
-    {
       "id": "jxvo",
-      "code_hash": "8d63dcf680912b49116156ecd51a2fb9",
+      "code_hash": "f7782ea77b31a4952ff5b164109776e8",
       "outputs": [
         {
           "type": "data",
@@ -652,32 +666,249 @@
     },
     {
       "id": "mWxS",
-      "code_hash": "9afc821a68bd0555c89e22fc93b64f05",
+      "code_hash": "370354bc58df07f5d1b231f46937897d",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
         }
       ],
       "console": []
     },
     {
       "id": "CcZR",
-      "code_hash": "a5f8aa0a03584ceee7c2837261a0fb42",
+      "code_hash": "db5e7d166836e19e42f9d883d6f43e4f",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
         }
       ],
       "console": []
     },
     {
       "id": "YWSi",
+      "code_hash": "6a78e3b3ebae9283ad828c74dbcf18e6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Plot score distribution over different leagues</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "zlud",
+      "code_hash": "7a3677bdf66cf2388d208504b303eca5",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "list index out of range",
+          "traceback": null
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;C:\\Users\\bensa\\AppData\\Local\\Temp\\marimo_7228\\__marimo__cell_zlud_.py&quot;</span>, line <span class=\"m\">23</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">cs</span> <span class=\"o\">=</span> <span class=\"p\">[</span><span class=\"n\">colors_1</span><span class=\"p\">[</span><span class=\"n\">k</span><span class=\"p\">]</span> <span class=\"k\">for</span> <span class=\"n\">k</span> <span class=\"ow\">in</span> <span class=\"n\">clabels</span><span class=\"p\">]</span>\n<span class=\"w\">          </span><span class=\"pm\">~~~~~~~~^^^</span>\n<span class=\"gr\">IndexError</span>: <span class=\"n\">list index out of range</span>\n</pre></div>\n</span>",
+          "mimetype": "application/vnd.marimo+traceback"
+        }
+      ]
+    },
+    {
+      "id": "tZnO",
+      "code_hash": "7a27f3e0c89af654b0a6c44b90d05bf1",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"31-how-is-this-related-to-the-actual-points-attained-by-each-team\">3.1 How is this related to the actual points attained by each team?</h2>\n<span class=\"paragraph\">Let's merge datasets of learned scores and official league standings</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "xvXZ",
+      "code_hash": "54e73ea6939ed5fa96837aaae69c3d7a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='xvXZ-0' random-id='fa11b485-47f7-00d6-7bfa-c6a6c783066c'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;node_id&#92;&quot;:51,&#92;&quot;node_label&#92;&quot;:28081,&#92;&quot;score_sr&#92;&quot;:1.4894854000869655,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2021&#92;&quot;,&#92;&quot;score_bt&#92;&quot;:0.005036326108355936,&#92;&quot;points&#92;&quot;:18,&#92;&quot;n_matches&#92;&quot;:6,&#92;&quot;points_prg&#92;&quot;:3.0},{&#92;&quot;node_id&#92;&quot;:736,&#92;&quot;node_label&#92;&quot;:40433,&#92;&quot;score_sr&#92;&quot;:1.7399805545452869,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2016&#92;&quot;,&#92;&quot;score_bt&#92;&quot;:0.005570958503119462,&#92;&quot;points&#92;&quot;:18,&#92;&quot;n_matches&#92;&quot;:6,&#92;&quot;points_prg&#92;&quot;:3.0},{&#92;&quot;node_id&#92;&quot;:189,&#92;&quot;node_label&#92;&quot;:49257,&#92;&quot;score_sr&#92;&quot;:2.052039073688616,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2021&#92;&quot;,&#92;&quot;score_bt&#92;&quot;:0.005447770831667927,&#92;&quot;points&#92;&quot;:15,&#92;&quot;n_matches&#92;&quot;:5,&#92;&quot;points_prg&#92;&quot;:3.0},{&#92;&quot;node_id&#92;&quot;:55,&#92;&quot;node_label&#92;&quot;:18831,&#92;&quot;score_sr&#92;&quot;:4.299430651946989,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2018&#92;&quot;,&#92;&quot;score_bt&#92;&quot;:0.1279131940991165,&#92;&quot;points&#92;&quot;:18,&#92;&quot;n_matches&#92;&quot;:6,&#92;&quot;points_prg&#92;&quot;:3.0},{&#92;&quot;node_id&#92;&quot;:10,&#92;&quot;node_label&#92;&quot;:4485,&#92;&quot;score_sr&#92;&quot;:3.7951445855377144,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2017&#92;&quot;,&#92;&quot;score_bt&#92;&quot;:0.036211418562921614,&#92;&quot;points&#92;&quot;:18,&#92;&quot;n_matches&#92;&quot;:6,&#92;&quot;points_prg&#92;&quot;:3.0}]&quot;' data-total-rows='5' data-total-columns='8' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;node_id&quot;,[&quot;integer&quot;,&quot;int32&quot;]],[&quot;node_label&quot;,[&quot;integer&quot;,&quot;int32&quot;]],[&quot;score_sr&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;competition_id&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;score_bt&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;points&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;n_matches&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;points_prg&quot;,[&quot;number&quot;,&quot;float64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "CLip",
+      "code_hash": "2e87f662f72402866e22bcba022c9982",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "YECM",
+      "code_hash": "5b3aab050992d66ed4d63fab1a3d2674",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='YECM-0' random-id='f70ef083-357e-64a9-0ce9-fc260352c753'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;node_label&#92;&quot;:18071,&#92;&quot;points&#92;&quot;:15,&#92;&quot;n_matches&#92;&quot;:5,&#92;&quot;points_prg&#92;&quot;:3.0,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2019&#92;&quot;},{&#92;&quot;node_label&#92;&quot;:19878,&#92;&quot;points&#92;&quot;:18,&#92;&quot;n_matches&#92;&quot;:6,&#92;&quot;points_prg&#92;&quot;:3.0,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2019&#92;&quot;},{&#92;&quot;node_label&#92;&quot;:9377,&#92;&quot;points&#92;&quot;:18,&#92;&quot;n_matches&#92;&quot;:6,&#92;&quot;points_prg&#92;&quot;:3.0,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2019&#92;&quot;},{&#92;&quot;node_label&#92;&quot;:21717,&#92;&quot;points&#92;&quot;:15,&#92;&quot;n_matches&#92;&quot;:5,&#92;&quot;points_prg&#92;&quot;:3.0,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2019&#92;&quot;},{&#92;&quot;node_label&#92;&quot;:46542,&#92;&quot;points&#92;&quot;:18,&#92;&quot;n_matches&#92;&quot;:6,&#92;&quot;points_prg&#92;&quot;:3.0,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2019&#92;&quot;},{&#92;&quot;node_label&#92;&quot;:28162,&#92;&quot;points&#92;&quot;:18,&#92;&quot;n_matches&#92;&quot;:6,&#92;&quot;points_prg&#92;&quot;:3.0,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2019&#92;&quot;},{&#92;&quot;node_label&#92;&quot;:23398,&#92;&quot;points&#92;&quot;:33,&#92;&quot;n_matches&#92;&quot;:11,&#92;&quot;points_prg&#92;&quot;:3.0,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2019&#92;&quot;},{&#92;&quot;node_label&#92;&quot;:4405,&#92;&quot;points&#92;&quot;:114,&#92;&quot;n_matches&#92;&quot;:40,&#92;&quot;points_prg&#92;&quot;:2.85,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2019&#92;&quot;},{&#92;&quot;node_label&#92;&quot;:17481,&#92;&quot;points&#92;&quot;:82,&#92;&quot;n_matches&#92;&quot;:29,&#92;&quot;points_prg&#92;&quot;:2.83,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2019&#92;&quot;},{&#92;&quot;node_label&#92;&quot;:27237,&#92;&quot;points&#92;&quot;:165,&#92;&quot;n_matches&#92;&quot;:59,&#92;&quot;points_prg&#92;&quot;:2.8,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2019&#92;&quot;}]&quot;' data-total-rows='831' data-total-columns='5' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;node_label&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;points&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;n_matches&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;points_prg&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;competition_id&quot;,[&quot;string&quot;,&quot;str&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='true' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "cEAS",
+      "code_hash": "b4774340df575a83071dc8ce7db46ef7",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "`x` and `y` must have length at least 2.",
+          "traceback": null
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;C:\\Users\\bensa\\AppData\\Local\\Temp\\marimo_7228\\__marimo__cell_cEAS_.py&quot;</span>, line <span class=\"m\">8</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">_pearson_coef</span> <span class=\"o\">=</span> <span class=\"n\">pearsonr</span><span class=\"p\">(</span><span class=\"n\">_g</span><span class=\"p\">[</span><span class=\"n\">_x</span><span class=\"p\">],</span> <span class=\"n\">_g</span><span class=\"p\">[</span><span class=\"n\">_y</span><span class=\"p\">])[</span><span class=\"mi\">0</span><span class=\"p\">]</span>\n<span class=\"w\">                    </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\bensa\\OneDrive\\Documents\\Important Docs\\Portfolio\\Fencing\\olympic fencing dataset\\Oly-Fencing-Networks\\.venv\\Lib\\site-packages\\scipy\\stats\\_stats_py.py&quot;</span>, line <span class=\"m\">4666</span>, in <span class=\"n\">pearsonr</span>\n<span class=\"w\">    </span><span class=\"k\">raise</span> <span class=\"ne\">ValueError</span><span class=\"p\">(</span><span class=\"s1\">&#39;`x` and `y` must have length at least 2.&#39;</span><span class=\"p\">)</span>\n<span class=\"gr\">ValueError</span>: <span class=\"n\">`x` and `y` must have length at least 2.</span>\n</pre></div>\n</span>",
+          "mimetype": "application/vnd.marimo+traceback"
+        }
+      ]
+    },
+    {
+      "id": "iXej",
+      "code_hash": "4d4d61273f47a01d91c061276e0db799",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "49",
+          "traceback": null
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;C:\\Users\\bensa\\AppData\\Local\\Temp\\marimo_7228\\__marimo__cell_iXej_.py&quot;</span>, line <span class=\"m\">3</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">_cond1</span> <span class=\"o\">=</span> <span class=\"n\">df</span><span class=\"p\">[</span><span class=\"n\">k_4</span><span class=\"p\">]</span><span class=\"o\">.</span><span class=\"n\">home_team</span> <span class=\"o\">==</span> <span class=\"n\">ref_team_name</span>\n<span class=\"w\">             </span><span class=\"pm\">~~^^^^^</span>\n<span class=\"gr\">KeyError</span>: <span class=\"n\">49</span>\n</pre></div>\n</span>",
+          "mimetype": "application/vnd.marimo+traceback"
+        }
+      ]
+    },
+    {
+      "id": "EJmg",
+      "code_hash": "9baf5c427b1ec211221e0f481bfd2785",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "49",
+          "traceback": null
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;C:\\Users\\bensa\\AppData\\Local\\Temp\\marimo_7228\\__marimo__cell_EJmg_.py&quot;</span>, line <span class=\"m\">5</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">viz</span><span class=\"o\">.</span><span class=\"n\">plot_score_network</span><span class=\"p\">(</span><span class=\"n\">A</span><span class=\"p\">[</span><span class=\"n\">k_5</span><span class=\"p\">],</span> <span class=\"n\">model</span><span class=\"p\">[</span><span class=\"n\">k_5</span><span class=\"p\">]</span><span class=\"o\">.</span><span class=\"n\">ranks</span><span class=\"p\">,</span> <span class=\"n\">cm</span><span class=\"o\">=</span><span class=\"n\">colormap</span><span class=\"p\">,</span> <span class=\"n\">ax</span><span class=\"o\">=</span><span class=\"n\">_ax</span><span class=\"p\">,</span> <span class=\"n\">plot_labels</span><span class=\"o\">=</span><span class=\"kc\">True</span><span class=\"p\">,</span> <span class=\"n\">nodeId2Label</span><span class=\"o\">=</span><span class=\"n\">nodeId2Label</span><span class=\"p\">[</span><span class=\"n\">k_5</span><span class=\"p\">])</span>\n<span class=\"w\">                           </span><span class=\"pm\">~^^^^^</span>\n<span class=\"gr\">KeyError</span>: <span class=\"n\">49</span>\n</pre></div>\n</span>",
+          "mimetype": "application/vnd.marimo+traceback"
+        }
+      ]
+    },
+    {
+      "id": "UmEG",
+      "code_hash": "d92b4b912a9d1124b8294052feab4eda",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"32-simulate-games\">3.2 Simulate games</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vEBW",
+      "code_hash": "b25e297cb458f868b12b026b6afdb148",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">We are ready to generate games from the main model parameters.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "kLmu",
+      "code_hash": "8d63dcf680912b49116156ecd51a2fb9",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "IpqN",
+      "code_hash": "f37126eb092c3927cb9679783daea789",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "interruption",
+          "evalue": "This cell was interrupted and needs to be re-run",
+          "traceback": []
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;C:\\Users\\bensa\\AppData\\Local\\Temp\\marimo_7228\\__marimo__cell_IpqN_.py&quot;</span>, line <span class=\"m\">2</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">_beta</span> <span class=\"o\">=</span> <span class=\"n\">model</span><span class=\"p\">[</span><span class=\"n\">k_6</span><span class=\"p\">]</span><span class=\"o\">.</span><span class=\"n\">beta</span>\n<span class=\"w\">            </span><span class=\"pm\">~~~~~^^^^^</span>\n<span class=\"gr\">KeyError</span>: <span class=\"n\">49</span>\n</pre></div>\n</span>",
+          "mimetype": "application/vnd.marimo+traceback"
+        }
+      ]
+    },
+    {
+      "id": "dxZZ",
+      "code_hash": "a5f8aa0a03584ceee7c2837261a0fb42",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "An ancestor raised an exception (KeyError): ",
+          "traceback": null
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "dlnW",
       "code_hash": "63c529e11dc8f28f088e990273ef0815",
       "outputs": [
         {
@@ -690,20 +921,20 @@
       "console": []
     },
     {
-      "id": "zlud",
+      "id": "TTti",
       "code_hash": "a5324f5e4695f7f68ec79b53e0e9cbaf",
       "outputs": [
         {
           "type": "error",
           "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
+          "evalue": "An ancestor raised an exception (KeyError): ",
           "traceback": null
         }
       ],
       "console": []
     },
     {
-      "id": "tZnO",
+      "id": "RKFZ",
       "code_hash": "d19eb8a858be1d080dc87ab73c616cb8",
       "outputs": [
         {
@@ -716,7 +947,7 @@
       "console": []
     },
     {
-      "id": "xvXZ",
+      "id": "IaQp",
       "code_hash": "3ecbe30c3422ec5d6133d00dc5976055",
       "outputs": [
         {
@@ -729,33 +960,33 @@
       "console": []
     },
     {
-      "id": "CLip",
-      "code_hash": "e7f1aa861062b914dc65d60c91cbdcd5",
+      "id": "IWgg",
+      "code_hash": "13185644c23696925bcaf41b215428d2",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "application/json": "[[1000, 710, 710], \"text/plain+float:13.954806251133736\", \"text/plain+float:1.5782287195867097\"]"
+          }
         }
       ],
       "console": []
     },
     {
-      "id": "YECM",
+      "id": "fCoF",
       "code_hash": "9cf51c47c821071d0e1e5a461fb3142e",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>&lt;module &#x27;matplotlib.pyplot&#x27; from &#x27;C:\\\\Users\\\\bensa\\\\OneDrive\\\\Documents\\\\Important Docs\\\\Portfolio\\\\Fencing\\\\olympic fencing dataset\\\\Oly-Fencing-Networks\\\\.venv\\\\Lib\\\\site-packages\\\\matplotlib\\\\pyplot.py&#x27;&gt;</pre>"
+          }
         }
       ],
       "console": []
     },
     {
-      "id": "cEAS",
+      "id": "LkGn",
       "code_hash": "12fda25e0b359c1c79d60fadb13e1233",
       "outputs": [
         {
@@ -768,33 +999,40 @@
       "console": []
     },
     {
-      "id": "iXej",
-      "code_hash": "b8518b5337b6fad95ce02c07cc35055a",
+      "id": "zVRe",
+      "code_hash": "5c224ee585bb4a92739014615fa8ff4d",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
         }
       ],
       "console": []
     },
     {
-      "id": "EJmg",
+      "id": "woaO",
       "code_hash": "4d3098602ab015d5354b9c448c2e918e",
       "outputs": [
         {
           "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
+          "ename": "interruption",
+          "evalue": "This cell was interrupted and needs to be re-run",
+          "traceback": []
         }
       ],
-      "console": []
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;C:\\Users\\bensa\\AppData\\Local\\Temp\\marimo_7228\\__marimo__cell_woaO_.py&quot;</span>, line <span class=\"m\">2</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">df_sim</span> <span class=\"o\">=</span> <span class=\"p\">[</span><span class=\"n\">get_simulated_games_df</span><span class=\"p\">(</span><span class=\"n\">df</span><span class=\"p\">[</span><span class=\"n\">k_8</span><span class=\"p\">],</span> <span class=\"n\">model</span><span class=\"p\">[</span><span class=\"n\">k_8</span><span class=\"p\">]</span><span class=\"o\">.</span><span class=\"n\">ranks</span><span class=\"p\">,</span> <span class=\"n\">nodeLabel2Id</span><span class=\"p\">[</span><span class=\"n\">k_8</span><span class=\"p\">],</span> <span class=\"n\">beta</span><span class=\"o\">=</span><span class=\"n\">model</span><span class=\"p\">[</span><span class=\"n\">k_8</span><span class=\"p\">]</span><span class=\"o\">.</span><span class=\"n\">beta</span><span class=\"p\">,</span> <span class=\"n\">competition_id</span><span class=\"o\">=</span><span class=\"n\">k_8</span><span class=\"p\">)</span> <span class=\"k\">for</span> <span class=\"n\">s</span> <span class=\"ow\">in</span> <span class=\"nb\">range</span><span class=\"p\">(</span><span class=\"n\">SAMPLE_2</span><span class=\"p\">)]</span>\n<span class=\"w\">              </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\bensa\\AppData\\Local\\Temp\\marimo_7228\\__marimo__cell_zVRe_.py&quot;</span>, line <span class=\"m\">13</span>, in <span class=\"n\">get_simulated_games_df</span>\n<span class=\"w\">    </span><span class=\"n\">r</span> <span class=\"o\">=</span> <span class=\"n\">st</span><span class=\"o\">.</span><span class=\"n\">bernoulli</span><span class=\"o\">.</span><span class=\"n\">rvs</span><span class=\"p\">(</span><span class=\"n\">p_ij</span><span class=\"p\">,</span> <span class=\"n\">size</span><span class=\"o\">=</span><span class=\"mi\">1</span><span class=\"p\">)</span>\n<span class=\"w\">        </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\bensa\\OneDrive\\Documents\\Important Docs\\Portfolio\\Fencing\\olympic fencing dataset\\Oly-Fencing-Networks\\.venv\\Lib\\site-packages\\scipy\\stats\\_distn_infrastructure.py&quot;</span>, line <span class=\"m\">3501</span>, in <span class=\"n\">rvs</span>\n<span class=\"w\">    </span><span class=\"k\">return</span> <span class=\"nb\">super</span><span class=\"p\">()</span><span class=\"o\">.</span><span class=\"n\">rvs</span><span class=\"p\">(</span><span class=\"o\">*</span><span class=\"n\">args</span><span class=\"p\">,</span> <span class=\"o\">**</span><span class=\"n\">kwargs</span><span class=\"p\">)</span>\n<span class=\"w\">           </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\bensa\\OneDrive\\Documents\\Important Docs\\Portfolio\\Fencing\\olympic fencing dataset\\Oly-Fencing-Networks\\.venv\\Lib\\site-packages\\scipy\\stats\\_distn_infrastructure.py&quot;</span>, line <span class=\"m\">1144</span>, in <span class=\"n\">rvs</span>\n<span class=\"w\">    </span><span class=\"n\">vals</span> <span class=\"o\">=</span> <span class=\"n\">vals</span><span class=\"o\">.</span><span class=\"n\">astype</span><span class=\"p\">(</span><span class=\"n\">np</span><span class=\"o\">.</span><span class=\"n\">int64</span><span class=\"p\">)</span>\n<span class=\"w\">           </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\bensa\\OneDrive\\Documents\\Important Docs\\Portfolio\\Fencing\\olympic fencing dataset\\Oly-Fencing-Networks\\.venv\\Lib\\site-packages\\marimo\\_runtime\\handlers.py&quot;</span>, line <span class=\"m\">72</span>, in <span class=\"n\">interrupt_handler</span>\n<span class=\"w\">    </span><span class=\"k\">raise</span> <span class=\"n\">MarimoInterrupt</span>\n<span class=\"gr\">KeyboardInterrupt</span>\n</pre></div>\n</span>",
+          "mimetype": "application/vnd.marimo+traceback"
+        }
+      ]
     },
     {
-      "id": "UmEG",
+      "id": "HnMC",
       "code_hash": "9aab53a98f5e9d56d4c265e3826562d7",
       "outputs": [
         {
@@ -807,20 +1045,20 @@
       "console": []
     },
     {
-      "id": "vEBW",
+      "id": "wadT",
       "code_hash": "d3dde41f59bf67b31321b416ebe6887a",
       "outputs": [
         {
           "type": "error",
           "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
+          "evalue": "An ancestor raised an exception (KeyboardInterrupt): ",
           "traceback": null
         }
       ],
       "console": []
     },
     {
-      "id": "kLmu",
+      "id": "VCRE",
       "code_hash": "7e9c971f502e8a0cc6d09b2d81b59124",
       "outputs": [
         {
@@ -833,46 +1071,46 @@
       "console": []
     },
     {
-      "id": "IpqN",
+      "id": "hgqU",
       "code_hash": "1b7cf26efabe8345a8eb5cdf0594f110",
       "outputs": [
         {
           "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
+          "ename": "interruption",
+          "evalue": "This cell was interrupted and needs to be re-run",
+          "traceback": []
         }
       ],
       "console": []
     },
     {
-      "id": "dxZZ",
+      "id": "PSUk",
       "code_hash": "b9ae6f1c52a4f247a6f9a906e43f00f6",
       "outputs": [
         {
           "type": "error",
           "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
+          "evalue": "An ancestor raised an exception (KeyboardInterrupt): ",
           "traceback": null
         }
       ],
       "console": []
     },
     {
-      "id": "dlnW",
+      "id": "mfOT",
       "code_hash": "7831ee36838ee5e5a1bdcc382ab64750",
       "outputs": [
         {
           "type": "error",
           "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
+          "evalue": "An ancestor raised an exception (KeyboardInterrupt): ",
           "traceback": null
         }
       ],
       "console": []
     },
     {
-      "id": "TTti",
+      "id": "vGiW",
       "code_hash": "d0ad8b38ccea189874f54af369f08adb",
       "outputs": [
         {
@@ -885,20 +1123,20 @@
       "console": []
     },
     {
-      "id": "RKFZ",
+      "id": "SYQT",
       "code_hash": "278137eaf0e275993e0ba7d956c4e8aa",
       "outputs": [
         {
           "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
+          "ename": "interruption",
+          "evalue": "This cell was interrupted and needs to be re-run",
+          "traceback": []
         }
       ],
       "console": []
     },
     {
-      "id": "IaQp",
+      "id": "bMrW",
       "code_hash": "49725224631f3292f96b166fa11ce0c4",
       "outputs": [
         {
@@ -911,33 +1149,33 @@
       "console": []
     },
     {
-      "id": "IWgg",
+      "id": "PSQn",
       "code_hash": "b4c8b4ad8c6346b438fa7a3e08c9ad29",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='PSQn-0' random-id='7e037237-01d9-a483-b6fc-ca1bad992a4d'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;&#92;&quot;:0,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2015&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Season 2015&#92;&quot;,&#92;&quot;beta&#92;&quot;:1.5782287195867097,&#92;&quot;depth&#92;&quot;:3.487608673048458,&#92;&quot;n_levels&#92;&quot;:10.020357913814674,&#92;&quot;delta_level&#92;&quot;:0.34805230542116955},{&#92;&quot;&#92;&quot;:1,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2016&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Season 2016&#92;&quot;,&#92;&quot;beta&#92;&quot;:1.604249841163423,&#92;&quot;depth&#92;&quot;:3.4711343278969746,&#92;&quot;n_levels&#92;&quot;:10.137455682270978,&#92;&quot;delta_level&#92;&quot;:0.3424068559892709},{&#92;&quot;&#92;&quot;:2,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2017&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Season 2017&#92;&quot;,&#92;&quot;beta&#92;&quot;:1.6377457073341106,&#92;&quot;depth&#92;&quot;:3.7063576418967186,&#92;&quot;n_levels&#92;&quot;:11.050434043879683,&#92;&quot;delta_level&#92;&quot;:0.33540380650925616},{&#92;&quot;&#92;&quot;:3,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2018&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Season 2018&#92;&quot;,&#92;&quot;beta&#92;&quot;:1.6430334659809975,&#92;&quot;depth&#92;&quot;:3.243388805390092,&#92;&quot;n_levels&#92;&quot;:9.701323033450862,&#92;&quot;delta_level&#92;&quot;:0.334324379696115},{&#92;&quot;&#92;&quot;:4,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2019&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Season 2019&#92;&quot;,&#92;&quot;beta&#92;&quot;:1.594379037746802,&#92;&quot;depth&#92;&quot;:2.8176462927195614,&#92;&quot;n_levels&#92;&quot;:8.178310458084106,&#92;&quot;delta_level&#92;&quot;:0.34452669743472153},{&#92;&quot;&#92;&quot;:5,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2020&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Season 2020&#92;&quot;,&#92;&quot;beta&#92;&quot;:1.6364087140016457,&#92;&quot;depth&#92;&quot;:3.458435106579733,&#92;&quot;n_levels&#92;&quot;:10.302840053022548,&#92;&quot;delta_level&#92;&quot;:0.3356778411371271},{&#92;&quot;&#92;&quot;:6,&#92;&quot;competition_id&#92;&quot;:&#92;&quot;2021&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Season 2021&#92;&quot;,&#92;&quot;beta&#92;&quot;:2.2890796606809363,&#92;&quot;depth&#92;&quot;:3.9013102433295135,&#92;&quot;n_levels&#92;&quot;:16.257618852668152,&#92;&quot;delta_level&#92;&quot;:0.2399681207121695},{&#92;&quot;&#92;&quot;:0,&#92;&quot;competition_id&#92;&quot;:100,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;parakeet G1&#92;&quot;,&#92;&quot;beta&#92;&quot;:2.7,&#92;&quot;depth&#92;&quot;:2.604,&#92;&quot;n_levels&#92;&quot;:12.799419909135937,&#92;&quot;delta_level&#92;&quot;:0.20344672012372403},{&#92;&quot;&#92;&quot;:1,&#92;&quot;competition_id&#92;&quot;:101,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;parakeet G2&#92;&quot;,&#92;&quot;beta&#92;&quot;:2.78,&#92;&quot;depth&#92;&quot;:1.879,&#92;&quot;n_levels&#92;&quot;:9.509487657984959,&#92;&quot;delta_level&#92;&quot;:0.19759213824966004},{&#92;&quot;&#92;&quot;:2,&#92;&quot;competition_id&#92;&quot;:102,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Asian elephants&#92;&quot;,&#92;&quot;beta&#92;&quot;:2.33,&#92;&quot;depth&#92;&quot;:3.0,&#92;&quot;n_levels&#92;&quot;:12.725144388243187,&#92;&quot;delta_level&#92;&quot;:0.2357537100146158}]&quot;' data-total-rows='15' data-total-columns='6' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;competition_id&quot;,[&quot;string&quot;,&quot;object&quot;]],[&quot;competition_name&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;beta&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;depth&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;n_levels&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;delta_level&quot;,[&quot;number&quot;,&quot;float64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='true' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[[&quot;&quot;,[&quot;integer&quot;,&quot;int64&quot;]]]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
         }
       ],
       "console": []
     },
     {
-      "id": "fCoF",
+      "id": "OfTS",
       "code_hash": "19c1d47ae36c450ece00de1c1679b16a",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
         }
       ],
       "console": []
     },
     {
-      "id": "LkGn",
+      "id": "lQxp",
       "code_hash": "d8adfd209852adfc3de8897e2b6ee4ab",
       "outputs": [
         {

@@ -1,0 +1,640 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.23.10",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "aa8ed363c01af43a3cb39dfea260722d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"l5-rankings-from-pairwise-comparisons\">L5: rankings from pairwise comparisons</h1>\n<span class=\"paragraph\">Here we explore how to extract hidden rankings from pairwise comparisons, e.g. games between teams in sport.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "d81203f459c707c9eaa50cc0a4c9c494",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "6179446554fd6781560a6d658304f48f",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "39d475e178c4601511a909fc174bd3d1",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "54d65055ac4262ba6740fc4bde56373a",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "5de5cc6807dc73bb0e0cc3939b173fac",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "a2f9349dbb96a87d9507aaed1ab8b938",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "5b29a800f5fa164f7be60fbe75db2476",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "baa507be5d6787eb32c1cc848f1d207b",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "20297c75f5091a61d801de0f74730131",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"0-download-code\">0. Download code</h1>\n<ul>\n<li><a href=\"https://github.com/LarremoreLab/SpringRank/blob/master/springrank/springrank.py\" rel=\"noopener noreferrer\" target=\"_blank\">SpringRank</a></li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "emfo",
+      "code_hash": "fa24836fcca49d1cbb42320d53a1e511",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"1-import-data\">1. Import data</h1>\n<span class=\"paragraph\"><strong>Source</strong>: download a dataset from <a href=\"https://github.com/statsbomb/open-data/tree/master\" rel=\"noopener noreferrer\" target=\"_blank\">StatsBomb open data</a>.</span>\n<span class=\"paragraph\">We will use the python package <a href=\"https://github.com/statsbomb/statsbombpy\" rel=\"noopener noreferrer\" target=\"_blank\"><code>statsbombpy</code></a> to process the raw data.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "f226eb1f45233ee606e997c8967eca67",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">We start by downloading matches from at least two different competitions, to be able to compare them</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "59c7534c1efddeb42cebc26758b78118",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"11-import-raw-data\">1.1 Import raw data</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "iLit",
+      "code_hash": "10566d4a4db959aed8b32312473582d8",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "0d79014ff56426a2248fdb9012c17c1c",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "ROlb",
+      "code_hash": "85f2f35b5ec246cf146cd786dc39d668",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "8e1c6f12ffbf45b2cedf39cfaa381f01",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "5738cb267c5a769d41d3a09898a9a67b",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "Vxnm",
+      "code_hash": "bb07c1d9a90a93703ad92797bfd9fede",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "DnEU",
+      "code_hash": "a24cbc69fa36cc39f3590facc09aa41a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"12-process-into-a-matrix\">1.2 Process into a matrix</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ulZA",
+      "code_hash": "5ad9cebec6c6fc369cf6f7e368542a80",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "ecfG",
+      "code_hash": "d0bb1489cbe7988417d194316b873d37",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "Pvdt",
+      "code_hash": "1f3c613674ef668c8b3c43f7e75e5287",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "ZBYS",
+      "code_hash": "732be86a2c4648e4324eb04b5305e869",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"import-fencing-data\">import fencing data</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aLJB",
+      "code_hash": "01addd2c24c5c99dab0e2cedda77a144",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "nHfw",
+      "code_hash": "7329a397ba68554d845e58ca8f06d15b",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "xXTn",
+      "code_hash": "734dbeb601ec1fa67cb4a3b088da36d9",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "AjVT",
+      "code_hash": "14f5353467febe2847a24fd6a2b6a235",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"2-run-ranking-models\">2. Run ranking models</h1>\n<span class=\"paragraph\">We can proceed by learning scores from the outcomes of matches</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "pHFh",
+      "code_hash": "1b7be81638be840c3b01d003d935f535",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"21-springrank\">2.1 SpringRank</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "NCOB",
+      "code_hash": "a4a2fade0532eb3d76dc78e135f68dfe",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "aqbW",
+      "code_hash": "6d90f46a435374c1f4ad4a529e44c6e4",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"22-bradley-terry-model\">2.2 Bradley-Terry model</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TRpd",
+      "code_hash": "b64438c56585ce3b3332f5011021f10f",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "TXez",
+      "code_hash": "f9453106591c5c30c03d19dfda04a9ff",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "dNNg",
+      "code_hash": "3cffd8f43accb1c0077f57af6b76fb6d",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "yCnT",
+      "code_hash": "b73ed277a71def331ae949a206ff398c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Let's get aggregate statistics to characterize the distributions per league</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "wlCL",
+      "code_hash": "2b3248ac3d34250055cbddc444d2dcfb",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "kqZH",
+      "code_hash": "5dc5fb137b8ae5a4041e38d229df4b34",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"3-analyze-results\">3. Analyze results</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "wAgl",
+      "code_hash": "f7782ea77b31a4952ff5b164109776e8",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "rEll",
+      "code_hash": "319b73b90a503d47ab09ee68aa4ef9d2",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "dGlV",
+      "code_hash": "db5e7d166836e19e42f9d883d6f43e4f",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "SdmI",
+      "code_hash": "6a78e3b3ebae9283ad828c74dbcf18e6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Plot score distribution over different leagues</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lgWD",
+      "code_hash": "6b996290a91addddc23652c9582fa7d5",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "yOPj",
+      "code_hash": "7a27f3e0c89af654b0a6c44b90d05bf1",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"31-how-is-this-related-to-the-actual-points-attained-by-each-team\">3.1 How is this related to the actual points attained by each team?</h2>\n<span class=\"paragraph\">Let's merge datasets of learned scores and official league standings</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "fwwy",
+      "code_hash": "54e73ea6939ed5fa96837aaae69c3d7a",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "LJZf",
+      "code_hash": "9e52cda752fc548be4934bafe5e91560",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "urSm",
+      "code_hash": "5030f0ed45bead2622cb2a7d56958665",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "jxvo",
+      "code_hash": "b4774340df575a83071dc8ce7db46ef7",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "mWxS",
+      "code_hash": "4d4d61273f47a01d91c061276e0db799",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "CcZR",
+      "code_hash": "9baf5c427b1ec211221e0f481bfd2785",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "YWSi",
+      "code_hash": "d92b4b912a9d1124b8294052feab4eda",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"32-simulate-games\">3.2 Simulate games</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "zlud",
+      "code_hash": "b25e297cb458f868b12b026b6afdb148",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">We are ready to generate games from the main model parameters.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "tZnO",
+      "code_hash": "8d63dcf680912b49116156ecd51a2fb9",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "xvXZ",
+      "code_hash": "9afc821a68bd0555c89e22fc93b64f05",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "CLip",
+      "code_hash": "a5f8aa0a03584ceee7c2837261a0fb42",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "YECM",
+      "code_hash": "63c529e11dc8f28f088e990273ef0815",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">We can select one example sample and check the data</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "cEAS",
+      "code_hash": "a5324f5e4695f7f68ec79b53e0e9cbaf",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "iXej",
+      "code_hash": "d19eb8a858be1d080dc87ab73c616cb8",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">What happens if you change the hyperparameters?</span>\n<span class=\"paragraph\">Note that this makes sense if you do not have a fixed schedule, and you want to generate that as well.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "EJmg",
+      "code_hash": "3ecbe30c3422ec5d6133d00dc5976055",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"321-la-liga\">3.2.1 La Liga</h3>\n<span class=\"paragraph\">The top 3 teams are very close to each other. What is the probability that one of them wins the league if we were to simulate it n times?</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "UmEG",
+      "code_hash": "e7f1aa861062b914dc65d60c91cbdcd5",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "vEBW",
+      "code_hash": "9cf51c47c821071d0e1e5a461fb3142e",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "kLmu",
+      "code_hash": "12fda25e0b359c1c79d60fadb13e1233",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Alternatively, we can take every match in the schedule and simulate who wins.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "IpqN",
+      "code_hash": "5c224ee585bb4a92739014615fa8ff4d",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "dxZZ",
+      "code_hash": "4d3098602ab015d5354b9c448c2e918e",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "dlnW",
+      "code_hash": "9aab53a98f5e9d56d4c265e3826562d7",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Let's check one particular (arbitrary) sample</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TTti",
+      "code_hash": "d3dde41f59bf67b31321b416ebe6887a",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "RKFZ",
+      "code_hash": "7e9c971f502e8a0cc6d09b2d81b59124",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">We can now count how many times in each of the simulated standing, one of the top 3 teams wins.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "IaQp",
+      "code_hash": "1b7cf26efabe8345a8eb5cdf0594f110",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "IWgg",
+      "code_hash": "b9ae6f1c52a4f247a6f9a906e43f00f6",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "fCoF",
+      "code_hash": "7831ee36838ee5e5a1bdcc382ab64750",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "LkGn",
+      "code_hash": "d0ad8b38ccea189874f54af369f08adb",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">What are we missing?</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "zVRe",
+      "code_hash": "278137eaf0e275993e0ba7d956c4e8aa",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "woaO",
+      "code_hash": "49725224631f3292f96b166fa11ce0c4",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"4-depth-of-competition\">4. Depth of competition</h1>\n<span class=\"paragraph\">We can compare the statistics of the soccer league with results of other types of datasets.\nWe take Table S2 <a href=\"of the SpringRank paper\">https://arxiv.org/pdf/1709.09002</a> for other datasets.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "HnMC",
+      "code_hash": "b4c8b4ad8c6346b438fa7a3e08c9ad29",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "wadT",
+      "code_hash": "19c1d47ae36c450ece00de1c1679b16a",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "VCRE",
+      "code_hash": "d8adfd209852adfc3de8897e2b6ee4ab",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"5-model-selection\">5. Model selection</h1>\n<span class=\"paragraph\">How do we determine what scoring system is the best?</span>\n<span class=\"paragraph\"><strong>Homework</strong>!</span></span>"
+          }
+        }
+      ],
+      "console": []
+    }
+  ]
+}

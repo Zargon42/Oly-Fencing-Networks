@@ -79,14 +79,7 @@ def _():
     import cv_tools as cvtl
     from statsbombpy import sb
 
-    return
-
-
-@app.cell
-def _():
-    from tqdm import tqdm
-
-    return (tqdm,)
+    return (sb,)
 
 
 @app.cell
@@ -141,8 +134,8 @@ def _(mo):
 
 
 @app.cell
-def _(pd):
-    df_comp = pd.read_csv("Womens foil olympics/all_womens_foil_tournament_data_May_13_2021_cleaned.csv")
+def _(sb):
+    df_comp = sb.competitions()
     return (df_comp,)
 
 
@@ -154,63 +147,32 @@ def _(df_comp):
 
 @app.cell
 def _(df_comp):
-    #_mask = df_comp['competition_international'] == False
-    #df_comp_1 = df_comp[_mask]
-    competitionId2Name = dict(zip(
-        df_comp['season'].astype(str) + '-' + df_comp['competition_ID'].astype(str),
-        df_comp['name']
-    ))
-    df_comp.name.unique()
+    _mask = df_comp['competition_international'] == False
+    df_comp_1 = df_comp[_mask]
+    competitionId2Name = dict(zip(df_comp_1['competition_id'], df_comp_1['competition_name']))
+    df_comp_1.competition_name.unique()
     return (competitionId2Name,)
 
 
 @app.cell
-def _(df_comp):
-    # unique tournament ids and seasons
-    print(df_comp.competition_ID.unique())
-    print(df_comp.season.unique())
-    return
-
-
-@app.cell
-def _(df_bouts):
-    competition_ids = df_bouts.tournament_ID.unique()
-    season_ids = ['2015', '2016', '2017', '2018', '2019', '2020', '2021']
+def _():
+    competition_ids = [37, 49, 12, 2, 11]
+    season_ids = [90, 3, 27, 27, 27]
     compId2sort = {_c: i for i, _c in enumerate(competition_ids)}
     return compId2sort, competition_ids, season_ids
 
 
 @app.cell
-def _(competition_ids, df_bouts):
-    games = {_c: df_bouts[df_bouts['tournament_ID']==_c] for _c in competition_ids}
-    return
+def _(competition_ids, sb, season_ids):
+    games = {_c: sb.matches(competition_id=_c, season_id=season_ids[i]) for i, _c in enumerate(competition_ids)}
+    return (games,)
 
 
 @app.cell
-def _(df_bouts):
-    df_bouts['season'] = df_bouts['tournament_ID'].str.slice(0, 4)
-    return
-
-
-@app.cell
-def _(df_bouts):
-    games_by_season = {season: df_bouts[df_bouts['season'] == season] for season in df_bouts['season'].unique()}
-    return (games_by_season,)
-
-
-@app.cell
-def _(games_by_season):
-    cols = ['date','home_team', 'away_team', 'home_score', 'away_score']
-    games_by_season["2021"][cols].head(50)
+def _(games):
+    cols = ['match_id', 'match_date','home_team', 'away_team', 'home_score', 'away_score']
+    games[49][cols].head()
     return (cols,)
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ## season level aggregation
-    """)
-    return
 
 
 @app.cell(hide_code=True)
@@ -222,22 +184,8 @@ def _(mo):
 
 
 @app.cell
-def _(df_bouts):
-    print(df_bouts.head())
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    #####  season level matrix
-    """)
-    return
-
-
-@app.cell
-def _(games_by_season, prcs, season_ids):
-    df = {season: prcs.process_games(games_by_season[season]) for season in season_ids}
+def _(competition_ids, games, prcs):
+    df = {competition_id: prcs.process_games(games[competition_id]) for competition_id in competition_ids}
     A, encoder_teams = ({}, {})
     for k, _v in df.items():
         A[k], encoder_teams[k] = prcs.df2matrix(_v, score_label='points', method='points')
@@ -288,24 +236,14 @@ def _(pd):
 
 @app.cell
 def _(bouts):
-    df_bouts = bouts.rename(columns={
-        'fencer_ID': 'home_team',
-        'opp_ID': 'away_team',
-        'fencer_score': 'home_score',
-        'opp_score': 'away_score'
-    })
-    return (df_bouts,)
-
-
-@app.cell
-def _(bouts):
     bouts.head()
     return
 
 
 @app.cell
-def _(bouts):
-    bouts.tournament_ID.unique()
+def _(pd):
+    competitions = pd.read_csv("Womens foil olympics/all_womens_foil_tournament_data_May_13_2021_cleaned.csv")
+    competitions.head()
     return
 
 
@@ -328,16 +266,7 @@ def _(mo):
 
 
 @app.cell
-def _(A, np):
-    print(A['2021'].shape)
-    print(A['2021'].sum())
-    print((A['2021'] > 0).sum())  # number of nonzero edges
-    print(np.allclose(A['2021'], A['2021'].T))  # symmetric? (shouldn't be, for directed wins)
-    return
-
-
-@app.cell
-def _(A, pd, sr):
+def _(A, competitionId2Name, pd, sr):
     model = {}
     scaled_ranks = {}
     stats = []
@@ -345,11 +274,11 @@ def _(A, pd, sr):
         model[k_1] = sr.SpringRank()
         model[k_1].fit(_v)
         scaled_ranks[k_1] = model[k_1].get_rescaled_ranks(0.75)
-        _d = [k_1, f"Season {k_1}", model[k_1].get_beta(), model[k_1].depth, model[k_1].n_levels, model[k_1].delta_beta]
+        _d = [k_1, competitionId2Name[k_1], model[k_1].get_beta(), model[k_1].depth, model[k_1].n_levels, model[k_1].delta_beta]
         stats.append(_d)
     df_stats = pd.DataFrame(stats, columns=['competition_id', 'competition_name', 'beta', 'depth', 'n_levels', 'delta_level'])
     df_stats
-    return model, scaled_ranks
+    return df_stats, model, scaled_ranks
 
 
 @app.cell(hide_code=True)
@@ -361,10 +290,10 @@ def _(mo):
 
 
 @app.cell
-def _(A, bt, np, tqdm):
+def _(A, bt, np):
     model_bt = {}
     scaled_ranks_bt = {}
-    for k_2, _v in tqdm(A.items(), desc="Seasons", total=len(A)):
+    for k_2, _v in A.items():
         model_bt[k_2] = bt.BradleyTerry()
         model_bt[k_2].fit(_v, method='em')
         scaled_ranks_bt[k_2] = np.exp(model_bt[k_2].ranks)
@@ -431,8 +360,8 @@ def _(viz):
 
 
 @app.cell
-def _(df_plot_dist):
-    sorted_ylabels = [f"Season {_c}" for _c in df_plot_dist['competition_id']]
+def _(competitionId2Name, df_plot_dist):
+    sorted_ylabels = [competitionId2Name[_c] for _c in df_plot_dist['competition_id']]
     return (sorted_ylabels,)
 
 
@@ -458,6 +387,7 @@ def _(
     adjust_text,
     algo,
     colors_1,
+    competition_ids,
     df_plot_dist,
     df_res,
     fig_label,
@@ -470,7 +400,6 @@ def _(
     np,
     outdir_fig,
     plt,
-    season_ids,
     sorted_ylabels,
     st,
     tl,
@@ -488,7 +417,7 @@ def _(
     '\nInidividual points\n'
     ylabels = []
     teams_to_display = []
-    for i, cid in enumerate(season_ids):
+    for i, cid in enumerate(competition_ids):
         _g = df_res[df_res.competition_id == cid]
         l = len(_g)
         x_data = np.array([_xs[i]] * l)
@@ -556,6 +485,7 @@ def _(df_points, df_res):
 @app.cell
 def _(
     colors_1,
+    competitionId2Name,
     df_tot,
     label_dict,
     lecture_id,
@@ -574,7 +504,7 @@ def _(
     for i_1, (n, _g) in enumerate(df_tot.groupby(by='competition_id')):
         _spearman_coef = spearmanr(_g[_x], _g[_y])[0]
         _pearson_coef = pearsonr(_g[_x], _g[_y])[0]
-        _msg = f'Season {n}, sp = {_spearman_coef:.2f} | pr = {_pearson_coef:.2f}'
+        _msg = f'{competitionId2Name[n]}, sp = {_spearman_coef:.2f} | pr = {_pearson_coef:.2f}'
         _ax.scatter(_g[_x], _g[_y], c=colors_1[i_1], label=_msg)
         if _plot_linear_regression == True:
             _m, _b = np.polyfit(list(_g[_x]), list(_g[_y]), 1)
@@ -592,7 +522,7 @@ def _(
 
 @app.cell
 def _(df_points_comp):
-    df_points_comp["2019"]
+    df_points_comp[49]
     return
 
 
@@ -608,7 +538,7 @@ def _(
     plt,
     spearmanr,
 ):
-    k_3 = "2019"
+    k_3 = 49
     _x = 'score_sr'
     _y = 'points_prg'
     _plot_linear_regression = True
@@ -636,7 +566,7 @@ def _(
 
 @app.cell
 def _(cols, df):
-    k_4 = ""
+    k_4 = 49
     ref_team_name = 'North Carolina Courage'
     _cond1 = df[k_4].home_team == ref_team_name
     _cond2 = df[k_4].away_team == ref_team_name
@@ -660,7 +590,7 @@ def _(
     tl,
     viz,
 ):
-    k_5 = "2019"
+    k_5 = 49
     delta_x = 0.2
     _q = 0.75
     _fig, _ax = plt.subplots(1, 1, figsize=(6, 6))
@@ -713,7 +643,7 @@ def _(np):
 
 @app.cell
 def _(A, get_H, model, np, prng):
-    k_6 = "2019"
+    k_6 = 49
     _beta = model[k_6].beta
     _H = get_H(model[k_6].ranks)
     _lambda_pois = np.exp(_beta * _H)
@@ -746,7 +676,7 @@ def _(mo):
 
 @app.cell
 def _(A_sim, SAMPLE, colormap, model, nodeId2Label, np, plt, prng, viz):
-    k_7 = "2019"
+    k_7 = 49
     _fig, _ax = plt.subplots(1, 1, figsize=(6, 6))
     _idx = prng.choice(np.arange(SAMPLE))
     viz.plot_score_network(A_sim[0], model[k_7].ranks, cm=colormap, ax=_ax, plot_labels=True, nodeId2Label=nodeId2Label[k_7], x_jit=0.05)
@@ -774,7 +704,7 @@ def _(mo):
 
 @app.cell
 def _(A, get_H, model, np, prng):
-    k_8 = "2015"
+    k_8 = 11
     _beta = model[k_8].beta
     _H = get_H(model[k_8].ranks)
     _lambda_pois = np.exp(_beta * _H)
@@ -916,19 +846,17 @@ def _(mo):
     return
 
 
-app._unparsable_cell(
-    r"""
+@app.cell
+def _(df_stats, np, pd, sr):
     _q = 0.75
     dataset = ['parakeet G1', 'parakeet G2', 'Asian elephants', 'Business', 'Computer Science', 'History', 'Village 1', 'Village 2']
     betas_S2 = np.array([2.7, 2.78, 2.33, 2.04, 2.23, 2.39, 1.98, 1.89])
-    depth_S2 = np.array([2.604, 1.879, 3.0, 2.125, 2.423, 2.234, 3.618, 3.7"2019"])
+    depth_S2 = np.array([2.604, 1.879, 3.0, 2.125, 2.423, 2.234, 3.618, 3.749])
     delta_level_S2 = np.array([np.log(_q / (1 - _q)) / (2 * _beta) for _beta in betas_S2])
     df_S2 = pd.DataFrame({'competition_id': [i + 100 for i in range(len(dataset))], 'competition_name': dataset, 'beta': betas_S2, 'depth': depth_S2, 'n_levels': sr.calculate_n_levels(depth_S2, betas_S2), 'delta_level': delta_level_S2})
     df_stats2 = pd.concat([df_stats, df_S2], axis=0).drop_duplicates()
     df_stats2
-    """,
-    name="_"
-)
+    return (df_stats2,)
 
 
 @app.cell
