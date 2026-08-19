@@ -1,0 +1,1117 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.23.10",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "aa8ed363c01af43a3cb39dfea260722d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"l5-rankings-from-pairwise-comparisons\">L5: rankings from pairwise comparisons</h1>\n<span class=\"paragraph\">Here we explore how to extract hidden rankings from pairwise comparisons, e.g. games between teams in sport.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "d81203f459c707c9eaa50cc0a4c9c494",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "6179446554fd6781560a6d658304f48f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "39d475e178c4601511a909fc174bd3d1",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "54d65055ac4262ba6740fc4bde56373a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "5de5cc6807dc73bb0e0cc3939b173fac",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "a2f9349dbb96a87d9507aaed1ab8b938",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "5b29a800f5fa164f7be60fbe75db2476",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "baa507be5d6787eb32c1cc848f1d207b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bgoz",
+      "code_hash": "db140c236e6b42e815a740df8c9ec885",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "20297c75f5091a61d801de0f74730131",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"0-download-code\">0. Download code</h1>\n<ul>\n<li><a href=\"https://github.com/LarremoreLab/SpringRank/blob/master/springrank/springrank.py\" rel=\"noopener noreferrer\" target=\"_blank\">SpringRank</a></li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "emfo",
+      "code_hash": "fa24836fcca49d1cbb42320d53a1e511",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"1-import-data\">1. Import data</h1>\n<span class=\"paragraph\"><strong>Source</strong>: download a dataset from <a href=\"https://github.com/statsbomb/open-data/tree/master\" rel=\"noopener noreferrer\" target=\"_blank\">StatsBomb open data</a>.</span>\n<span class=\"paragraph\">We will use the python package <a href=\"https://github.com/statsbomb/statsbombpy\" rel=\"noopener noreferrer\" target=\"_blank\"><code>statsbombpy</code></a> to process the raw data.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "f226eb1f45233ee606e997c8967eca67",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">We start by downloading matches from at least two different competitions, to be able to compare them</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "59c7534c1efddeb42cebc26758b78118",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"11-import-raw-data\">1.1 Import raw data</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "iLit",
+      "code_hash": "10566d4a4db959aed8b32312473582d8",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "C:\\Users\\bensa\\OneDrive\\Documents\\Important Docs\\Portfolio\\Fencing\\olympic fencing dataset\\Oly-Fencing-Networks\\.venv\\Lib\\site-packages\\statsbombpy\\api_client.py:21: NoAuthWarning: credentials were not supplied. open data access only\n  warnings.warn(\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "0d79014ff56426a2248fdb9012c17c1c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='ZHCJ-0' random-id='f710c311-a21f-81f9-fad9-a0c3aa5c769e'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;competition_id&#92;&quot;:9,&#92;&quot;season_id&#92;&quot;:281,&#92;&quot;country_name&#92;&quot;:&#92;&quot;Germany&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;1. Bundesliga&#92;&quot;,&#92;&quot;competition_gender&#92;&quot;:&#92;&quot;male&#92;&quot;,&#92;&quot;competition_youth&#92;&quot;:false,&#92;&quot;competition_international&#92;&quot;:false,&#92;&quot;season_name&#92;&quot;:&#92;&quot;2023/2024&#92;&quot;,&#92;&quot;match_updated&#92;&quot;:&#92;&quot;2024-09-28T20:46:38.893391&#92;&quot;,&#92;&quot;match_updated_360&#92;&quot;:&#92;&quot;2025-11-15T23:17:41.827093&#92;&quot;,&#92;&quot;match_available_360&#92;&quot;:&#92;&quot;2025-11-15T23:17:41.827093&#92;&quot;,&#92;&quot;match_available&#92;&quot;:&#92;&quot;2024-09-28T20:46:38.893391&#92;&quot;},{&#92;&quot;competition_id&#92;&quot;:9,&#92;&quot;season_id&#92;&quot;:27,&#92;&quot;country_name&#92;&quot;:&#92;&quot;Germany&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;1. Bundesliga&#92;&quot;,&#92;&quot;competition_gender&#92;&quot;:&#92;&quot;male&#92;&quot;,&#92;&quot;competition_youth&#92;&quot;:false,&#92;&quot;competition_international&#92;&quot;:false,&#92;&quot;season_name&#92;&quot;:&#92;&quot;2015/2016&#92;&quot;,&#92;&quot;match_updated&#92;&quot;:&#92;&quot;2024-05-19T11:11:14.192381&#92;&quot;,&#92;&quot;match_updated_360&#92;&quot;:NaN,&#92;&quot;match_available_360&#92;&quot;:NaN,&#92;&quot;match_available&#92;&quot;:&#92;&quot;2024-05-19T11:11:14.192381&#92;&quot;},{&#92;&quot;competition_id&#92;&quot;:1267,&#92;&quot;season_id&#92;&quot;:107,&#92;&quot;country_name&#92;&quot;:&#92;&quot;Africa&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;African Cup of Nations&#92;&quot;,&#92;&quot;competition_gender&#92;&quot;:&#92;&quot;male&#92;&quot;,&#92;&quot;competition_youth&#92;&quot;:false,&#92;&quot;competition_international&#92;&quot;:true,&#92;&quot;season_name&#92;&quot;:&#92;&quot;2023&#92;&quot;,&#92;&quot;match_updated&#92;&quot;:&#92;&quot;2026-05-12T21:18:08.827431&#92;&quot;,&#92;&quot;match_updated_360&#92;&quot;:&#92;&quot;2026-05-02T02:07:18.902396&#92;&quot;,&#92;&quot;match_available_360&#92;&quot;:&#92;&quot;2026-05-02T02:07:18.902396&#92;&quot;,&#92;&quot;match_available&#92;&quot;:&#92;&quot;2026-05-12T21:18:08.827431&#92;&quot;},{&#92;&quot;competition_id&#92;&quot;:16,&#92;&quot;season_id&#92;&quot;:4,&#92;&quot;country_name&#92;&quot;:&#92;&quot;Europe&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Champions League&#92;&quot;,&#92;&quot;competition_gender&#92;&quot;:&#92;&quot;male&#92;&quot;,&#92;&quot;competition_youth&#92;&quot;:false,&#92;&quot;competition_international&#92;&quot;:false,&#92;&quot;season_name&#92;&quot;:&#92;&quot;2018/2019&#92;&quot;,&#92;&quot;match_updated&#92;&quot;:&#92;&quot;2026-05-15T15:54:04.598614&#92;&quot;,&#92;&quot;match_updated_360&#92;&quot;:&#92;&quot;2021-06-13T16:17:31.694&#92;&quot;,&#92;&quot;match_available_360&#92;&quot;:NaN,&#92;&quot;match_available&#92;&quot;:&#92;&quot;2026-05-15T15:54:04.598614&#92;&quot;},{&#92;&quot;competition_id&#92;&quot;:16,&#92;&quot;season_id&#92;&quot;:1,&#92;&quot;country_name&#92;&quot;:&#92;&quot;Europe&#92;&quot;,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Champions League&#92;&quot;,&#92;&quot;competition_gender&#92;&quot;:&#92;&quot;male&#92;&quot;,&#92;&quot;competition_youth&#92;&quot;:false,&#92;&quot;competition_international&#92;&quot;:false,&#92;&quot;season_name&#92;&quot;:&#92;&quot;2017/2018&#92;&quot;,&#92;&quot;match_updated&#92;&quot;:&#92;&quot;2024-02-13T02:35:28.134882&#92;&quot;,&#92;&quot;match_updated_360&#92;&quot;:&#92;&quot;2021-06-13T16:17:31.694&#92;&quot;,&#92;&quot;match_available_360&#92;&quot;:NaN,&#92;&quot;match_available&#92;&quot;:&#92;&quot;2024-02-13T02:35:28.134882&#92;&quot;}]&quot;' data-total-rows='5' data-total-columns='12' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;competition_id&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;season_id&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;country_name&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;competition_name&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;competition_gender&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;competition_youth&quot;,[&quot;boolean&quot;,&quot;bool&quot;]],[&quot;competition_international&quot;,[&quot;boolean&quot;,&quot;bool&quot;]],[&quot;season_name&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;match_updated&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;match_updated_360&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;match_available_360&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;match_available&quot;,[&quot;string&quot;,&quot;str&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ROlb",
+      "code_hash": "85f2f35b5ec246cf146cd786dc39d668",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>&lt;StringArray&gt;\n[          &#x27;1. Bundesliga&#x27;,        &#x27;Champions League&#x27;,\n            &#x27;Copa del Rey&#x27;, &#x27;FA Women&#x27;s Super League&#x27;,\n       &#x27;Frauen Bundesliga&#x27;,     &#x27;Indian Super league&#x27;,\n                 &#x27;La Liga&#x27;,                  &#x27;Liga F&#x27;,\n        &#x27;Liga Profesional&#x27;,                 &#x27;Ligue 1&#x27;,\n     &#x27;Major League Soccer&#x27;,   &#x27;North American League&#x27;,\n                    &#x27;NWSL&#x27;,          &#x27;Premier League&#x27;,\n                 &#x27;Serie A&#x27;,           &#x27;Serie A Women&#x27;,\n      &#x27;UEFA Europa League&#x27;]\nLength: 17, dtype: str</pre>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "8e1c6f12ffbf45b2cedf39cfaa381f01",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "5738cb267c5a769d41d3a09898a9a67b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "C:\\Users\\bensa\\OneDrive\\Documents\\Important Docs\\Portfolio\\Fencing\\olympic fencing dataset\\Oly-Fencing-Networks\\.venv\\Lib\\site-packages\\statsbombpy\\api_client.py:21: NoAuthWarning: credentials were not supplied. open data access only\n  warnings.warn(\nC:\\Users\\bensa\\OneDrive\\Documents\\Important Docs\\Portfolio\\Fencing\\olympic fencing dataset\\Oly-Fencing-Networks\\.venv\\Lib\\site-packages\\statsbombpy\\api_client.py:21: NoAuthWarning: credentials were not supplied. open data access only\n  warnings.warn(\nC:\\Users\\bensa\\OneDrive\\Documents\\Important Docs\\Portfolio\\Fencing\\olympic fencing dataset\\Oly-Fencing-Networks\\.venv\\Lib\\site-packages\\statsbombpy\\api_client.py:21: NoAuthWarning: credentials were not supplied. open data access only\n  warnings.warn(\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "Vxnm",
+      "code_hash": "bb07c1d9a90a93703ad92797bfd9fede",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='Vxnm-0' random-id='ceec6b1f-3ef9-631c-a417-4b45016a7888'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;match_id&#92;&quot;:7476,&#92;&quot;match_date&#92;&quot;:&#92;&quot;2018-07-08&#92;&quot;,&#92;&quot;home_team&#92;&quot;:&#92;&quot;NJ/NY Gotham FC&#92;&quot;,&#92;&quot;away_team&#92;&quot;:&#92;&quot;Chicago Red Stars&#92;&quot;,&#92;&quot;home_score&#92;&quot;:1,&#92;&quot;away_score&#92;&quot;:3},{&#92;&quot;match_id&#92;&quot;:7482,&#92;&quot;match_date&#92;&quot;:&#92;&quot;2018-07-12&#92;&quot;,&#92;&quot;home_team&#92;&quot;:&#92;&quot;North Carolina Courage&#92;&quot;,&#92;&quot;away_team&#92;&quot;:&#92;&quot;Washington Spirit&#92;&quot;,&#92;&quot;home_score&#92;&quot;:2,&#92;&quot;away_score&#92;&quot;:0},{&#92;&quot;match_id&#92;&quot;:7494,&#92;&quot;match_date&#92;&quot;:&#92;&quot;2018-08-06&#92;&quot;,&#92;&quot;home_team&#92;&quot;:&#92;&quot;Houston Dash&#92;&quot;,&#92;&quot;away_team&#92;&quot;:&#92;&quot;Utah Royals&#92;&quot;,&#92;&quot;home_score&#92;&quot;:1,&#92;&quot;away_score&#92;&quot;:2},{&#92;&quot;match_id&#92;&quot;:7486,&#92;&quot;match_date&#92;&quot;:&#92;&quot;2018-07-16&#92;&quot;,&#92;&quot;home_team&#92;&quot;:&#92;&quot;Portland Thorns&#92;&quot;,&#92;&quot;away_team&#92;&quot;:&#92;&quot;Houston Dash&#92;&quot;,&#92;&quot;home_score&#92;&quot;:3,&#92;&quot;away_score&#92;&quot;:1},{&#92;&quot;match_id&#92;&quot;:7497,&#92;&quot;match_date&#92;&quot;:&#92;&quot;2018-08-11&#92;&quot;,&#92;&quot;home_team&#92;&quot;:&#92;&quot;Chicago Red Stars&#92;&quot;,&#92;&quot;away_team&#92;&quot;:&#92;&quot;North Carolina Courage&#92;&quot;,&#92;&quot;home_score&#92;&quot;:1,&#92;&quot;away_score&#92;&quot;:1}]&quot;' data-total-rows='5' data-total-columns='6' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;match_id&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;match_date&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;home_team&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;away_team&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;home_score&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;away_score&quot;,[&quot;integer&quot;,&quot;int64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "DnEU",
+      "code_hash": "a24cbc69fa36cc39f3590facc09aa41a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"12-process-into-a-matrix\">1.2 Process into a matrix</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ulZA",
+      "code_hash": "5ad9cebec6c6fc369cf6f7e368542a80",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "37 (12, 12)\n49 (9, 9)\n12 (20, 20)\n2 (20, 20)\n11 (20, 20)\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "ecfG",
+      "code_hash": "d0bb1489cbe7988417d194316b873d37",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Pvdt",
+      "code_hash": "1f3c613674ef668c8b3c43f7e75e5287",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZBYS",
+      "code_hash": "732be86a2c4648e4324eb04b5305e869",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"import-fencing-data\">import fencing data</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aLJB",
+      "code_hash": "198659e8c5ca9e608ac955ff92503c72",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "C:\\Users\\bensa\\AppData\\Local\\Temp\\marimo_33620\\__marimo__cell_aLJB_.py:2: DtypeWarning: Columns (0: Tableau Phase) have mixed types. Specify dtype option on import or set low_memory=False.\n  bouts_DE = pd.read_csv(\"CoC dataset/DEs.csv\")\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "nHfw",
+      "code_hash": "0953001063da757848bd51a9ac5d136b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='nHfw-0' random-id='5b0862fd-534c-0664-2fca-f29c2aa3532a'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;Season&#92;&quot;:&#92;&quot;2025-26&#92;&quot;,&#92;&quot;Event Date&#92;&quot;:&#92;&quot;2025-09-06&#92;&quot;,&#92;&quot;Event Name&#92;&quot;:&#92;&quot;FIE Satellite&#92;&quot;,&#92;&quot;City&#92;&quot;:&#92;&quot;Manama&#92;&quot;,&#92;&quot;Host Country&#92;&quot;:&#92;&quot;BRN&#92;&quot;,&#92;&quot;Age Category&#92;&quot;:&#92;&quot;Senior&#92;&quot;,&#92;&quot;Gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;Weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;Pool Number A&#92;&quot;:1,&#92;&quot;Fencer A&#92;&quot;:&#92;&quot;ABU OBID Celine&#92;&quot;,&#92;&quot;Country A&#92;&quot;:&#92;&quot;JOR&#92;&quot;,&#92;&quot;Score A&#92;&quot;:4.0,&#92;&quot;Pool Number B&#92;&quot;:1,&#92;&quot;Fencer B&#92;&quot;:&#92;&quot;AL FULAITI Ghzal&#92;&quot;,&#92;&quot;Country B&#92;&quot;:&#92;&quot;OMA&#92;&quot;,&#92;&quot;Score B&#92;&quot;:5.0,&#92;&quot;Winner&#92;&quot;:&#92;&quot;AL FULAITI Ghzal&#92;&quot;,&#92;&quot;Winner Country&#92;&quot;:&#92;&quot;OMA&#92;&quot;,&#92;&quot;Post-Pool Rank A&#92;&quot;:9.0,&#92;&quot;Post-Pool Rank B&#92;&quot;:14.0,&#92;&quot;Referee 1 Last&#92;&quot;:&#92;&quot;Alqattan&#92;&quot;,&#92;&quot;Referee 1 First&#92;&quot;:&#92;&quot;Mohammed&#92;&quot;,&#92;&quot;Referee 1 Country&#92;&quot;:&#92;&quot;BRN&#92;&quot;,&#92;&quot;Referee 2 Last&#92;&quot;:&#92;&quot;Maghayreh&#92;&quot;,&#92;&quot;Referee 2 First&#92;&quot;:&#92;&quot;Eyyad&#92;&quot;,&#92;&quot;Referee 2 Country&#92;&quot;:&#92;&quot;JOR&#92;&quot;,&#92;&quot;Bout Status&#92;&quot;:&#92;&quot;Fenced&#92;&quot;,&#92;&quot;Source URL&#92;&quot;:&#92;&quot;https://www.fencingtimelive.com/tournaments/eventSchedule/F2AE1D9C6752408DB75DDB808ACAD1DC#today&#92;&quot;},{&#92;&quot;Season&#92;&quot;:&#92;&quot;2025-26&#92;&quot;,&#92;&quot;Event Date&#92;&quot;:&#92;&quot;2025-09-06&#92;&quot;,&#92;&quot;Event Name&#92;&quot;:&#92;&quot;FIE Satellite&#92;&quot;,&#92;&quot;City&#92;&quot;:&#92;&quot;Manama&#92;&quot;,&#92;&quot;Host Country&#92;&quot;:&#92;&quot;BRN&#92;&quot;,&#92;&quot;Age Category&#92;&quot;:&#92;&quot;Senior&#92;&quot;,&#92;&quot;Gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;Weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;Pool Number A&#92;&quot;:1,&#92;&quot;Fencer A&#92;&quot;:&#92;&quot;ABU OBID Celine&#92;&quot;,&#92;&quot;Country A&#92;&quot;:&#92;&quot;JOR&#92;&quot;,&#92;&quot;Score A&#92;&quot;:3.0,&#92;&quot;Pool Number B&#92;&quot;:1,&#92;&quot;Fencer B&#92;&quot;:&#92;&quot;BLAZIC Dorja&#92;&quot;,&#92;&quot;Country B&#92;&quot;:&#92;&quot;CRO&#92;&quot;,&#92;&quot;Score B&#92;&quot;:5.0,&#92;&quot;Winner&#92;&quot;:&#92;&quot;BLAZIC Dorja&#92;&quot;,&#92;&quot;Winner Country&#92;&quot;:&#92;&quot;CRO&#92;&quot;,&#92;&quot;Post-Pool Rank A&#92;&quot;:9.0,&#92;&quot;Post-Pool Rank B&#92;&quot;:1.0,&#92;&quot;Referee 1 Last&#92;&quot;:&#92;&quot;Alqattan&#92;&quot;,&#92;&quot;Referee 1 First&#92;&quot;:&#92;&quot;Mohammed&#92;&quot;,&#92;&quot;Referee 1 Country&#92;&quot;:&#92;&quot;BRN&#92;&quot;,&#92;&quot;Referee 2 Last&#92;&quot;:&#92;&quot;Maghayreh&#92;&quot;,&#92;&quot;Referee 2 First&#92;&quot;:&#92;&quot;Eyyad&#92;&quot;,&#92;&quot;Referee 2 Country&#92;&quot;:&#92;&quot;JOR&#92;&quot;,&#92;&quot;Bout Status&#92;&quot;:&#92;&quot;Fenced&#92;&quot;,&#92;&quot;Source URL&#92;&quot;:&#92;&quot;https://www.fencingtimelive.com/tournaments/eventSchedule/F2AE1D9C6752408DB75DDB808ACAD1DC#today&#92;&quot;},{&#92;&quot;Season&#92;&quot;:&#92;&quot;2025-26&#92;&quot;,&#92;&quot;Event Date&#92;&quot;:&#92;&quot;2025-09-06&#92;&quot;,&#92;&quot;Event Name&#92;&quot;:&#92;&quot;FIE Satellite&#92;&quot;,&#92;&quot;City&#92;&quot;:&#92;&quot;Manama&#92;&quot;,&#92;&quot;Host Country&#92;&quot;:&#92;&quot;BRN&#92;&quot;,&#92;&quot;Age Category&#92;&quot;:&#92;&quot;Senior&#92;&quot;,&#92;&quot;Gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;Weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;Pool Number A&#92;&quot;:1,&#92;&quot;Fencer A&#92;&quot;:&#92;&quot;ABU OBID Celine&#92;&quot;,&#92;&quot;Country A&#92;&quot;:&#92;&quot;JOR&#92;&quot;,&#92;&quot;Score A&#92;&quot;:5.0,&#92;&quot;Pool Number B&#92;&quot;:1,&#92;&quot;Fencer B&#92;&quot;:&#92;&quot;ALMARRI Lameed&#92;&quot;,&#92;&quot;Country B&#92;&quot;:&#92;&quot;KSA&#92;&quot;,&#92;&quot;Score B&#92;&quot;:3.0,&#92;&quot;Winner&#92;&quot;:&#92;&quot;ABU OBID Celine&#92;&quot;,&#92;&quot;Winner Country&#92;&quot;:&#92;&quot;JOR&#92;&quot;,&#92;&quot;Post-Pool Rank A&#92;&quot;:9.0,&#92;&quot;Post-Pool Rank B&#92;&quot;:18.0,&#92;&quot;Referee 1 Last&#92;&quot;:&#92;&quot;Alqattan&#92;&quot;,&#92;&quot;Referee 1 First&#92;&quot;:&#92;&quot;Mohammed&#92;&quot;,&#92;&quot;Referee 1 Country&#92;&quot;:&#92;&quot;BRN&#92;&quot;,&#92;&quot;Referee 2 Last&#92;&quot;:&#92;&quot;Maghayreh&#92;&quot;,&#92;&quot;Referee 2 First&#92;&quot;:&#92;&quot;Eyyad&#92;&quot;,&#92;&quot;Referee 2 Country&#92;&quot;:&#92;&quot;JOR&#92;&quot;,&#92;&quot;Bout Status&#92;&quot;:&#92;&quot;Fenced&#92;&quot;,&#92;&quot;Source URL&#92;&quot;:&#92;&quot;https://www.fencingtimelive.com/tournaments/eventSchedule/F2AE1D9C6752408DB75DDB808ACAD1DC#today&#92;&quot;},{&#92;&quot;Season&#92;&quot;:&#92;&quot;2025-26&#92;&quot;,&#92;&quot;Event Date&#92;&quot;:&#92;&quot;2025-09-06&#92;&quot;,&#92;&quot;Event Name&#92;&quot;:&#92;&quot;FIE Satellite&#92;&quot;,&#92;&quot;City&#92;&quot;:&#92;&quot;Manama&#92;&quot;,&#92;&quot;Host Country&#92;&quot;:&#92;&quot;BRN&#92;&quot;,&#92;&quot;Age Category&#92;&quot;:&#92;&quot;Senior&#92;&quot;,&#92;&quot;Gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;Weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;Pool Number A&#92;&quot;:1,&#92;&quot;Fencer A&#92;&quot;:&#92;&quot;AL FULAITI Ghzal&#92;&quot;,&#92;&quot;Country A&#92;&quot;:&#92;&quot;OMA&#92;&quot;,&#92;&quot;Score A&#92;&quot;:0.0,&#92;&quot;Pool Number B&#92;&quot;:1,&#92;&quot;Fencer B&#92;&quot;:&#92;&quot;BLAZIC Dorja&#92;&quot;,&#92;&quot;Country B&#92;&quot;:&#92;&quot;CRO&#92;&quot;,&#92;&quot;Score B&#92;&quot;:5.0,&#92;&quot;Winner&#92;&quot;:&#92;&quot;BLAZIC Dorja&#92;&quot;,&#92;&quot;Winner Country&#92;&quot;:&#92;&quot;CRO&#92;&quot;,&#92;&quot;Post-Pool Rank A&#92;&quot;:14.0,&#92;&quot;Post-Pool Rank B&#92;&quot;:1.0,&#92;&quot;Referee 1 Last&#92;&quot;:&#92;&quot;Alqattan&#92;&quot;,&#92;&quot;Referee 1 First&#92;&quot;:&#92;&quot;Mohammed&#92;&quot;,&#92;&quot;Referee 1 Country&#92;&quot;:&#92;&quot;BRN&#92;&quot;,&#92;&quot;Referee 2 Last&#92;&quot;:&#92;&quot;Maghayreh&#92;&quot;,&#92;&quot;Referee 2 First&#92;&quot;:&#92;&quot;Eyyad&#92;&quot;,&#92;&quot;Referee 2 Country&#92;&quot;:&#92;&quot;JOR&#92;&quot;,&#92;&quot;Bout Status&#92;&quot;:&#92;&quot;Fenced&#92;&quot;,&#92;&quot;Source URL&#92;&quot;:&#92;&quot;https://www.fencingtimelive.com/tournaments/eventSchedule/F2AE1D9C6752408DB75DDB808ACAD1DC#today&#92;&quot;},{&#92;&quot;Season&#92;&quot;:&#92;&quot;2025-26&#92;&quot;,&#92;&quot;Event Date&#92;&quot;:&#92;&quot;2025-09-06&#92;&quot;,&#92;&quot;Event Name&#92;&quot;:&#92;&quot;FIE Satellite&#92;&quot;,&#92;&quot;City&#92;&quot;:&#92;&quot;Manama&#92;&quot;,&#92;&quot;Host Country&#92;&quot;:&#92;&quot;BRN&#92;&quot;,&#92;&quot;Age Category&#92;&quot;:&#92;&quot;Senior&#92;&quot;,&#92;&quot;Gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;Weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;Pool Number A&#92;&quot;:1,&#92;&quot;Fencer A&#92;&quot;:&#92;&quot;AL FULAITI Ghzal&#92;&quot;,&#92;&quot;Country A&#92;&quot;:&#92;&quot;OMA&#92;&quot;,&#92;&quot;Score A&#92;&quot;:1.0,&#92;&quot;Pool Number B&#92;&quot;:1,&#92;&quot;Fencer B&#92;&quot;:&#92;&quot;ALTAMIMI HAMDA&#92;&quot;,&#92;&quot;Country B&#92;&quot;:&#92;&quot;UAE&#92;&quot;,&#92;&quot;Score B&#92;&quot;:5.0,&#92;&quot;Winner&#92;&quot;:&#92;&quot;ALTAMIMI HAMDA&#92;&quot;,&#92;&quot;Winner Country&#92;&quot;:&#92;&quot;UAE&#92;&quot;,&#92;&quot;Post-Pool Rank A&#92;&quot;:14.0,&#92;&quot;Post-Pool Rank B&#92;&quot;:8.0,&#92;&quot;Referee 1 Last&#92;&quot;:&#92;&quot;Alqattan&#92;&quot;,&#92;&quot;Referee 1 First&#92;&quot;:&#92;&quot;Mohammed&#92;&quot;,&#92;&quot;Referee 1 Country&#92;&quot;:&#92;&quot;BRN&#92;&quot;,&#92;&quot;Referee 2 Last&#92;&quot;:&#92;&quot;Maghayreh&#92;&quot;,&#92;&quot;Referee 2 First&#92;&quot;:&#92;&quot;Eyyad&#92;&quot;,&#92;&quot;Referee 2 Country&#92;&quot;:&#92;&quot;JOR&#92;&quot;,&#92;&quot;Bout Status&#92;&quot;:&#92;&quot;Fenced&#92;&quot;,&#92;&quot;Source URL&#92;&quot;:&#92;&quot;https://www.fencingtimelive.com/tournaments/eventSchedule/F2AE1D9C6752408DB75DDB808ACAD1DC#today&#92;&quot;}]&quot;' data-total-rows='5' data-total-columns='28' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;Season&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Event Date&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Event Name&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;City&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Host Country&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Age Category&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Gender&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Weapon&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Pool Number A&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;Fencer A&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Country A&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Score A&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Pool Number B&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;Fencer B&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Country B&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Score B&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Winner&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Winner Country&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Post-Pool Rank A&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Post-Pool Rank B&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Referee 1 Last&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Referee 1 First&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Referee 1 Country&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Referee 2 Last&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Referee 2 First&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Referee 2 Country&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Bout Status&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Source URL&quot;,[&quot;string&quot;,&quot;str&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "xXTn",
+      "code_hash": "380be3460852962c27135ed6d2cd6e1f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='xXTn-0' random-id='62eae9f5-2afb-c545-26d7-8d72c3e57046'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;competition_ID&#92;&quot;:121,&#92;&quot;season&#92;&quot;:2021,&#92;&quot;name&#92;&quot;:&#92;&quot;Grand Prix&#92;&quot;,&#92;&quot;category&#92;&quot;:&#92;&quot;Senior&#92;&quot;,&#92;&quot;country&#92;&quot;:&#92;&quot;QATAR&#92;&quot;,&#92;&quot;start_date&#92;&quot;:&#92;&quot;26/03/2021&#92;&quot;,&#92;&quot;end_date&#92;&quot;:&#92;&quot;28/03/2021&#92;&quot;,&#92;&quot;weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;timezone&#92;&quot;:&#92;&quot;Asia/Qatar&#92;&quot;,&#92;&quot;url&#92;&quot;:&#92;&quot;https://fie.org/competitions/2021/121&#92;&quot;,&#92;&quot;unique_ID&#92;&quot;:&#92;&quot;2021-121&#92;&quot;,&#92;&quot;missing_results_flag&#92;&quot;:NaN},{&#92;&quot;competition_ID&#92;&quot;:41,&#92;&quot;season&#92;&quot;:2017,&#92;&quot;name&#92;&quot;:&#92;&quot;Tournoi international&#92;&quot;,&#92;&quot;category&#92;&quot;:&#92;&quot;Junior&#92;&quot;,&#92;&quot;country&#92;&quot;:&#92;&quot;GERMANY&#92;&quot;,&#92;&quot;start_date&#92;&quot;:&#92;&quot;28/10/2016&#92;&quot;,&#92;&quot;end_date&#92;&quot;:&#92;&quot;28/10/2016&#92;&quot;,&#92;&quot;weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;timezone&#92;&quot;:&#92;&quot;Europe/Berlin&#92;&quot;,&#92;&quot;url&#92;&quot;:&#92;&quot;https://fie.org/competitions/2017/41&#92;&quot;,&#92;&quot;unique_ID&#92;&quot;:&#92;&quot;2017-41&#92;&quot;,&#92;&quot;missing_results_flag&#92;&quot;:NaN},{&#92;&quot;competition_ID&#92;&quot;:800,&#92;&quot;season&#92;&quot;:2015,&#92;&quot;name&#92;&quot;:&#92;&quot;Championnats Panam&#92;&#92;u00e9ricains&#92;&quot;,&#92;&quot;category&#92;&quot;:&#92;&quot;Senior&#92;&quot;,&#92;&quot;country&#92;&quot;:&#92;&quot;CHILE&#92;&quot;,&#92;&quot;start_date&#92;&quot;:&#92;&quot;17/04/2015&#92;&quot;,&#92;&quot;end_date&#92;&quot;:&#92;&quot;26/04/2015&#92;&quot;,&#92;&quot;weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;timezone&#92;&quot;:&#92;&quot;America/Santiago&#92;&quot;,&#92;&quot;url&#92;&quot;:&#92;&quot;https://fie.org/competitions/2015/800&#92;&quot;,&#92;&quot;unique_ID&#92;&quot;:&#92;&quot;2015-800&#92;&quot;,&#92;&quot;missing_results_flag&#92;&quot;:NaN},{&#92;&quot;competition_ID&#92;&quot;:243,&#92;&quot;season&#92;&quot;:2019,&#92;&quot;name&#92;&quot;:&#92;&quot;Championnats du Monde&#92;&quot;,&#92;&quot;category&#92;&quot;:&#92;&quot;Senior&#92;&quot;,&#92;&quot;country&#92;&quot;:&#92;&quot;HUNGARY&#92;&quot;,&#92;&quot;start_date&#92;&quot;:&#92;&quot;16/07/2019&#92;&quot;,&#92;&quot;end_date&#92;&quot;:&#92;&quot;19/07/2019&#92;&quot;,&#92;&quot;weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;timezone&#92;&quot;:&#92;&quot;Europe/Budapest&#92;&quot;,&#92;&quot;url&#92;&quot;:&#92;&quot;https://fie.org/competitions/2019/243&#92;&quot;,&#92;&quot;unique_ID&#92;&quot;:&#92;&quot;2019-243&#92;&quot;,&#92;&quot;missing_results_flag&#92;&quot;:NaN},{&#92;&quot;competition_ID&#92;&quot;:237,&#92;&quot;season&#92;&quot;:2016,&#92;&quot;name&#92;&quot;:&#92;&quot;Championnats du monde juniors-cadets&#92;&quot;,&#92;&quot;category&#92;&quot;:&#92;&quot;Cadet&#92;&quot;,&#92;&quot;country&#92;&quot;:&#92;&quot;FRANCE&#92;&quot;,&#92;&quot;start_date&#92;&quot;:&#92;&quot;01/04/2016&#92;&quot;,&#92;&quot;end_date&#92;&quot;:&#92;&quot;01/04/2016&#92;&quot;,&#92;&quot;weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;timezone&#92;&quot;:&#92;&quot;Europe/Paris&#92;&quot;,&#92;&quot;url&#92;&quot;:&#92;&quot;https://fie.org/competitions/2016/237&#92;&quot;,&#92;&quot;unique_ID&#92;&quot;:&#92;&quot;2016-237&#92;&quot;,&#92;&quot;missing_results_flag&#92;&quot;:NaN},{&#92;&quot;competition_ID&#92;&quot;:225,&#92;&quot;season&#92;&quot;:2021,&#92;&quot;name&#92;&quot;:&#92;&quot;Championnats du monde juniors-cadets&#92;&quot;,&#92;&quot;category&#92;&quot;:&#92;&quot;Junior&#92;&quot;,&#92;&quot;country&#92;&quot;:&#92;&quot;EGYPT&#92;&quot;,&#92;&quot;start_date&#92;&quot;:&#92;&quot;06/04/2021&#92;&quot;,&#92;&quot;end_date&#92;&quot;:&#92;&quot;06/04/2021&#92;&quot;,&#92;&quot;weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;timezone&#92;&quot;:&#92;&quot;Africa/Cairo&#92;&quot;,&#92;&quot;url&#92;&quot;:&#92;&quot;https://fie.org/competitions/2021/225&#92;&quot;,&#92;&quot;unique_ID&#92;&quot;:&#92;&quot;2021-225&#92;&quot;,&#92;&quot;missing_results_flag&#92;&quot;:NaN},{&#92;&quot;competition_ID&#92;&quot;:586,&#92;&quot;season&#92;&quot;:2018,&#92;&quot;name&#92;&quot;:&#92;&quot;Championnats d&#x27;Afrique&#92;&quot;,&#92;&quot;category&#92;&quot;:&#92;&quot;Senior&#92;&quot;,&#92;&quot;country&#92;&quot;:&#92;&quot;TUNISIA&#92;&quot;,&#92;&quot;start_date&#92;&quot;:&#92;&quot;07/06/2018&#92;&quot;,&#92;&quot;end_date&#92;&quot;:&#92;&quot;07/06/2018&#92;&quot;,&#92;&quot;weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;timezone&#92;&quot;:&#92;&quot;Africa/Tunis&#92;&quot;,&#92;&quot;url&#92;&quot;:&#92;&quot;https://fie.org/competitions/2018/586&#92;&quot;,&#92;&quot;unique_ID&#92;&quot;:&#92;&quot;2018-586&#92;&quot;,&#92;&quot;missing_results_flag&#92;&quot;:NaN},{&#92;&quot;competition_ID&#92;&quot;:1061,&#92;&quot;season&#92;&quot;:2021,&#92;&quot;name&#92;&quot;:&#92;&quot;Championnats de qualification - Afrique&#92;&quot;,&#92;&quot;category&#92;&quot;:&#92;&quot;Senior&#92;&quot;,&#92;&quot;country&#92;&quot;:&#92;&quot;EGYPT&#92;&quot;,&#92;&quot;start_date&#92;&quot;:&#92;&quot;23/04/2021&#92;&quot;,&#92;&quot;end_date&#92;&quot;:&#92;&quot;23/04/2021&#92;&quot;,&#92;&quot;weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;timezone&#92;&quot;:&#92;&quot;Africa/Cairo&#92;&quot;,&#92;&quot;url&#92;&quot;:&#92;&quot;https://fie.org/competitions/2021/1061&#92;&quot;,&#92;&quot;unique_ID&#92;&quot;:&#92;&quot;2021-1061&#92;&quot;,&#92;&quot;missing_results_flag&#92;&quot;:NaN},{&#92;&quot;competition_ID&#92;&quot;:1281,&#92;&quot;season&#92;&quot;:2015,&#92;&quot;name&#92;&quot;:&#92;&quot;Tournoi satellite fleuret f&#92;&#92;u00e9minin&#92;&quot;,&#92;&quot;category&#92;&quot;:&#92;&quot;Senior&#92;&quot;,&#92;&quot;country&#92;&quot;:&#92;&quot;DENMARK&#92;&quot;,&#92;&quot;start_date&#92;&quot;:&#92;&quot;10/05/2015&#92;&quot;,&#92;&quot;end_date&#92;&quot;:&#92;&quot;10/05/2015&#92;&quot;,&#92;&quot;weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;timezone&#92;&quot;:&#92;&quot;Europe/Copenhagen&#92;&quot;,&#92;&quot;url&#92;&quot;:&#92;&quot;https://fie.org/competitions/2015/1281&#92;&quot;,&#92;&quot;unique_ID&#92;&quot;:&#92;&quot;2015-1281&#92;&quot;,&#92;&quot;missing_results_flag&#92;&quot;:NaN},{&#92;&quot;competition_ID&#92;&quot;:1230,&#92;&quot;season&#92;&quot;:2018,&#92;&quot;name&#92;&quot;:&#92;&quot;Tournoi satellite&#92;&quot;,&#92;&quot;category&#92;&quot;:&#92;&quot;Senior&#92;&quot;,&#92;&quot;country&#92;&quot;:&#92;&quot;SPAIN&#92;&quot;,&#92;&quot;start_date&#92;&quot;:&#92;&quot;24/02/2018&#92;&quot;,&#92;&quot;end_date&#92;&quot;:&#92;&quot;25/02/2018&#92;&quot;,&#92;&quot;weapon&#92;&quot;:&#92;&quot;Foil&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;Womens&#92;&quot;,&#92;&quot;timezone&#92;&quot;:&#92;&quot;Europe/Madrid&#92;&quot;,&#92;&quot;url&#92;&quot;:&#92;&quot;https://fie.org/competitions/2018/1230&#92;&quot;,&#92;&quot;unique_ID&#92;&quot;:&#92;&quot;2018-1230&#92;&quot;,&#92;&quot;missing_results_flag&#92;&quot;:NaN}]&quot;' data-total-rows='50' data-total-columns='13' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;competition_ID&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;season&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;name&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;category&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;country&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;start_date&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;end_date&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;weapon&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;gender&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;timezone&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;url&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;unique_ID&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;missing_results_flag&quot;,[&quot;number&quot;,&quot;float64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='true' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "BNSD",
+      "code_hash": "2ac33beea789b8c0cbfc6b188cb3835a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Eclv",
+      "code_hash": "d1ec58246bd0801b0ad4541838a22065",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "UxII",
+      "code_hash": "455818770ddfd44451a3b98d543686ce",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='UxII-0' random-id='ed5890e8-4f04-ad02-a333-27264589a522'><marimo-dropdown data-initial-value='[&quot;Weapon&quot;]' data-label='&quot;&#92;u003cspan class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&#92;u003e&#92;u003cspan class=&#92;&quot;paragraph&#92;&quot;&#92;u003eGroup/Compare Leagues By:&#92;u003c/span&#92;u003e&#92;u003c/span&#92;u003e&quot;' data-options='[&quot;Weapon&quot;,&quot;Age Category&quot;,&quot;Gender&quot;,&quot;Season&quot;,&quot;Host Country&quot;]' data-allow-select-none='false' data-searchable='false' data-full-width='false' data-disabled='false'></marimo-dropdown></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ADds",
+      "code_hash": "19277620e53d9cda02530e9276f718d7",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "grDm",
+      "code_hash": "94b721ed63820a9a545077617a80128d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<div style='display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 0.5rem'><span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"1-depth-of-competition-grouped-by-age-category\">1. Depth of Competition (Grouped by Age Category)</h3></span><marimo-ui-element object-id='grDm-0' random-id='39689f5b-8889-bbd7-ea43-78e2afe4e45b'><marimo-table data-initial-value='[]' data-label='&quot;&#92;u003cspan class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&#92;u003e&#92;u003cspan class=&#92;&quot;paragraph&#92;&quot;&#92;u003eLeague Depth Summary&#92;u003c/span&#92;u003e&#92;u003c/span&#92;u003e&quot;' data-data='&quot;[{&#92;&quot;_marimo_row_id&#92;&quot;:0,&#92;&quot;League&#92;&quot;:&#92;&quot;Cadet&#92;&quot;,&#92;&quot;Fencers Count&#92;&quot;:1729,&#92;&quot;Bouts Count&#92;&quot;:8694,&#92;&quot;Beta (Predictability)&#92;&quot;:2.004743071788205,&#92;&quot;Depth&#92;&quot;:3.7703327166353953,&#92;&quot;Number of Levels&#92;&quot;:13.760174485531618},{&#92;&quot;_marimo_row_id&#92;&quot;:1,&#92;&quot;League&#92;&quot;:&#92;&quot;Junior&#92;&quot;,&#92;&quot;Fencers Count&#92;&quot;:3823,&#92;&quot;Bouts Count&#92;&quot;:31217,&#92;&quot;Beta (Predictability)&#92;&quot;:1.6822436744516955,&#92;&quot;Depth&#92;&quot;:4.157362147652673,&#92;&quot;Number of Levels&#92;&quot;:12.73187319572468},{&#92;&quot;_marimo_row_id&#92;&quot;:2,&#92;&quot;League&#92;&quot;:&#92;&quot;Senior&#92;&quot;,&#92;&quot;Fencers Count&#92;&quot;:5301,&#92;&quot;Bouts Count&#92;&quot;:56008,&#92;&quot;Beta (Predictability)&#92;&quot;:1.5371977893451905,&#92;&quot;Depth&#92;&quot;:4.226962167347931,&#92;&quot;Number of Levels&#92;&quot;:11.828880791367043}]&quot;' data-total-rows='3' data-total-columns='6' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;League&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;Fencers Count&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;Bouts Count&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;Beta (Predictability)&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Depth&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Number of Levels&quot;,[&quot;number&quot;,&quot;float64&quot;]]]' data-selection='&quot;multi&quot;' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='true' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element><span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"2-search-fencer-strengths\">2. Search Fencer Strengths</h3></span><marimo-ui-element object-id='grDm-1' random-id='09a72ff4-455e-efeb-9484-4c10907d4d87'><marimo-table data-initial-value='[]' data-label='&quot;&#92;u003cspan class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&#92;u003e&#92;u003cspan class=&#92;&quot;paragraph&#92;&quot;&#92;u003eIndividual Fencer Rankings&#92;u003c/span&#92;u003e&#92;u003c/span&#92;u003e&quot;' data-data='&quot;[{&#92;&quot;&#92;&quot;:4289,&#92;&quot;_marimo_row_id&#92;&quot;:0,&#92;&quot;Fencer&#92;&quot;:&#92;&quot;PAN Qimiao&#92;&quot;,&#92;&quot;League&#92;&quot;:&#92;&quot;Junior&#92;&quot;,&#92;&quot;SpringRank_Score&#92;&quot;:2.2469221665410326},{&#92;&quot;&#92;&quot;:1155,&#92;&quot;_marimo_row_id&#92;&quot;:1,&#92;&quot;Fencer&#92;&quot;:&#92;&quot;PAN Qimiao&#92;&quot;,&#92;&quot;League&#92;&quot;:&#92;&quot;Cadet&#92;&quot;,&#92;&quot;SpringRank_Score&#92;&quot;:2.0022390704202175},{&#92;&quot;&#92;&quot;:4033,&#92;&quot;_marimo_row_id&#92;&quot;:2,&#92;&quot;Fencer&#92;&quot;:&#92;&quot;MIKHAILOVA Aleksandra&#92;&quot;,&#92;&quot;League&#92;&quot;:&#92;&quot;Junior&#92;&quot;,&#92;&quot;SpringRank_Score&#92;&quot;:1.9881661298347333},{&#92;&quot;&#92;&quot;:2599,&#92;&quot;_marimo_row_id&#92;&quot;:3,&#92;&quot;Fencer&#92;&quot;:&#92;&quot;DOMONKOS Emese&#92;&quot;,&#92;&quot;League&#92;&quot;:&#92;&quot;Junior&#92;&quot;,&#92;&quot;SpringRank_Score&#92;&quot;:1.9045795460461796},{&#92;&quot;&#92;&quot;:4100,&#92;&quot;_marimo_row_id&#92;&quot;:4,&#92;&quot;Fencer&#92;&quot;:&#92;&quot;MORRILL William&#92;&quot;,&#92;&quot;League&#92;&quot;:&#92;&quot;Junior&#92;&quot;,&#92;&quot;SpringRank_Score&#92;&quot;:1.847519127744617},{&#92;&quot;&#92;&quot;:4954,&#92;&quot;_marimo_row_id&#92;&quot;:5,&#92;&quot;Fencer&#92;&quot;:&#92;&quot;TALLADA Karina&#92;&quot;,&#92;&quot;League&#92;&quot;:&#92;&quot;Junior&#92;&quot;,&#92;&quot;SpringRank_Score&#92;&quot;:1.8299785754953903},{&#92;&quot;&#92;&quot;:1977,&#92;&quot;_marimo_row_id&#92;&quot;:6,&#92;&quot;Fencer&#92;&quot;:&#92;&quot;ASTOLFI Flavia&#92;&quot;,&#92;&quot;League&#92;&quot;:&#92;&quot;Junior&#92;&quot;,&#92;&quot;SpringRank_Score&#92;&quot;:1.7833947999832112},{&#92;&quot;&#92;&quot;:3000,&#92;&quot;_marimo_row_id&#92;&quot;:7,&#92;&quot;Fencer&#92;&quot;:&#92;&quot;GUVEN Coco&#92;&quot;,&#92;&quot;League&#92;&quot;:&#92;&quot;Junior&#92;&quot;,&#92;&quot;SpringRank_Score&#92;&quot;:1.7567917600815577},{&#92;&quot;&#92;&quot;:9696,&#92;&quot;_marimo_row_id&#92;&quot;:8,&#92;&quot;Fencer&#92;&quot;:&#92;&quot;SANTUCCIO Alberta&#92;&quot;,&#92;&quot;League&#92;&quot;:&#92;&quot;Senior&#92;&quot;,&#92;&quot;SpringRank_Score&#92;&quot;:1.7454479072790745},{&#92;&quot;&#92;&quot;:3813,&#92;&quot;_marimo_row_id&#92;&quot;:9,&#92;&quot;Fencer&#92;&quot;:&#92;&quot;LIU Sophie&#92;&quot;,&#92;&quot;League&#92;&quot;:&#92;&quot;Junior&#92;&quot;,&#92;&quot;SpringRank_Score&#92;&quot;:1.7278795586078612}]&quot;' data-total-rows='10853' data-total-columns='3' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;Fencer&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;League&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;SpringRank_Score&quot;,[&quot;number&quot;,&quot;float64&quot;]]]' data-selection='&quot;multi&quot;' data-show-filters='true' data-show-download='true' data-show-column-summaries='true' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[[&quot;&quot;,[&quot;integer&quot;,&quot;int64&quot;]]]' data-hidden-columns='[]' data-has-stable-row-id='true' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element></div>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "AjVT",
+      "code_hash": "14f5353467febe2847a24fd6a2b6a235",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"2-run-ranking-models\">2. Run ranking models</h1>\n<span class=\"paragraph\">We can proceed by learning scores from the outcomes of matches</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "pHFh",
+      "code_hash": "1b7be81638be840c3b01d003d935f535",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"21-springrank\">2.1 SpringRank</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "NCOB",
+      "code_hash": "a4a2fade0532eb3d76dc78e135f68dfe",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='NCOB-0' random-id='015282c8-392f-3fdd-5b1b-f287441066a1'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;competition_id&#92;&quot;:37,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;FA Women&#x27;s Super League&#92;&quot;,&#92;&quot;beta&#92;&quot;:1.3156282176004783,&#92;&quot;depth&#92;&quot;:1.230862514426076,&#92;&quot;n_levels&#92;&quot;:2.9480053567011,&#92;&quot;delta_level&#92;&quot;:0.41752383917085056},{&#92;&quot;competition_id&#92;&quot;:49,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;NWSL&#92;&quot;,&#92;&quot;beta&#92;&quot;:1.6003465834325683,&#92;&quot;depth&#92;&quot;:1.257741926266171,&#92;&quot;n_levels&#92;&quot;:3.6643008917735433,&#92;&quot;delta_level&#92;&quot;:0.3432419889670732},{&#92;&quot;competition_id&#92;&quot;:12,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Serie A&#92;&quot;,&#92;&quot;beta&#92;&quot;:0.959300375690428,&#92;&quot;depth&#92;&quot;:1.0525309159158718,&#92;&quot;n_levels&#92;&quot;:1.8381249026223372,&#92;&quot;delta_level&#92;&quot;:0.5726112052637403},{&#92;&quot;competition_id&#92;&quot;:2,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Premier League&#92;&quot;,&#92;&quot;beta&#92;&quot;:0.9589639619006117,&#92;&quot;depth&#92;&quot;:1.1987286445982,&#92;&quot;n_levels&#92;&quot;:2.0927083778778206,&#92;&quot;delta_level&#92;&quot;:0.5728120827870962},{&#92;&quot;competition_id&#92;&quot;:11,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;La Liga&#92;&quot;,&#92;&quot;beta&#92;&quot;:0.9188242862322676,&#92;&quot;depth&#92;&quot;:1.000208305806224,&#92;&quot;n_levels&#92;&quot;:1.6730482484956504,&#92;&quot;delta_level&#92;&quot;:0.597835900253073}]&quot;' data-total-rows='5' data-total-columns='6' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;competition_id&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;competition_name&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;beta&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;depth&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;n_levels&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;delta_level&quot;,[&quot;number&quot;,&quot;float64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aqbW",
+      "code_hash": "6d90f46a435374c1f4ad4a529e44c6e4",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"22-bradley-terry-model\">2.2 Bradley-Terry model</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TRpd",
+      "code_hash": "b64438c56585ce3b3332f5011021f10f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "\rEM fit:   0%|                                                                                  | 0/100 [00:00<?, ?it/s]\rEM fit: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 100/100 [00:00<?, ?it/s]\n\rEM fit:   0%|                                                                                  | 0/100 [00:00<?, ?it/s]\rEM fit: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 100/100 [00:00<00:00, 8390.12it/s]\n\rEM fit:   0%|                                                                                  | 0/100 [00:00<?, ?it/s]\rEM fit: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 100/100 [00:00<00:00, 20400.31it/s]\n\rEM fit:   0%|                                                                                  | 0/100 [00:00<?, ?it/s]\rEM fit: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 100/100 [00:00<00:00, 25010.76it/s]\n\rEM fit:   0%|                                                                                  | 0/100 [00:00<?, ?it/s]\rEM fit: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 100/100 [00:00<00:00, 20002.40it/s]\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "TXez",
+      "code_hash": "f9453106591c5c30c03d19dfda04a9ff",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "dNNg",
+      "code_hash": "3cffd8f43accb1c0077f57af6b76fb6d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "yCnT",
+      "code_hash": "b73ed277a71def331ae949a206ff398c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Let's get aggregate statistics to characterize the distributions per league</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "wlCL",
+      "code_hash": "2b3248ac3d34250055cbddc444d2dcfb",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='wlCL-0' random-id='c82915f0-2acf-a24d-d07f-22cc00a3f704'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;&#92;&quot;:3,&#92;&quot;competition_id&#92;&quot;:37,&#92;&quot;count&#92;&quot;:12.0,&#92;&quot;mean&#92;&quot;:-1.850371707708594e-17,&#92;&quot;std&#92;&quot;:1.0995066169783079,&#92;&quot;min&#92;&quot;:-1.2324961872780358,&#92;&quot;25%&#92;&quot;:-0.9503664391053396,&#92;&quot;50%&#92;&quot;:-0.32034596627155754,&#92;&quot;75%&#92;&quot;:1.018720089847996,&#92;&quot;max&#92;&quot;:1.7155091694230644},{&#92;&quot;&#92;&quot;:4,&#92;&quot;competition_id&#92;&quot;:49,&#92;&quot;count&#92;&quot;:9.0,&#92;&quot;mean&#92;&quot;:1.2335811384723962e-16,&#92;&quot;std&#92;&quot;:1.4098639761525522,&#92;&quot;min&#92;&quot;:-1.9846699015858633,&#92;&quot;25%&#92;&quot;:-0.6606268255251151,&#92;&quot;50%&#92;&quot;:0.010657691235422713,&#92;&quot;75%&#92;&quot;:1.2955119445627827,&#92;&quot;max&#92;&quot;:1.67963099018768},{&#92;&quot;&#92;&quot;:2,&#92;&quot;competition_id&#92;&quot;:12,&#92;&quot;count&#92;&quot;:20.0,&#92;&quot;mean&#92;&quot;:3.053113317719181e-17,&#92;&quot;std&#92;&quot;:0.5320195790529406,&#92;&quot;min&#92;&quot;:-0.7481029979127606,&#92;&quot;25%&#92;&quot;:-0.39993797342869986,&#92;&quot;50%&#92;&quot;:-0.18416439035531704,&#92;&quot;75%&#92;&quot;:0.37413660382219927,&#92;&quot;max&#92;&quot;:1.0900219047095767},{&#92;&quot;&#92;&quot;:0,&#92;&quot;competition_id&#92;&quot;:2,&#92;&quot;count&#92;&quot;:20.0,&#92;&quot;mean&#92;&quot;:1.9428902930940238e-17,&#92;&quot;std&#92;&quot;:0.5018854615413346,&#92;&quot;min&#92;&quot;:-1.127322425101708,&#92;&quot;25%&#92;&quot;:-0.3324598410721517,&#92;&quot;50%&#92;&quot;:-0.07957772290096427,&#92;&quot;75%&#92;&quot;:0.4081285633408506,&#92;&quot;max&#92;&quot;:0.9653859527761126},{&#92;&quot;&#92;&quot;:1,&#92;&quot;competition_id&#92;&quot;:11,&#92;&quot;count&#92;&quot;:20.0,&#92;&quot;mean&#92;&quot;:0.0,&#92;&quot;std&#92;&quot;:0.5028504181418187,&#92;&quot;min&#92;&quot;:-0.6161499151231784,&#92;&quot;25%&#92;&quot;:-0.3318146122418751,&#92;&quot;50%&#92;&quot;:-0.18843630956441,&#92;&quot;75%&#92;&quot;:0.2505765231912717,&#92;&quot;max&#92;&quot;:1.0568983333724722}]&quot;' data-total-rows='5' data-total-columns='9' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;competition_id&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;count&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;mean&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;std&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;min&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;25%&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;50%&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;75%&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;max&quot;,[&quot;number&quot;,&quot;float64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[[&quot;&quot;,[&quot;integer&quot;,&quot;int64&quot;]]]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "kqZH",
+      "code_hash": "5dc5fb137b8ae5a4041e38d229df4b34",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"3-analyze-results\">3. Analyze results</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "wAgl",
+      "code_hash": "f7782ea77b31a4952ff5b164109776e8",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "rEll",
+      "code_hash": "319b73b90a503d47ab09ee68aa4ef9d2",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "dGlV",
+      "code_hash": "db5e7d166836e19e42f9d883d6f43e4f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SdmI",
+      "code_hash": "6a78e3b3ebae9283ad828c74dbcf18e6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Plot score distribution over different leagues</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lgWD",
+      "code_hash": "6b996290a91addddc23652c9582fa7d5",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "findfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\nfindfont: Font family 'PT Sans' not found.\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "yOPj",
+      "code_hash": "7a27f3e0c89af654b0a6c44b90d05bf1",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"31-how-is-this-related-to-the-actual-points-attained-by-each-team\">3.1 How is this related to the actual points attained by each team?</h2>\n<span class=\"paragraph\">Let's merge datasets of learned scores and official league standings</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "fwwy",
+      "code_hash": "54e73ea6939ed5fa96837aaae69c3d7a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='fwwy-0' random-id='d08d7a09-259b-e269-eaba-8085b1fdd9c2'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;node_id&#92;&quot;:5,&#92;&quot;node_label&#92;&quot;:&#92;&quot;Chelsea FCW&#92;&quot;,&#92;&quot;score_sr&#92;&quot;:1.7155091694230644,&#92;&quot;competition_id&#92;&quot;:37,&#92;&quot;score_bt&#92;&quot;:0.33896796359153214,&#92;&quot;points&#92;&quot;:57,&#92;&quot;n_matches&#92;&quot;:22,&#92;&quot;points_prg&#92;&quot;:2.59},{&#92;&quot;node_id&#92;&quot;:7,&#92;&quot;node_label&#92;&quot;:&#92;&quot;Manchester City WFC&#92;&quot;,&#92;&quot;score_sr&#92;&quot;:1.6604520226764063,&#92;&quot;competition_id&#92;&quot;:37,&#92;&quot;score_bt&#92;&quot;:0.293856725173253,&#92;&quot;points&#92;&quot;:55,&#92;&quot;n_matches&#92;&quot;:22,&#92;&quot;points_prg&#92;&quot;:2.5},{&#92;&quot;node_id&#92;&quot;:2,&#92;&quot;node_label&#92;&quot;:&#92;&quot;Barcelona&#92;&quot;,&#92;&quot;score_sr&#92;&quot;:1.041403100652661,&#92;&quot;competition_id&#92;&quot;:11,&#92;&quot;score_bt&#92;&quot;:0.16326016767348273,&#92;&quot;points&#92;&quot;:91,&#92;&quot;n_matches&#92;&quot;:38,&#92;&quot;points_prg&#92;&quot;:2.39},{&#92;&quot;node_id&#92;&quot;:12,&#92;&quot;node_label&#92;&quot;:&#92;&quot;Juventus&#92;&quot;,&#92;&quot;score_sr&#92;&quot;:1.0900219047095767,&#92;&quot;competition_id&#92;&quot;:12,&#92;&quot;score_bt&#92;&quot;:0.17029141812678558,&#92;&quot;points&#92;&quot;:91,&#92;&quot;n_matches&#92;&quot;:38,&#92;&quot;points_prg&#92;&quot;:2.39},{&#92;&quot;node_id&#92;&quot;:3,&#92;&quot;node_label&#92;&quot;:&#92;&quot;North Carolina Courage&#92;&quot;,&#92;&quot;score_sr&#92;&quot;:1.5742555605770459,&#92;&quot;competition_id&#92;&quot;:49,&#92;&quot;score_bt&#92;&quot;:0.345616955872887,&#92;&quot;points&#92;&quot;:31,&#92;&quot;n_matches&#92;&quot;:13,&#92;&quot;points_prg&#92;&quot;:2.38}]&quot;' data-total-rows='5' data-total-columns='8' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;node_id&quot;,[&quot;integer&quot;,&quot;int32&quot;]],[&quot;node_label&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;score_sr&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;competition_id&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;score_bt&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;points&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;n_matches&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;points_prg&quot;,[&quot;number&quot;,&quot;float64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "LJZf",
+      "code_hash": "9e52cda752fc548be4934bafe5e91560",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "urSm",
+      "code_hash": "5030f0ed45bead2622cb2a7d56958665",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='urSm-0' random-id='28183faf-4723-e0e4-ca52-b22acbf4720e'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;node_label&#92;&quot;:&#92;&quot;North Carolina Courage&#92;&quot;,&#92;&quot;points&#92;&quot;:31,&#92;&quot;n_matches&#92;&quot;:13,&#92;&quot;points_prg&#92;&quot;:2.38,&#92;&quot;competition_id&#92;&quot;:49},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Seattle Reign&#92;&quot;,&#92;&quot;points&#92;&quot;:16,&#92;&quot;n_matches&#92;&quot;:7,&#92;&quot;points_prg&#92;&quot;:2.29,&#92;&quot;competition_id&#92;&quot;:49},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Chicago Red Stars&#92;&quot;,&#92;&quot;points&#92;&quot;:14,&#92;&quot;n_matches&#92;&quot;:7,&#92;&quot;points_prg&#92;&quot;:2.0,&#92;&quot;competition_id&#92;&quot;:49},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Utah Royals&#92;&quot;,&#92;&quot;points&#92;&quot;:16,&#92;&quot;n_matches&#92;&quot;:9,&#92;&quot;points_prg&#92;&quot;:1.78,&#92;&quot;competition_id&#92;&quot;:49},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Portland Thorns&#92;&quot;,&#92;&quot;points&#92;&quot;:12,&#92;&quot;n_matches&#92;&quot;:7,&#92;&quot;points_prg&#92;&quot;:1.71,&#92;&quot;competition_id&#92;&quot;:49},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Orlando Pride&#92;&quot;,&#92;&quot;points&#92;&quot;:8,&#92;&quot;n_matches&#92;&quot;:8,&#92;&quot;points_prg&#92;&quot;:1.0,&#92;&quot;competition_id&#92;&quot;:49},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Houston Dash&#92;&quot;,&#92;&quot;points&#92;&quot;:4,&#92;&quot;n_matches&#92;&quot;:5,&#92;&quot;points_prg&#92;&quot;:0.8,&#92;&quot;competition_id&#92;&quot;:49},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;NJ/NY Gotham FC&#92;&quot;,&#92;&quot;points&#92;&quot;:1,&#92;&quot;n_matches&#92;&quot;:7,&#92;&quot;points_prg&#92;&quot;:0.14,&#92;&quot;competition_id&#92;&quot;:49},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Washington Spirit&#92;&quot;,&#92;&quot;points&#92;&quot;:0,&#92;&quot;n_matches&#92;&quot;:9,&#92;&quot;points_prg&#92;&quot;:0.0,&#92;&quot;competition_id&#92;&quot;:49}]&quot;' data-total-rows='9' data-total-columns='5' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;node_label&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;points&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;n_matches&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;points_prg&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;competition_id&quot;,[&quot;integer&quot;,&quot;int64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "jxvo",
+      "code_hash": "b4774340df575a83071dc8ce7db46ef7",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/vnd.marimo+mimebundle": "{\"image/png\": \"data:image/png;base64,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FSpU8PrfCzItCFqCg4OlTZs27t4d8hEMXIiIEjF37lzNtowaNUpPwmPGjJElS5bItm3bJCgoSEqVKiXDhg2TnDlzxgpIZsyYIdevX5c+ffpIixYt4t1+/vz5pVKlSvqF7e7du9ccuKxZs0bmzJmjfU9atWolPXv21OLWN954Q/r27Wu+386dO+Wff/6Rd999VzMqr776qt4vW7Zs0rlzZ1200BqCsgkTJsihQ4d0+61bt5ZnnnnGKX8P2DaGh/D8DFrImRi4EBElAhkRBCEIFIzeI48//ri0a9dOu76uW7dORo8eLd9//735Mb/88ou89NJLegJHkIFVjxNb7RjDSwg6evXqpZd3796tw1UYpkJX2Y8++kiDEQQvCHJmzZql1wH2r2XLlvpz3rx55b333tOfr127Jp9//rkULlxYKlasGOv5Jk+erENHr732mvZVwTpBzoDXjNlDWCyxYcOGTtkmkYGBCxFRInLlyqWZFgQsxskfGZWffvpJLly4IFFRURIWFhbrMS+++KIGPDBz5kwNSKpWrWpz+999950GIdgWhozwBYsXL9ZgCbUhgLV8Zs+erYELsih4HIav8Pz79++XcePG/ffGniaNbN68WTNCt27dkps3b2r9jnXgki5dOg1skBWqVauWU3qq4PmQacE+IMsTEhKS7G0SWWJxLhGRiJ60cdK1hMu2siRoU//0009LlSpVtCYFGQsED5YsVzgODAzUoZj4dOrUSYefhgwZIrt27dIsCOA7iloNGHYx6mwQEGBo56+//tKhrG7dumnWBH799VddbXnAgAE6dISg5P79+3GeF8NCTZs2ld9//12zNdOmTUv23wKCILxeBi3kKgxciIhENAhZuHChPHjwwFwzcvXqVSlZsqReTp8+vXmmEIZCEKggWKhevboW1SaHUeMyaNAgadCggXz99dd6PepXli5dqkGPyWTS/bPMmmC4CvUvCxYsMA8vwblz56Ru3brSuHFjbfR28OBBm8+LAAP1Nz/88IMOc2FbSYVsEPYRWSkcF2ZayFU4VERE9P/ZhxdeeEFrMpBluXHjhnzwwQfmzEmTJk00u4IgA9kRBAUY0kGmpkSJEk47hijyRe0MgpIePXrI+vXr9bkwrIPsC+pSDMWLF9d9xVBWjhw5zNdjGAlBEIaakKFB8GLL2LFjdTgJAcfFixfl+eefT9I+IzOF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PN7ZcCy/+eYb+fvvv/VvPn/+/PL444/LgAEDEl21/uTJk9KuXTubt7355psycOBASWk3btyQlStXyuLFi2Xbtm2SOnVq2b9/v0Pb2Lx5s3z99ddy+PBhCQoKknr16slrr70m+fLlE3f8n+zcuVP/95cvX66/ozFjxujvyB5433j66adt3jZp0iRp0aKFpCS89+D3s2DBAjl06JC+lxUqVEi6desmvXr1SvR/3/DPP//I1KlT5cSJE5IxY0Z9b37llVcka9asju2QibxS69atTe3atTOtWbPGFBERYTp16pTp6aefNlWoUMG0c+fORB9/7949U9u2bU2dO3c2nThxQrfxww8/mEqXLm1avHixyR0GDBhg+vTTT0379u0zNWzY0NSjRw+HHl+vXj3Tq6++avIUc+bMMQ0dOtS0cOFC01dffWUqVaqUac+ePXY/Pjw83FS/fn3Tk08+abpw4YLp1q1bpg8//NBUvnx5065du0zugOevXLmyacWKFab79++btm7daqpVq5Zdxx33xzEYP368KSUdPXrUVKVKFdOIESNM165dM125csU0fPhwU40aNUyhoaEuf7wrPPfcc/r3vmPHDj2uS5cuNVWsWNGuY4v/d/we8PfpKUaPHm16++23TRs3bjQNGjRI38ccsWnTJlO5cuVMY8eONd2+fdt07tw5U9++fU1NmjQx3bhxw5TSdu/eberTp4/p119/1f9/HO+ZM2fa/fh169bpY/C6PMGiRYtMZcuW1ffns2fPmu7cuaOvC+8FzzzzjF3bmDdvnr6mH3/80RQZGWk6fvy4qX379qYuXbqYoqOjHdofBi5eCm9QeMOyhOADb7BPPfVUoo+fPn26/hEdOnQo1vV4LIKGhw8fmtzJFwIXS1OnTnU4cPnggw80SMGJ0vDo0SMNOHv27GlKaadPnzaVKVPG9PXXX8e6Hm/IeG179+71yMAFb6x169Y1RUVFma/DGycCrpdfftnlj3e2zZs363HEicDS559/rn8vYWFhXhe4WBoyZIjDgUuHDh30Q1hMTIz5OhwHBDPjxo0zuROCD28PXNauXWtzXyZOnGjX+xr+d2rXrm169tlnY12Px+Hxs2bNcmh/WOPipV5++WVNh1oKDg6WnDlzyvnz5xN9/LJlyzS9XLZs2VjXt2rVSi5fvqwpcXIv/I6qVq0qOXLkMF8XEBCgaeK9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\", \"__metadata__\": {\"image/png\": {\"width\": 558, \"height\": 538}}}"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "mWxS",
+      "code_hash": "4d4d61273f47a01d91c061276e0db799",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='mWxS-0' random-id='f577d5f1-ef79-7a3a-3ae6-b6e16b733c26'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;&#92;&quot;:1,&#92;&quot;match_id&#92;&quot;:7482,&#92;&quot;match_date&#92;&quot;:&#92;&quot;2018-07-12&#92;&quot;,&#92;&quot;home_team&#92;&quot;:&#92;&quot;North Carolina Courage&#92;&quot;,&#92;&quot;away_team&#92;&quot;:&#92;&quot;Washington Spirit&#92;&quot;,&#92;&quot;home_score&#92;&quot;:2,&#92;&quot;away_score&#92;&quot;:0},{&#92;&quot;&#92;&quot;:5,&#92;&quot;match_id&#92;&quot;:7430,&#92;&quot;match_date&#92;&quot;:&#92;&quot;2018-04-15&#92;&quot;,&#92;&quot;home_team&#92;&quot;:&#92;&quot;Washington Spirit&#92;&quot;,&#92;&quot;away_team&#92;&quot;:&#92;&quot;North Carolina Courage&#92;&quot;,&#92;&quot;home_score&#92;&quot;:2,&#92;&quot;away_score&#92;&quot;:4},{&#92;&quot;&#92;&quot;:16,&#92;&quot;match_id&#92;&quot;:7519,&#92;&quot;match_date&#92;&quot;:&#92;&quot;2018-05-31&#92;&quot;,&#92;&quot;home_team&#92;&quot;:&#92;&quot;Portland Thorns&#92;&quot;,&#92;&quot;away_team&#92;&quot;:&#92;&quot;North Carolina Courage&#92;&quot;,&#92;&quot;home_score&#92;&quot;:1,&#92;&quot;away_score&#92;&quot;:4},{&#92;&quot;&#92;&quot;:19,&#92;&quot;match_id&#92;&quot;:7484,&#92;&quot;match_date&#92;&quot;:&#92;&quot;2018-07-15&#92;&quot;,&#92;&quot;home_team&#92;&quot;:&#92;&quot;NJ/NY Gotham FC&#92;&quot;,&#92;&quot;away_team&#92;&quot;:&#92;&quot;North Carolina Courage&#92;&quot;,&#92;&quot;home_score&#92;&quot;:0,&#92;&quot;away_score&#92;&quot;:4},{&#92;&quot;&#92;&quot;:20,&#92;&quot;match_id&#92;&quot;:7475,&#92;&quot;match_date&#92;&quot;:&#92;&quot;2018-07-05&#92;&quot;,&#92;&quot;home_team&#92;&quot;:&#92;&quot;North Carolina Courage&#92;&quot;,&#92;&quot;away_team&#92;&quot;:&#92;&quot;Chicago Red Stars&#92;&quot;,&#92;&quot;home_score&#92;&quot;:4,&#92;&quot;away_score&#92;&quot;:1},{&#92;&quot;&#92;&quot;:21,&#92;&quot;match_id&#92;&quot;:7457,&#92;&quot;match_date&#92;&quot;:&#92;&quot;2018-05-24&#92;&quot;,&#92;&quot;home_team&#92;&quot;:&#92;&quot;Orlando Pride&#92;&quot;,&#92;&quot;away_team&#92;&quot;:&#92;&quot;North Carolina Courage&#92;&quot;,&#92;&quot;home_score&#92;&quot;:3,&#92;&quot;away_score&#92;&quot;:4},{&#92;&quot;&#92;&quot;:26,&#92;&quot;match_id&#92;&quot;:7456,&#92;&quot;match_date&#92;&quot;:&#92;&quot;2018-05-20&#92;&quot;,&#92;&quot;home_team&#92;&quot;:&#92;&quot;NJ/NY Gotham FC&#92;&quot;,&#92;&quot;away_team&#92;&quot;:&#92;&quot;North Carolina Courage&#92;&quot;,&#92;&quot;home_score&#92;&quot;:1,&#92;&quot;away_score&#92;&quot;:2},{&#92;&quot;&#92;&quot;:27,&#92;&quot;match_id&#92;&quot;:7471,&#92;&quot;match_date&#92;&quot;:&#92;&quot;2018-06-30&#92;&quot;,&#92;&quot;home_team&#92;&quot;:&#92;&quot;Orlando Pride&#92;&quot;,&#92;&quot;away_team&#92;&quot;:&#92;&quot;North Carolina Courage&#92;&quot;,&#92;&quot;home_score&#92;&quot;:0,&#92;&quot;away_score&#92;&quot;:3},{&#92;&quot;&#92;&quot;:34,&#92;&quot;match_id&#92;&quot;:7451,&#92;&quot;match_date&#92;&quot;:&#92;&quot;2018-05-13&#92;&quot;,&#92;&quot;home_team&#92;&quot;:&#92;&quot;North Carolina Courage&#92;&quot;,&#92;&quot;away_team&#92;&quot;:&#92;&quot;Washington Spirit&#92;&quot;,&#92;&quot;home_score&#92;&quot;:1,&#92;&quot;away_score&#92;&quot;:0}]&quot;' data-total-rows='9' data-total-columns='6' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;match_id&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;match_date&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;home_team&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;away_team&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;home_score&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;away_score&quot;,[&quot;integer&quot;,&quot;int64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[[&quot;&quot;,[&quot;integer&quot;,&quot;int64&quot;]]]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "CcZR",
+      "code_hash": "9baf5c427b1ec211221e0f481bfd2785",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "YWSi",
+      "code_hash": "d92b4b912a9d1124b8294052feab4eda",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"32-simulate-games\">3.2 Simulate games</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "zlud",
+      "code_hash": "b25e297cb458f868b12b026b6afdb148",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">We are ready to generate games from the main model parameters.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "tZnO",
+      "code_hash": "8d63dcf680912b49116156ecd51a2fb9",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "xvXZ",
+      "code_hash": "9afc821a68bd0555c89e22fc93b64f05",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[1000, 9, 9]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "CLip",
+      "code_hash": "a5f8aa0a03584ceee7c2837261a0fb42",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>&lt;module &#x27;matplotlib.pyplot&#x27; from &#x27;C:\\\\Users\\\\bensa\\\\OneDrive\\\\Documents\\\\Important Docs\\\\Portfolio\\\\Fencing\\\\olympic fencing dataset\\\\Oly-Fencing-Networks\\\\.venv\\\\Lib\\\\site-packages\\\\matplotlib\\\\pyplot.py&#x27;&gt;</pre>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "YECM",
+      "code_hash": "63c529e11dc8f28f088e990273ef0815",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">We can select one example sample and check the data</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "cEAS",
+      "code_hash": "a5324f5e4695f7f68ec79b53e0e9cbaf",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "iXej",
+      "code_hash": "d19eb8a858be1d080dc87ab73c616cb8",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">What happens if you change the hyperparameters?</span>\n<span class=\"paragraph\">Note that this makes sense if you do not have a fixed schedule, and you want to generate that as well.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "EJmg",
+      "code_hash": "3ecbe30c3422ec5d6133d00dc5976055",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"321-la-liga\">3.2.1 La Liga</h3>\n<span class=\"paragraph\">The top 3 teams are very close to each other. What is the probability that one of them wins the league if we were to simulate it n times?</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "UmEG",
+      "code_hash": "e7f1aa861062b914dc65d60c91cbdcd5",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[[1000, 20, 20], \"text/plain+float:0.23344396174689036\", \"text/plain+float:0.9188242862322676\"]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vEBW",
+      "code_hash": "9cf51c47c821071d0e1e5a461fb3142e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>&lt;module &#x27;matplotlib.pyplot&#x27; from &#x27;C:\\\\Users\\\\bensa\\\\OneDrive\\\\Documents\\\\Important Docs\\\\Portfolio\\\\Fencing\\\\olympic fencing dataset\\\\Oly-Fencing-Networks\\\\.venv\\\\Lib\\\\site-packages\\\\matplotlib\\\\pyplot.py&#x27;&gt;</pre>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "kLmu",
+      "code_hash": "12fda25e0b359c1c79d60fadb13e1233",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Alternatively, we can take every match in the schedule and simulate who wins.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "IpqN",
+      "code_hash": "5c224ee585bb4a92739014615fa8ff4d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "dxZZ",
+      "code_hash": "4d3098602ab015d5354b9c448c2e918e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "dlnW",
+      "code_hash": "9aab53a98f5e9d56d4c265e3826562d7",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Let's check one particular (arbitrary) sample</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TTti",
+      "code_hash": "d3dde41f59bf67b31321b416ebe6887a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='TTti-0' random-id='2515510b-2aeb-d95d-9c62-de78c90c0b97'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Barcelona&#92;&quot;,&#92;&quot;points&#92;&quot;:81,&#92;&quot;n_matches&#92;&quot;:38,&#92;&quot;points_prg&#92;&quot;:2.13,&#92;&quot;competition_id&#92;&quot;:11},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Real Madrid&#92;&quot;,&#92;&quot;points&#92;&quot;:75,&#92;&quot;n_matches&#92;&quot;:38,&#92;&quot;points_prg&#92;&quot;:1.97,&#92;&quot;competition_id&#92;&quot;:11},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Las Palmas&#92;&quot;,&#92;&quot;points&#92;&quot;:69,&#92;&quot;n_matches&#92;&quot;:38,&#92;&quot;points_prg&#92;&quot;:1.82,&#92;&quot;competition_id&#92;&quot;:11},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Real Sociedad&#92;&quot;,&#92;&quot;points&#92;&quot;:66,&#92;&quot;n_matches&#92;&quot;:38,&#92;&quot;points_prg&#92;&quot;:1.74,&#92;&quot;competition_id&#92;&quot;:11},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Athletic Club&#92;&quot;,&#92;&quot;points&#92;&quot;:63,&#92;&quot;n_matches&#92;&quot;:38,&#92;&quot;points_prg&#92;&quot;:1.66,&#92;&quot;competition_id&#92;&quot;:11},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Real Betis&#92;&quot;,&#92;&quot;points&#92;&quot;:63,&#92;&quot;n_matches&#92;&quot;:38,&#92;&quot;points_prg&#92;&quot;:1.66,&#92;&quot;competition_id&#92;&quot;:11},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Atl&#92;&#92;u00e9tico Madrid&#92;&quot;,&#92;&quot;points&#92;&quot;:60,&#92;&quot;n_matches&#92;&quot;:38,&#92;&quot;points_prg&#92;&quot;:1.58,&#92;&quot;competition_id&#92;&quot;:11},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Sporting Gij&#92;&#92;u00f3n&#92;&quot;,&#92;&quot;points&#92;&quot;:60,&#92;&quot;n_matches&#92;&quot;:38,&#92;&quot;points_prg&#92;&quot;:1.58,&#92;&quot;competition_id&#92;&quot;:11},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Rayo Vallecano&#92;&quot;,&#92;&quot;points&#92;&quot;:60,&#92;&quot;n_matches&#92;&quot;:38,&#92;&quot;points_prg&#92;&quot;:1.58,&#92;&quot;competition_id&#92;&quot;:11},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Villarreal&#92;&quot;,&#92;&quot;points&#92;&quot;:60,&#92;&quot;n_matches&#92;&quot;:38,&#92;&quot;points_prg&#92;&quot;:1.58,&#92;&quot;competition_id&#92;&quot;:11}]&quot;' data-total-rows='20' data-total-columns='5' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;node_label&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;points&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;n_matches&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;points_prg&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;competition_id&quot;,[&quot;integer&quot;,&quot;int64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='true' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RKFZ",
+      "code_hash": "7e9c971f502e8a0cc6d09b2d81b59124",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">We can now count how many times in each of the simulated standing, one of the top 3 teams wins.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "IaQp",
+      "code_hash": "1b7cf26efabe8345a8eb5cdf0594f110",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[[\"Real Madrid\", \"Barcelona\", \"Atl\\u00e9tico Madrid\"], \"text/plain:[0.63185177 0.62258816 0.56259968]\"]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "IWgg",
+      "code_hash": "b9ae6f1c52a4f247a6f9a906e43f00f6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "fCoF",
+      "code_hash": "7831ee36838ee5e5a1bdcc382ab64750",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='fCoF-0' random-id='0c310687-5f50-2e91-2265-65dce8ba04c3'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;&#92;&quot;:&#92;&quot;Real Madrid&#92;&quot;,&#92;&quot;n_1st&#92;&quot;:22,&#92;&quot;n_2nd&#92;&quot;:23,&#92;&quot;n_3rd&#92;&quot;:20},{&#92;&quot;&#92;&quot;:&#92;&quot;Barcelona&#92;&quot;,&#92;&quot;n_1st&#92;&quot;:33,&#92;&quot;n_2nd&#92;&quot;:22,&#92;&quot;n_3rd&#92;&quot;:12},{&#92;&quot;&#92;&quot;:&#92;&quot;Atl&#92;&#92;u00e9tico Madrid&#92;&quot;,&#92;&quot;n_1st&#92;&quot;:18,&#92;&quot;n_2nd&#92;&quot;:24,&#92;&quot;n_3rd&#92;&quot;:21}]&quot;' data-total-rows='3' data-total-columns='3' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;n_1st&quot;,[&quot;integer&quot;,&quot;int32&quot;]],[&quot;n_2nd&quot;,[&quot;integer&quot;,&quot;int32&quot;]],[&quot;n_3rd&quot;,[&quot;integer&quot;,&quot;int32&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[[&quot;&quot;,[&quot;string&quot;,&quot;str&quot;]]]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "LkGn",
+      "code_hash": "d0ad8b38ccea189874f54af369f08adb",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">What are we missing?</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "zVRe",
+      "code_hash": "278137eaf0e275993e0ba7d956c4e8aa",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='zVRe-0' random-id='67fe2057-8c13-9b92-78b7-999651795277'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Barcelona&#92;&quot;,&#92;&quot;points&#92;&quot;:91,&#92;&quot;n_matches&#92;&quot;:38,&#92;&quot;points_prg&#92;&quot;:2.39,&#92;&quot;competition_id&#92;&quot;:11},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Real Madrid&#92;&quot;,&#92;&quot;points&#92;&quot;:90,&#92;&quot;n_matches&#92;&quot;:38,&#92;&quot;points_prg&#92;&quot;:2.37,&#92;&quot;competition_id&#92;&quot;:11},{&#92;&quot;node_label&#92;&quot;:&#92;&quot;Atl&#92;&#92;u00e9tico Madrid&#92;&quot;,&#92;&quot;points&#92;&quot;:88,&#92;&quot;n_matches&#92;&quot;:38,&#92;&quot;points_prg&#92;&quot;:2.32,&#92;&quot;competition_id&#92;&quot;:11}]&quot;' data-total-rows='3' data-total-columns='5' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;node_label&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;points&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;n_matches&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;points_prg&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;competition_id&quot;,[&quot;integer&quot;,&quot;int64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "woaO",
+      "code_hash": "49725224631f3292f96b166fa11ce0c4",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"4-depth-of-competition\">4. Depth of competition</h1>\n<span class=\"paragraph\">We can compare the statistics of the soccer league with results of other types of datasets.\nWe take Table S2 <a href=\"of the SpringRank paper\">https://arxiv.org/pdf/1709.09002</a> for other datasets.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "HnMC",
+      "code_hash": "b4c8b4ad8c6346b438fa7a3e08c9ad29",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='HnMC-0' random-id='b2bafd77-5836-0bcf-4bfa-105c9d21453a'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;&#92;&quot;:0,&#92;&quot;competition_id&#92;&quot;:37,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;FA Women&#x27;s Super League&#92;&quot;,&#92;&quot;beta&#92;&quot;:1.3156282176004783,&#92;&quot;depth&#92;&quot;:1.230862514426076,&#92;&quot;n_levels&#92;&quot;:2.9480053567011,&#92;&quot;delta_level&#92;&quot;:0.41752383917085056},{&#92;&quot;&#92;&quot;:1,&#92;&quot;competition_id&#92;&quot;:49,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;NWSL&#92;&quot;,&#92;&quot;beta&#92;&quot;:1.6003465834325683,&#92;&quot;depth&#92;&quot;:1.257741926266171,&#92;&quot;n_levels&#92;&quot;:3.6643008917735433,&#92;&quot;delta_level&#92;&quot;:0.3432419889670732},{&#92;&quot;&#92;&quot;:2,&#92;&quot;competition_id&#92;&quot;:12,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Serie A&#92;&quot;,&#92;&quot;beta&#92;&quot;:0.959300375690428,&#92;&quot;depth&#92;&quot;:1.0525309159158718,&#92;&quot;n_levels&#92;&quot;:1.8381249026223372,&#92;&quot;delta_level&#92;&quot;:0.5726112052637403},{&#92;&quot;&#92;&quot;:3,&#92;&quot;competition_id&#92;&quot;:2,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Premier League&#92;&quot;,&#92;&quot;beta&#92;&quot;:0.9589639619006117,&#92;&quot;depth&#92;&quot;:1.1987286445982,&#92;&quot;n_levels&#92;&quot;:2.0927083778778206,&#92;&quot;delta_level&#92;&quot;:0.5728120827870962},{&#92;&quot;&#92;&quot;:4,&#92;&quot;competition_id&#92;&quot;:11,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;La Liga&#92;&quot;,&#92;&quot;beta&#92;&quot;:0.9188242862322676,&#92;&quot;depth&#92;&quot;:1.000208305806224,&#92;&quot;n_levels&#92;&quot;:1.6730482484956504,&#92;&quot;delta_level&#92;&quot;:0.597835900253073},{&#92;&quot;&#92;&quot;:0,&#92;&quot;competition_id&#92;&quot;:100,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;parakeet G1&#92;&quot;,&#92;&quot;beta&#92;&quot;:2.7,&#92;&quot;depth&#92;&quot;:2.604,&#92;&quot;n_levels&#92;&quot;:12.799419909135937,&#92;&quot;delta_level&#92;&quot;:0.20344672012372403},{&#92;&quot;&#92;&quot;:1,&#92;&quot;competition_id&#92;&quot;:101,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;parakeet G2&#92;&quot;,&#92;&quot;beta&#92;&quot;:2.78,&#92;&quot;depth&#92;&quot;:1.879,&#92;&quot;n_levels&#92;&quot;:9.509487657984959,&#92;&quot;delta_level&#92;&quot;:0.19759213824966004},{&#92;&quot;&#92;&quot;:2,&#92;&quot;competition_id&#92;&quot;:102,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Asian elephants&#92;&quot;,&#92;&quot;beta&#92;&quot;:2.33,&#92;&quot;depth&#92;&quot;:3.0,&#92;&quot;n_levels&#92;&quot;:12.725144388243187,&#92;&quot;delta_level&#92;&quot;:0.2357537100146158},{&#92;&quot;&#92;&quot;:3,&#92;&quot;competition_id&#92;&quot;:103,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Business&#92;&quot;,&#92;&quot;beta&#92;&quot;:2.04,&#92;&quot;depth&#92;&quot;:2.125,&#92;&quot;n_levels&#92;&quot;:7.8917740948546795,&#92;&quot;delta_level&#92;&quot;:0.2692677178108112},{&#92;&quot;&#92;&quot;:4,&#92;&quot;competition_id&#92;&quot;:104,&#92;&quot;competition_name&#92;&quot;:&#92;&quot;Computer Science&#92;&quot;,&#92;&quot;beta&#92;&quot;:2.23,&#92;&quot;depth&#92;&quot;:2.423,&#92;&quot;n_levels&#92;&quot;:9.836573021681048,&#92;&quot;delta_level&#92;&quot;:0.24632562526190802}]&quot;' data-total-rows='13' data-total-columns='6' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;competition_id&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;competition_name&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;beta&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;depth&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;n_levels&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;delta_level&quot;,[&quot;number&quot;,&quot;float64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='true' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[[&quot;&quot;,[&quot;integer&quot;,&quot;int64&quot;]]]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "wadT",
+      "code_hash": "19c1d47ae36c450ece00de1c1679b16a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "VCRE",
+      "code_hash": "d8adfd209852adfc3de8897e2b6ee4ab",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"5-model-selection\">5. Model selection</h1>\n<span class=\"paragraph\">How do we determine what scoring system is the best?</span>\n<span class=\"paragraph\"><strong>Homework</strong>!</span></span>"
+          }
+        }
+      ],
+      "console": []
+    }
+  ]
+}
