@@ -85,20 +85,7 @@
     },
     {
       "id": "SFPL",
-      "code_hash": "a2f9349dbb96a87d9507aaed1ab8b938",
-      "outputs": [
-        {
-          "type": "data",
-          "data": {
-            "text/plain": ""
-          }
-        }
-      ],
-      "console": []
-    },
-    {
-      "id": "BYtC",
-      "code_hash": "5b29a800f5fa164f7be60fbe75db2476",
+      "code_hash": "83cc29792e2918aa3ec4ef721c1b73ab",
       "outputs": [
         {
           "type": "data",

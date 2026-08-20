@@ -76,15 +76,8 @@ def _():
 @app.cell
 def _():
     import cv_tools as cvtl
-    from statsbombpy import sb
-
-    return
 
 
-@app.cell
-def _():
-    outdir_fig = '../figures/'
-    lecture_id = 5
     return
 
 
