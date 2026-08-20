@@ -14,6 +14,9 @@ src/
 Ranking from pairwise comparisons_CoC_data.py  # ranking pipeline (Marimo notebook)
 requirements.txt
 ```
+## Next Steps
+- pull official FIE rankings for each category and compare to calculated scores
+
 ## Acknowledgments
 
 The ranking utilities in `src/ranking_tools/` are adapted from the code in
