@@ -60,7 +60,14 @@ def _():
     from scipy.stats import pearsonr, spearmanr
     from sklearn.preprocessing import LabelEncoder
 
-    return AffinityPropagation, LabelEncoder, adjust_text, st
+    return (
+        AffinityPropagation,
+        LabelEncoder,
+        adjust_text,
+        pearsonr,
+        spearmanr,
+        st,
+    )
 
 
 @app.cell
@@ -79,6 +86,25 @@ def _():
 
 
     return
+
+
+@app.cell
+def _():
+    # pdf reading
+    import re
+    import pdfplumber
+    import os
+
+    return (os,)
+
+
+@app.cell
+def _():
+    import requests
+    from io import StringIO
+
+
+    return StringIO, requests
 
 
 @app.cell
@@ -143,6 +169,475 @@ def _(bouts_DE, bouts_pool, pd):
     # Drop rows with missing values in critical columns
     all_fencing_bouts = all_fencing_bouts.dropna(subset=['Fencer A', 'Fencer B', 'Winner']).copy()
     return (all_fencing_bouts,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### import rankings
+    """)
+    return
+
+
+@app.cell
+def _(StringIO, pd, requests):
+    def fie_ranking_to_csv(url, csv_path=None):
+        """
+        Download an FIE detailed ranking page and convert the ranking
+        table to a CSV.
+
+        Parameters
+        ----------
+        url : str
+            FIE detailed-ranking URL.
+
+        csv_path : str, optional
+            Output CSV path. If None, creates a CSV next to the URL's
+            inferred ranking name.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Cleaned FIE ranking dataframe.
+        """
+
+        # ----------------------------------------------------------
+        # 1. Download page like a normal browser
+        # ----------------------------------------------------------
+
+        headers = {
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/151.0.0.0 Safari/537.36"
+            ),
+            "Accept": (
+                "text/html,application/xhtml+xml,"
+                "application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
+            ),
+            "Accept-Language": "en-US,en;q=0.9",
+            "Referer": "https://fie.org/",
+        }
+
+        response = requests.get(
+            url,
+            headers=headers,
+            timeout=30
+        )
+
+        response.raise_for_status()
+
+        # ----------------------------------------------------------
+        # 2. Extract tables from downloaded HTML
+        # ----------------------------------------------------------
+
+        tables = pd.read_html(
+            StringIO(response.text)
+        )
+
+        if not tables:
+            raise ValueError(
+                "No tables found on the FIE page."
+            )
+
+        # Find the ranking table rather than blindly assuming
+        # it is table 0.
+        ranking_table = None
+
+        for table in tables:
+
+            columns = [
+                str(col).strip()
+                for col in table.columns
+            ]
+
+            if (
+                "Rank" in columns
+                and "Name" in columns
+            ):
+                ranking_table = table.copy()
+                break
+
+        if ranking_table is None:
+            raise ValueError(
+                "Could not find the FIE ranking table."
+            )
+
+        df = ranking_table
+
+        # ----------------------------------------------------------
+        # 3. Clean column names
+        # ----------------------------------------------------------
+
+        df.columns = [
+            str(col).strip()
+            for col in df.columns
+        ]
+
+        # Remove completely empty columns
+        df = df.dropna(
+            axis=1,
+            how="all"
+        )
+
+        # ----------------------------------------------------------
+        # 4. Clean Rank
+        # ----------------------------------------------------------
+
+        if "Rank" in df.columns:
+
+            df["Rank"] = pd.to_numeric(
+                df["Rank"],
+                errors="coerce"
+            ).astype("Int64")
+
+            # Keep only actual ranking rows
+            df = df[
+                df["Rank"].notna()
+            ]
+
+        # ----------------------------------------------------------
+        # 5. Clean numeric columns
+        # ----------------------------------------------------------
+
+        for col in df.columns:
+
+            if col in ["Rank", "Name", "Nat."]:
+                continue
+
+            df[col] = (
+                df[col]
+                .astype("string")
+                .str.strip()
+                .str.replace("(", "", regex=False)
+                .str.replace(")", "", regex=False)
+                .replace("", pd.NA)
+            )
+
+            df[col] = pd.to_numeric(
+                df[col],
+                errors="coerce"
+            )
+
+        # ----------------------------------------------------------
+        # 6. Remove duplicates
+        # ----------------------------------------------------------
+
+        duplicate_columns = [
+            col
+            for col in ["Rank", "Name", "Nat."]
+            if col in df.columns
+        ]
+
+        if duplicate_columns:
+
+            df = df.drop_duplicates(
+                subset=duplicate_columns,
+                keep="first"
+            )
+
+        # ----------------------------------------------------------
+        # 7. Sort by ranking
+        # ----------------------------------------------------------
+
+        if "Rank" in df.columns:
+
+            df = df.sort_values(
+                by="Rank"
+            ).reset_index(drop=True)
+
+        # ----------------------------------------------------------
+        # 8. Generate CSV path if none supplied
+        # ----------------------------------------------------------
+
+        if csv_path is None:
+
+            csv_path = "fie_ranking.csv"
+
+        # ----------------------------------------------------------
+        # 9. Save
+        # ----------------------------------------------------------
+
+        df.to_csv(
+            csv_path,
+            index=False,
+            encoding="utf-8-sig"
+        )
+
+        print(
+            f"Saved {len(df)} fencers "
+            f"with {len(df.columns)} columns to:"
+        )
+        print(csv_path)
+
+        return df
+
+    return (fie_ranking_to_csv,)
+
+
+@app.cell
+def codenames(fie_ranking_to_csv):
+    rankings = {
+        "ME": ("E", "M"),
+        "MF": ("F", "M"),
+        "MS": ("S", "M"),
+        "WE": ("E", "F"),
+        "WF": ("F", "F"),
+        "WS": ("S", "F"),
+    }
+
+    for code, (weapon, gender) in rankings.items():
+
+        url = (
+            "https://fie.org/athletes/detailed-ranking"
+            f"?season=2026"
+            f"&weapon={weapon}"
+            f"&gender={gender}"
+            f"&category=S"
+            f"&type=I"
+        )
+
+        fie_ranking_to_csv(
+            url,
+            f"rankings/{code}-detailed-ranking-2026.csv"
+        )
+    return
+
+
+@app.function
+def pdf_ranking_to_csv(pdf_path, csv_path=None):
+    """
+    Convert an FIE General Ranking PDF into a CSV.
+
+    The column names are extracted automatically from the PDF.
+    Supports small variations in the number of columns between PDFs.
+    """
+
+    import pdfplumber
+    import pandas as pd
+
+    all_rows = []
+    header = None
+
+    with pdfplumber.open(pdf_path) as pdf:
+
+        for page_number, page in enumerate(pdf.pages, start=1):
+
+            tables = page.extract_tables()
+
+            if not tables:
+                print(f"Warning: no table found on page {page_number}")
+                continue
+
+            table = tables[0]
+
+            for row in table:
+
+                if not row:
+                    continue
+
+                # Clean cells
+                row = [
+                    cell.strip() if isinstance(cell, str) else cell
+                    for cell in row
+                ]
+
+                # --------------------------------------------------
+                # Find the header automatically
+                # --------------------------------------------------
+
+                if header is None:
+
+                    row_text = " ".join(
+                        str(cell).lower()
+                        for cell in row
+                        if cell
+                    )
+
+                    # FIE ranking tables should contain these
+                    # characteristic header fields
+                    if (
+                        "rank" in row_text
+                        and "name" in row_text
+                    ):
+                        header = row
+                        print(
+                            f"Detected header on page {page_number}: "
+                            f"{len(header)} columns"
+                        )
+                        continue
+
+                # --------------------------------------------------
+                # Only accept rows whose first cell is a rank
+                # --------------------------------------------------
+
+                if not row[0] or not str(row[0]).strip().isdigit():
+                    continue
+
+                all_rows.append(row)
+
+    if header is None:
+        raise ValueError(
+            "Could not automatically detect the table header."
+        )
+
+    # --------------------------------------------------------------
+    # Handle small variations in column count
+    # --------------------------------------------------------------
+
+    n_columns = len(header)
+
+    cleaned_rows = []
+
+    for row in all_rows:
+
+        # Ignore wildly malformed rows
+        if abs(len(row) - n_columns) > 2:
+            print(
+                f"Warning: ignoring row with {len(row)} columns "
+                f"(expected approximately {n_columns})"
+            )
+            continue
+
+        # Too few columns → pad
+        if len(row) < n_columns:
+            row = row + [None] * (n_columns - len(row))
+
+        # Too many columns → extend header
+        elif len(row) > n_columns:
+
+            extra = len(row) - n_columns
+
+            for i in range(extra):
+                header.append(f"Extra_{i + 1}")
+
+            n_columns = len(header)
+
+        cleaned_rows.append(row)
+
+    # Make every row the same size
+    cleaned_rows = [
+        row + [None] * (len(header) - len(row))
+        for row in cleaned_rows
+    ]
+
+    # --------------------------------------------------------------
+    # Create DataFrame
+    # --------------------------------------------------------------
+
+    df = pd.DataFrame(
+        cleaned_rows,
+        columns=header
+    )
+
+    # --------------------------------------------------------------
+    # Clean column names
+    # --------------------------------------------------------------
+
+    df.columns = [
+        str(col).strip() if col else f"Column_{i + 1}"
+        for i, col in enumerate(df.columns)
+    ]
+
+    # --------------------------------------------------------------
+    # Convert Rank
+    # --------------------------------------------------------------
+
+    if "Rank" in df.columns:
+        df["Rank"] = pd.to_numeric(
+            df["Rank"],
+            errors="coerce"
+        ).astype("Int64")
+
+    # --------------------------------------------------------------
+    # Convert numeric columns
+    # --------------------------------------------------------------
+
+    for col in df.columns:
+
+        if col in ["Rank", "Name", "Nat."]:
+            continue
+
+        df[col] = (
+            df[col]
+            .astype("string")
+            .str.strip()
+            .str.replace("(", "", regex=False)
+            .str.replace(")", "", regex=False)
+            .replace("", pd.NA)
+        )
+
+        df[col] = pd.to_numeric(
+            df[col],
+            errors="coerce"
+        )
+
+    # --------------------------------------------------------------
+    # Remove duplicates
+    # --------------------------------------------------------------
+
+    duplicate_columns = [
+        col for col in ["Rank", "Name", "Nat."]
+        if col in df.columns
+    ]
+
+    if duplicate_columns:
+        df = df.drop_duplicates(
+            subset=duplicate_columns,
+            keep="first"
+        )
+
+    # --------------------------------------------------------------
+    # Sort
+    # --------------------------------------------------------------
+
+    if "Rank" in df.columns:
+        df = df.sort_values(
+            by="Rank"
+        ).reset_index(drop=True)
+
+    # --------------------------------------------------------------
+    # Automatically create CSV path if not provided
+    # --------------------------------------------------------------
+
+    if csv_path is None:
+        csv_path = pdf_path.rsplit(".", 1)[0] + ".csv"
+
+    df.to_csv(
+        csv_path,
+        index=False,
+        encoding="utf-8-sig"
+    )
+
+    print(f"Saved {len(df)} fencers to:")
+    print(csv_path)
+
+    return df
+
+
+@app.cell
+def _(os):
+    cats = ["ME", "MF", "WF", "WS", "MS" ]
+
+    for c in cats:
+        input_path = f"rankings/{c}-detailed-ranking-2026.pdf"
+        #output_path = f"rankings/{c}-detailed-ranking-2026.csv"
+        if os.path.exists(input_path):
+            try:
+                df = pdf_ranking_to_csv(str(input_path))
+            except Exception as e:
+                print(f"Error processing {input_path}: {e}. Skipping this file.")
+        else:
+            print(f"File not found: {input_path}")
+    return
+
+
+@app.cell
+def _(os):
+
+    print(os.getcwd())
+    print(os.path.exists(r"rankings\ME-detailed-ranking-2026.pdf"))
+    return
 
 
 @app.cell(hide_code=True)
@@ -249,20 +744,20 @@ def computationcell(
         for group_name, group_df in grouped_bouts:
             if len(group_df) < 50:
                 continue
-            
+
             # 1. Filter out inactive fencers
             all_fenders_in_group = pd.concat([group_df['Fencer A'], group_df['Fencer B']])
             fencer_appearance_counts = all_fenders_in_group.value_counts()
             active_fencers = fencer_appearance_counts[fencer_appearance_counts >= min_bouts].index
-        
+
             filtered_df = group_df[
                 group_df['Fencer A'].isin(active_fencers) & 
                 group_df['Fencer B'].isin(active_fencers)
             ].copy()
-        
+
             if len(filtered_df) < 20:
                 continue
-            
+
             # 2. NetworkX: Optional Largest Connected Component filter
             if filter_connected:
                 G = nx.Graph()
@@ -273,30 +768,30 @@ def computationcell(
                 target_fencers = [f for f in active_fencers if f in largest_cc]
             else:
                 target_fencers = list(active_fencers)
-            
+
             if len(target_fencers) < 5:
                 continue
-            
+
             filtered_df = filtered_df[
                 filtered_df['Fencer A'].isin(target_fencers) & 
                 filtered_df['Fencer B'].isin(target_fencers)
             ]
-        
+
             # Label Encoder setup
             le = LabelEncoder()
             le.fit(target_fencers)
             n_fencers = len(le.classes_)
-        
+
             # Build adjacency matrix
             fencer_to_id = {name: i for i, name in enumerate(le.classes_)}
             u_arr = filtered_df['Fencer A'].map(fencer_to_id).values.astype(int)
             v_arr = filtered_df['Fencer B'].map(fencer_to_id).values.astype(int)
             win_a_mask = (filtered_df['Winner'] == filtered_df['Fencer A']).values
-        
+
             A_mat = np.zeros((n_fencers, n_fencers))
             np.add.at(A_mat, (u_arr[win_a_mask], v_arr[win_a_mask]), 1)
             np.add.at(A_mat, (v_arr[~win_a_mask], u_arr[~win_a_mask]), 1)
-                
+
             # 3. Fit Selected Ranking Model
             try:
                 if model_choice == 'SpringRank':
@@ -316,7 +811,7 @@ def computationcell(
                     n_levels = len(np.unique(np.round(ranks, 1)))
             except Exception as e:
                 continue
-        
+
             # Store individual fencer scores
             for idx, fencer_name in enumerate(le.classes_):
                 fencer_scores_list.append({
@@ -324,7 +819,7 @@ def computationcell(
                     'League': group_name,
                     'Calculated_Score': ranks[idx]
                 })
-            
+
             # Store global network metrics
             league_depth_stats.append({
                 'League': group_name,
@@ -423,25 +918,25 @@ def _(
     for _i, _league_name in enumerate(df_fencing_dist['League']):
         _league_fencers = df_fencer_scores[df_fencer_scores['League'] == _league_name]
         _y_val = _ys[_i]
-    
+
         # Apply vertical jittering to prevent overlapping points
         _y_jittered = _y_val + st.t(df=6, scale=0.08).rvs(len(_league_fencers))
-    
+
         # Extract fencer scores
         _scores = _league_fencers['Calculated_Score'].values
-    
+
         # Cluster fencers into similarity bands
         if len(_scores) >= 3:
             _clustering = AffinityPropagation(random_state=5).fit(_scores.reshape(-1, 1))
             _clabels = _clustering.labels_
         else:
             _clabels = np.zeros(len(_scores), dtype=int)
-        
+
         _cs = [plt.cm.tab20(_c % 20) for _c in _clabels]
-    
+
         # Plot individual fencers
         _ax.scatter(_scores, _y_jittered, s=40, alpha=0.6, c=_cs, edgecolors='none', zorder=2)
-    
+
         # Identify top 2 and bottom 1 fencers to label
         _sorted_fencers = _league_fencers.sort_values(by='Calculated_Score', ascending=False)
         if len(_sorted_fencers) > 0:
@@ -505,6 +1000,14 @@ def _(df_league_depths, group_col, model_choice, plt):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### Validation
+    """)
+    return
+
+
 @app.cell
 def _(all_fencing_bouts, df_fencer_scores, plt):
     # Match SpringRank scores back to their average "Post-Pool Rank"
@@ -532,6 +1035,230 @@ def _(mo):
     mo.md(r"""
     probably ignore this chart. When I have more time I'll try to match scores to official FIE rankings
     """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    #### Correlation with actual fie rankings
+    """)
+    return
+
+
+@app.cell
+def _(df_fencer_scores, model_choice):
+    def plot_score_vs_fie_ranking(df_scores, rankings_dir="rankings"):
+        import os
+        import unicodedata
+        import pandas as pd
+        import numpy as np
+        import matplotlib.pyplot as plt
+        from scipy.stats import spearmanr, pearsonr
+
+        # Support files: ME, MF, MS, WE, WF, WS
+        codes = ["ME", "MF", "MS", "WE", "WF", "WS"]
+        fie_dfs = []
+    
+        for code in codes:
+            path = os.path.join(rankings_dir, f"{code}-detailed-ranking-2026.csv")
+            if os.path.exists(path):
+                try:
+                    df = pd.read_csv(path)
+                    if "Name" in df.columns and "Rank" in df.columns:
+                        df = df[["Rank", "Name"]].dropna()
+                        df["Code"] = code
+                        fie_dfs.append(df)
+                except Exception:
+                    continue
+
+        if not fie_dfs:
+            fig, ax = plt.subplots(figsize=(6, 2))
+            ax.text(0.5, 0.5, "No FIE ranking CSV files found in 'rankings/' directory.", 
+                    ha='center', va='center', fontsize=12, color='red')
+            ax.axis('off')
+            return plt.gca()
+
+        df_fie = pd.concat(fie_dfs, ignore_index=True)
+
+        # Clean name helper to strip accents, lowercase, and sort words
+        def get_match_key(name):
+            if not isinstance(name, str):
+                return ""
+            # Normalize accents
+            normalized = unicodedata.normalize('NFD', name)
+            stripped = "".join(c for c in normalized if unicodedata.category(c) != 'Mn')
+            # Keep alphanumeric characters and lowercase
+            clean = "".join(c for c in stripped.lower() if c.isalnum() or c.isspace())
+            # Sort words alphabetically to handle "First Last" vs "Last First" mismatch
+            words = sorted(clean.split())
+            return " ".join(words)
+
+        df_fie["match_key"] = df_fie["Name"].apply(get_match_key)
+    
+        df_scores_copy = df_scores.copy()
+        df_scores_copy["match_key"] = df_scores_copy["Fencer"].apply(get_match_key)
+
+        # Merge SpringRank calculated scores with official FIE World Rankings
+        merged = pd.merge(df_scores_copy, df_fie, on="match_key", how="inner")
+
+        if len(merged) < 3:
+            fig, ax = plt.subplots(figsize=(6, 2))
+            ax.text(0.5, 0.5, f"Too few matches found between datasets (Only {len(merged)} matches).\nCheck fencer name formats.", 
+                    ha='center', va='center', fontsize=11, color='orange')
+            ax.axis('off')
+            return plt.gca()
+
+        # Create visualization
+        fig, ax = plt.subplots(figsize=(9, 6.5))
+    
+        # Calculate overall Spearman rank correlation
+        spearman_corr, p_val = spearmanr(merged["Calculated_Score"], merged["Rank"])
+        pearson_corr, _ = pearsonr(merged["Calculated_Score"], merged["Rank"])
+
+        unique_codes = sorted(merged["Code"].unique())
+        colors_list = plt.cm.tab10.colors
+
+        for idx, code in enumerate(unique_codes):
+            sub = merged[merged["Code"] == code]
+            ax.scatter(
+                sub["Calculated_Score"], 
+                sub["Rank"], 
+                label=f"{code} (n={len(sub)})", 
+                alpha=0.75, 
+                s=60,
+                edgecolors='black',
+                linewidths=0.5,
+                color=colors_list[idx % len(colors_list)]
+            )
+
+        # Add general trendline
+        if len(merged) > 1:
+            m, b = np.polyfit(merged["Calculated_Score"], merged["Rank"], 1)
+            x_domain = np.linspace(merged["Calculated_Score"].min(), merged["Calculated_Score"].max(), 100)
+            ax.plot(x_domain, m * x_domain + b, color="red", linestyle="--", linewidth=1.5, label="Overall Trend")
+
+        ax.set_xlabel(f"Calculated Score ({model_choice})", fontsize=11, fontweight='bold')
+        ax.set_ylabel("Official FIE World Rank", fontsize=11, fontweight='bold')
+        ax.set_title(
+            f"Validation: Calculated Scores vs. Official FIE World Rankings\n"
+            f"Spearman's ρ: {spearman_corr:.3f} (p = {p_val:.2e}) | Pearson's r: {pearson_corr:.3f}", 
+            fontsize=12, 
+            fontweight='bold', 
+            pad=15
+        )
+    
+        ax.invert_yaxis()  # Rank 1 is the best and should be at the top
+        ax.grid(True, linestyle=":", alpha=0.6)
+        ax.legend(loc="upper right", frameon=True, facecolor='white', edgecolor='none')
+    
+        plt.tight_layout()
+        return plt.gca()
+
+    plot_score_vs_fie_ranking(df_fencer_scores)
+    return
+
+
+@app.cell
+def _(df_fencer_scores, os, pd):
+    # Cell 1: Clean and Merge SpringRank Scores with FIE Rankings
+    import unicodedata
+
+    def clean_fencer_name(name):
+        if not isinstance(name, str):
+            return ""
+        # Strip accents, lowercase, and keep alphanumeric characters
+        normalized = unicodedata.normalize('NFD', name)
+        stripped = "".join(c for c in normalized if unicodedata.category(c) != 'Mn')
+        clean_str = "".join(c for c in stripped.lower() if c.isalnum() or c.isspace())
+        # Sort words alphabetically to handle "Last First" vs "First Last" issues
+        return " ".join(sorted(clean_str.split()))
+
+    # 1. Load FIE CSVs
+    fie_categories = ["ME", "MF", "MS", "WE", "WF", "WS"]
+    fie_data_list = []
+
+    for cat_code in fie_categories:
+        csv_file_path = f"rankings/{cat_code}-detailed-ranking-2026.csv"
+        if os.path.exists(csv_file_path):
+            try:
+                temp_df = pd.read_csv(csv_file_path)
+                if "Name" in temp_df.columns and "Rank" in temp_df.columns:
+                    temp_df = temp_df[["Rank", "Name", "Nat."]].dropna()
+                    temp_df["Category"] = cat_code
+                    fie_data_list.append(temp_df)
+            except Exception as e:
+                continue
+
+    if fie_data_list:
+        df_all_fie = pd.concat(fie_data_list, ignore_index=True)
+        df_all_fie["match_key"] = df_all_fie["Name"].apply(clean_fencer_name)
+    
+        # 2. Normalize names in our SpringRank scores
+        df_scores_normalized = df_fencer_scores.copy()
+        df_scores_normalized["match_key"] = df_scores_normalized["Fencer"].apply(clean_fencer_name)
+    
+        # 3. Merge
+        df_merged_rankings = pd.merge(
+            df_scores_normalized, 
+            df_all_fie, 
+            on="match_key", 
+            how="inner"
+        )
+    else:
+        df_merged_rankings = pd.DataFrame()
+    return (df_merged_rankings,)
+
+
+@app.cell
+def _(df_merged_rankings, mo, pd, pearsonr, spearmanr):
+    # Cell 2: Calculate and Display Correlations
+    if len(df_merged_rankings) >= 3:
+        correlation_results = []
+    
+        # Calculate global correlation
+        glob_spearman, glob_s_p = spearmanr(df_merged_rankings["Calculated_Score"], df_merged_rankings["Rank"])
+        glob_pearson, glob_p_p = pearsonr(df_merged_rankings["Calculated_Score"], df_merged_rankings["Rank"])
+    
+        correlation_results.append({
+            "Category": "GLOBAL (All Overlapping Fencers)",
+            "Fencers Matched": len(df_merged_rankings),
+            "Spearman (Rank Corr)": glob_spearman,
+            "Spearman p-value": glob_s_p,
+            "Pearson (Linear Corr)": glob_pearson,
+            "Pearson p-value": glob_p_p
+        })
+    
+        # Calculate category-wise correlation
+        for category, sub_grp in df_merged_rankings.groupby("Category"):
+            if len(sub_grp) >= 3:
+                s_corr, s_p = spearmanr(sub_grp["Calculated_Score"], sub_grp["Rank"])
+                p_corr, p_p = pearsonr(sub_grp["Calculated_Score"], sub_grp["Rank"])
+                correlation_results.append({
+                    "Category": category,
+                    "Fencers Matched": len(sub_grp),
+                    "Spearman (Rank Corr)": s_corr,
+                    "Spearman p-value": s_p,
+                    "Pearson (Linear Corr)": p_corr,
+                    "Pearson p-value": p_p
+                })
+            
+        df_correlations = pd.DataFrame(correlation_results)
+    
+        correlation_display = mo.vstack([
+            mo.md("### 📈 Relationship: SpringRank Scores vs. Official FIE World Rankings"),
+            mo.md(
+                "Below is the statistical correlation between your custom-calculated SpringRank scores "
+                "and the official FIE world ranks. \n\n"
+                "* **Spearman (Rank Correlation):** Measures monotonic relationship (how well order is preserved). A value close to **-1.0** is expected since Rank 1 (best) should correlate with the highest SpringRank Score.\n"
+                "* **Pearson (Linear Correlation):** Measures linear relationship. Expect a value close to **-1.0**."
+            ),
+            mo.ui.table(df_correlations)
+        ])
+    else:
+        correlation_display = mo.md("⚠️ **No overlapping fencers found.** Please ensure your FIE rankings CSV files are populated in the `rankings/` directory and names match your bout files.")
+
+    correlation_display
     return
 
 
