@@ -77,7 +77,7 @@ def _():
 
     colormap = plt.cm.tab10
     colors = {i: colormap(i) for i in range(20)}
-    return (plt,)
+    return colors, plt
 
 
 @app.cell
@@ -629,7 +629,7 @@ def _(os):
                 print(f"Error processing {input_path}: {e}. Skipping this file.")
         else:
             print(f"File not found: {input_path}")
-    return
+    return (c,)
 
 
 @app.cell
@@ -852,6 +852,41 @@ def _(df_fencer_scores, df_league_depths, group_col, mo):
     return
 
 
+@app.cell
+def _(df_fencer_scores, mo):
+    # Create a dictionary of DataFrames dynamically split by your chosen dividers
+    league_dfs = {}
+    _tabs_dict = {}
+
+    if 'df_fencer_scores' in globals() and not df_fencer_scores.empty:
+        _unique_leagues = sorted(df_fencer_scores['League'].unique())
+    
+        for _league in _unique_leagues:
+            # Filter and sort by calculated score
+            _sub_df = df_fencer_scores[df_fencer_scores['League'] == _league].sort_values(
+                by='Calculated_Score', ascending=False
+            ).reset_index(drop=True)
+        
+            # Add a local rank column
+            _sub_df.insert(0, 'Rank', range(1, len(_sub_df) + 1))
+        
+            # Save to the league dictionary
+            league_dfs[_league] = _sub_df
+        
+            # Add to the visual tab selector
+            _tabs_dict[_league] = mo.vstack([
+                mo.md(f"### 🏆 {_league} Rankings ({len(_sub_df)} fencers)"),
+                mo.ui.table(_sub_df[["Rank", "Fencer", "Calculated_Score"]])
+            ])
+        
+        _tabs_display = mo.ui.tabs(_tabs_dict)
+    else:
+        _tabs_display = mo.md("Calculate scores to generate league rankings.")
+
+    _tabs_display
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -1059,7 +1094,7 @@ def _(df_fencer_scores, model_choice):
         # Support files: ME, MF, MS, WE, WF, WS
         codes = ["ME", "MF", "MS", "WE", "WF", "WS"]
         fie_dfs = []
-    
+
         for code in codes:
             path = os.path.join(rankings_dir, f"{code}-detailed-ranking-2026.csv")
             if os.path.exists(path):
@@ -1095,7 +1130,7 @@ def _(df_fencer_scores, model_choice):
             return " ".join(words)
 
         df_fie["match_key"] = df_fie["Name"].apply(get_match_key)
-    
+
         df_scores_copy = df_scores.copy()
         df_scores_copy["match_key"] = df_scores_copy["Fencer"].apply(get_match_key)
 
@@ -1111,7 +1146,7 @@ def _(df_fencer_scores, model_choice):
 
         # Create visualization
         fig, ax = plt.subplots(figsize=(9, 6.5))
-    
+
         # Calculate overall Spearman rank correlation
         spearman_corr, p_val = spearmanr(merged["Calculated_Score"], merged["Rank"])
         pearson_corr, _ = pearsonr(merged["Calculated_Score"], merged["Rank"])
@@ -1147,11 +1182,11 @@ def _(df_fencer_scores, model_choice):
             fontweight='bold', 
             pad=15
         )
-    
+
         ax.invert_yaxis()  # Rank 1 is the best and should be at the top
         ax.grid(True, linestyle=":", alpha=0.6)
         ax.legend(loc="upper right", frameon=True, facecolor='white', edgecolor='none')
-    
+
         plt.tight_layout()
         return plt.gca()
 
@@ -1193,11 +1228,11 @@ def _(df_fencer_scores, os, pd):
     if fie_data_list:
         df_all_fie = pd.concat(fie_data_list, ignore_index=True)
         df_all_fie["match_key"] = df_all_fie["Name"].apply(clean_fencer_name)
-    
+
         # 2. Normalize names in our SpringRank scores
         df_scores_normalized = df_fencer_scores.copy()
         df_scores_normalized["match_key"] = df_scores_normalized["Fencer"].apply(clean_fencer_name)
-    
+
         # 3. Merge
         df_merged_rankings = pd.merge(
             df_scores_normalized, 
@@ -1207,7 +1242,7 @@ def _(df_fencer_scores, os, pd):
         )
     else:
         df_merged_rankings = pd.DataFrame()
-    return (df_merged_rankings,)
+    return df_merged_rankings, unicodedata
 
 
 @app.cell
@@ -1215,11 +1250,11 @@ def _(df_merged_rankings, mo, pd, pearsonr, spearmanr):
     # Cell 2: Calculate and Display Correlations
     if len(df_merged_rankings) >= 3:
         correlation_results = []
-    
+
         # Calculate global correlation
         glob_spearman, glob_s_p = spearmanr(df_merged_rankings["Calculated_Score"], df_merged_rankings["Rank"])
         glob_pearson, glob_p_p = pearsonr(df_merged_rankings["Calculated_Score"], df_merged_rankings["Rank"])
-    
+
         correlation_results.append({
             "Category": "GLOBAL (All Overlapping Fencers)",
             "Fencers Matched": len(df_merged_rankings),
@@ -1228,7 +1263,7 @@ def _(df_merged_rankings, mo, pd, pearsonr, spearmanr):
             "Pearson (Linear Corr)": glob_pearson,
             "Pearson p-value": glob_p_p
         })
-    
+
         # Calculate category-wise correlation
         for category, sub_grp in df_merged_rankings.groupby("Category"):
             if len(sub_grp) >= 3:
@@ -1242,9 +1277,9 @@ def _(df_merged_rankings, mo, pd, pearsonr, spearmanr):
                     "Pearson (Linear Corr)": p_corr,
                     "Pearson p-value": p_p
                 })
-            
+
         df_correlations = pd.DataFrame(correlation_results)
-    
+
         correlation_display = mo.vstack([
             mo.md("### 📈 Relationship: SpringRank Scores vs. Official FIE World Rankings"),
             mo.md(
@@ -1259,6 +1294,190 @@ def _(df_merged_rankings, mo, pd, pearsonr, spearmanr):
         correlation_display = mo.md("⚠️ **No overlapping fencers found.** Please ensure your FIE rankings CSV files are populated in the `rankings/` directory and names match your bout files.")
 
     correlation_display
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### clean correlations
+    """)
+    return
+
+
+@app.cell
+def _(c, df_fencer_scores, mo, np, os, pd, pearsonr, spearmanr, unicodedata):
+    # Helper to clean and sort fencer names safely
+    def _clean_name(name):
+        if not isinstance(name, str):
+            return ""
+        _norm = unicodedata.normalize('NFD', name)
+        _stripped = "".join(c for _c in _norm if unicodedata.category(_c) != 'Mn')
+        _clean = "".join(c for c in _stripped.lower() if c.isalnum() or c.isspace())
+        return " ".join(sorted(_clean.split()))
+
+    # Helper to map league names to FIE category codes
+    def _get_fie_code(league_name):
+        _name_lower = str(league_name).lower()
+        _g = "M" if " / m" in _name_lower or "men" in _name_lower else "W" if " / f" in _name_lower or "women" in _name_lower else None
+        _w = "E" if "epee" in _name_lower or "épée" in _name_lower else "F" if "foil" in _name_lower else "S" if "sabre" in _name_lower else None
+        return f"{_g}{_w}" if _g and _w else None
+
+    # Clean and match SpringRank scores to FIE detailed files
+    _fie_categories = ["ME", "MF", "MS", "WE", "WF", "WS"]
+    _fie_dfs = {}
+
+    for _cat in _fie_categories:
+        _path = f"rankings/{_cat}-detailed-ranking-2026.csv"
+        if os.path.exists(_path):
+            try:
+                _df = pd.read_csv(_path)
+                if "Name" in _df.columns and "Rank" in _df.columns:
+                    # Dynamically locate the Points column
+                    _pts_col = next((_col for _col in _df.columns if "point" in _col.lower() or "pts" in _col.lower()), None)
+                    _cols_to_keep = ["Rank", "Name", "Nat."]
+                    if _pts_col:
+                        _cols_to_keep.append(_pts_col)
+                
+                    _cleaned_df = _df[_cols_to_keep].dropna(subset=["Rank", "Name"])
+                    _cleaned_df["match_key"] = _cleaned_df["Name"].apply(_clean_name)
+                    _fie_dfs[_cat] = (_cleaned_df, _pts_col)
+            except Exception:
+                continue
+
+    _matched_records = []
+
+    if 'df_fencer_scores' in globals() and not df_fencer_scores.empty:
+        for _, _row in df_fencer_scores.iterrows():
+            _league = _row["League"]
+            _cat_code = _get_fie_code(_league)
+        
+            if _cat_code in _fie_dfs:
+                _fie_df, _pts_col = _fie_dfs[_cat_code]
+                _fencer_clean = _clean_name(_row["Fencer"])
+            
+                _match = _fie_df[_fie_df["match_key"] == _fencer_clean]
+                if not _match.empty:
+                    _rec = {
+                        "Fencer": _row["Fencer"],
+                        "League": _league,
+                        "Category": _cat_code,
+                        "Calculated_Score": _row["Calculated_Score"],
+                        "Official_Rank": _match.iloc[0]["Rank"],
+                        "Country": _match.iloc[0]["Nat."]
+                    }
+                    if _pts_col:
+                        _rec["FIE_Points"] = pd.to_numeric(_match.iloc[0][_pts_col], errors="coerce")
+                    _matched_records.append(_rec)
+
+    df_matched_validation = pd.DataFrame(_matched_records)
+
+    # Calculate Rank and Points Correlations
+    _correlations = []
+
+    if not df_matched_validation.empty and len(df_matched_validation) >= 3:
+        for _league_name, _sub_grp in df_matched_validation.groupby("League"):
+            if len(_sub_grp) >= 3:
+                _s_rank_corr, _ = spearmanr(_sub_grp["Calculated_Score"], _sub_grp["Official_Rank"])
+                _p_rank_corr, _ = pearsonr(_sub_grp["Calculated_Score"], _sub_grp["Official_Rank"])
+            
+                _res = {
+                    "League / Category": _league_name,
+                    "Fencers Matched": len(_sub_grp),
+                    "Spearman (vs Rank)": _s_rank_corr,
+                    "Pearson (vs Rank)": _p_rank_corr,
+                }
+            
+                # Points correlations (if points exist)
+                if "FIE_Points" in _sub_grp.columns and _sub_grp["FIE_Points"].notna().sum() >= 3:
+                    _sub_pts = _sub_grp.dropna(subset=["FIE_Points"])
+                    _s_pts_corr, _ = spearmanr(_sub_pts["Calculated_Score"], _sub_pts["FIE_Points"])
+                    _p_pts_corr, _ = pearsonr(_sub_pts["Calculated_Score"], _sub_pts["FIE_Points"])
+                    _res["Spearman (vs Points)"] = _s_pts_corr
+                    _res["Pearson (vs Points)"] = _p_pts_corr
+                else:
+                    _res["Spearman (vs Points)"] = np.nan
+                    _res["Pearson (vs Points)"] = np.nan
+                
+                _correlations.append(_res)
+            
+        df_correlations_summary = pd.DataFrame(_correlations)
+        _output = mo.vstack([
+            mo.md("### 📊 Correlation: Calculated Scores vs. Official FIE Metrics"),
+            mo.md(
+                "Calculations matched strictly within weapons and genders: \n\n"
+                "* **vs. Rank:** Expect a **negative** correlation (better fencer = high score, lower rank number e.g. 1st).\n"
+                "* **vs. Points:** Expect a **positive** correlation (better fencer = high score, higher FIE points)."
+            ),
+            mo.ui.table(df_correlations_summary)
+        ])
+    else:
+        _output = mo.md("⚠️ **No overlapping fencers matched.** Check your rankings CSV files.")
+
+    _output
+    return (df_matched_validation,)
+
+
+@app.cell
+def _(colors, df_matched_validation, mo, model_choice, np, plt):
+    # Dynamic Visual Validation (Ranks and Points side-by-side)
+    if 'df_matched_validation' in globals() and not df_matched_validation.empty and len(df_matched_validation) >= 3:
+        _has_points = "FIE_Points" in df_matched_validation.columns and df_matched_validation["FIE_Points"].notna().sum() > 2
+    
+        _fig, _axs = plt.subplots(1, 2 if _has_points else 1, figsize=(14, 6) if _has_points else (8, 6))
+        _ax_rank = _axs[0] if _has_points else _axs
+    
+        _unique_categories = sorted(df_matched_validation["Category"].unique())
+    
+        # Plot 1: Ranks
+        for _idx, _cat in enumerate(_unique_categories):
+            _sub = df_matched_validation[df_matched_validation["Category"] == _cat]
+            _color = colors[_idx % len(colors)]
+        
+            _ax_rank.scatter(
+                _sub["Calculated_Score"], _sub["Official_Rank"], 
+                label=f"{_cat} (n={len(_sub)})", alpha=0.75, s=60, edgecolors='black', linewidths=0.5, color=_color
+            )
+            if len(_sub) > 2:
+                _m, _b = np.polyfit(_sub["Calculated_Score"], _sub["Official_Rank"], 1)
+                _x_dom = np.linspace(_sub["Calculated_Score"].min(), _sub["Calculated_Score"].max(), 100)
+                _ax_rank.plot(_x_dom, _m * _x_dom + _b, color=_color, linestyle="--", alpha=0.5)
+            
+        _ax_rank.set_xlabel(f"Calculated Score ({model_choice})", fontweight='bold')
+        _ax_rank.set_ylabel("Official FIE World Rank", fontweight='bold')
+        _ax_rank.set_title("Validation vs. Official Rank (Inverted)", fontweight='bold')
+        _ax_rank.invert_yaxis()
+        _ax_rank.grid(True, linestyle=":", alpha=0.6)
+        _ax_rank.legend()
+    
+        # Plot 2: Points (If available)
+        if _has_points:
+            _ax_pts = _axs[1]
+            for _idx, _cat in enumerate(_unique_categories):
+                _sub = df_matched_validation[(df_matched_validation["Category"] == _cat) & (df_matched_validation["FIE_Points"].notna())]
+                _color = colors[_idx % len(colors)]
+            
+                _ax_pts.scatter(
+                    _sub["Calculated_Score"], _sub["FIE_Points"], 
+                    label=f"{_cat} (n={len(_sub)})", alpha=0.75, s=60, edgecolors='black', linewidths=0.5, color=_color
+                )
+                if len(_sub) > 2:
+                    _m, _b = np.polyfit(_sub["Calculated_Score"], _sub["FIE_Points"], 1)
+                    _x_dom = np.linspace(_sub["Calculated_Score"].min(), _sub["Calculated_Score"].max(), 100)
+                    _ax_pts.plot(_x_dom, _m * _x_dom + _b, color=_color, linestyle="--", alpha=0.5)
+                
+            _ax_pts.set_xlabel(f"Calculated Score ({model_choice})", fontweight='bold')
+            _ax_pts.set_ylabel("Official FIE World Points", fontweight='bold')
+            _ax_pts.set_title("Validation vs. Total FIE Points", fontweight='bold')
+            _ax_pts.grid(True, linestyle=":", alpha=0.6)
+            _ax_pts.legend()
+
+        plt.tight_layout()
+        _viz_output = plt.gca()
+    else:
+        _viz_output = mo.md("Nothing to plot. Check loaded fencer dataset.")
+    
+    _viz_output
     return
 
 
