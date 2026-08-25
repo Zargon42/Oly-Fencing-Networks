@@ -59,12 +59,14 @@ def _():
     from adjustText import adjust_text
     from scipy.stats import pearsonr, spearmanr
     from sklearn.preprocessing import LabelEncoder
+    import seaborn as sns
 
     return (
         AffinityPropagation,
         LabelEncoder,
         adjust_text,
         pearsonr,
+        sns,
         spearmanr,
         st,
     )
@@ -376,8 +378,8 @@ def _(StringIO, pd, requests):
 
 
 @app.cell
-def codenames(fie_ranking_to_csv):
-    rankings = {
+def codenames():
+    '''rankings = {
         "ME": ("E", "M"),
         "MF": ("F", "M"),
         "MS": ("S", "M"),
@@ -400,244 +402,58 @@ def codenames(fie_ranking_to_csv):
         fie_ranking_to_csv(
             url,
             f"rankings/{code}-detailed-ranking-2026.csv"
-        )
+        )'''
     return
 
 
-@app.function
-def pdf_ranking_to_csv(pdf_path, csv_path=None):
-    """
-    Convert an FIE General Ranking PDF into a CSV.
-
-    The column names are extracted automatically from the PDF.
-    Supports small variations in the number of columns between PDFs.
-    """
-
-    import pdfplumber
-    import pandas as pd
-
-    all_rows = []
-    header = None
-
-    with pdfplumber.open(pdf_path) as pdf:
-
-        for page_number, page in enumerate(pdf.pages, start=1):
-
-            tables = page.extract_tables()
-
-            if not tables:
-                print(f"Warning: no table found on page {page_number}")
-                continue
-
-            table = tables[0]
-
-            for row in table:
-
-                if not row:
-                    continue
-
-                # Clean cells
-                row = [
-                    cell.strip() if isinstance(cell, str) else cell
-                    for cell in row
-                ]
-
-                # --------------------------------------------------
-                # Find the header automatically
-                # --------------------------------------------------
-
-                if header is None:
-
-                    row_text = " ".join(
-                        str(cell).lower()
-                        for cell in row
-                        if cell
-                    )
-
-                    # FIE ranking tables should contain these
-                    # characteristic header fields
-                    if (
-                        "rank" in row_text
-                        and "name" in row_text
-                    ):
-                        header = row
-                        print(
-                            f"Detected header on page {page_number}: "
-                            f"{len(header)} columns"
-                        )
-                        continue
-
-                # --------------------------------------------------
-                # Only accept rows whose first cell is a rank
-                # --------------------------------------------------
-
-                if not row[0] or not str(row[0]).strip().isdigit():
-                    continue
-
-                all_rows.append(row)
-
-    if header is None:
-        raise ValueError(
-            "Could not automatically detect the table header."
-        )
-
-    # --------------------------------------------------------------
-    # Handle small variations in column count
-    # --------------------------------------------------------------
-
-    n_columns = len(header)
-
-    cleaned_rows = []
-
-    for row in all_rows:
-
-        # Ignore wildly malformed rows
-        if abs(len(row) - n_columns) > 2:
-            print(
-                f"Warning: ignoring row with {len(row)} columns "
-                f"(expected approximately {n_columns})"
-            )
-            continue
-
-        # Too few columns → pad
-        if len(row) < n_columns:
-            row = row + [None] * (n_columns - len(row))
-
-        # Too many columns → extend header
-        elif len(row) > n_columns:
-
-            extra = len(row) - n_columns
-
-            for i in range(extra):
-                header.append(f"Extra_{i + 1}")
-
-            n_columns = len(header)
-
-        cleaned_rows.append(row)
-
-    # Make every row the same size
-    cleaned_rows = [
-        row + [None] * (len(header) - len(row))
-        for row in cleaned_rows
-    ]
-
-    # --------------------------------------------------------------
-    # Create DataFrame
-    # --------------------------------------------------------------
-
-    df = pd.DataFrame(
-        cleaned_rows,
-        columns=header
-    )
-
-    # --------------------------------------------------------------
-    # Clean column names
-    # --------------------------------------------------------------
-
-    df.columns = [
-        str(col).strip() if col else f"Column_{i + 1}"
-        for i, col in enumerate(df.columns)
-    ]
-
-    # --------------------------------------------------------------
-    # Convert Rank
-    # --------------------------------------------------------------
-
-    if "Rank" in df.columns:
-        df["Rank"] = pd.to_numeric(
-            df["Rank"],
-            errors="coerce"
-        ).astype("Int64")
-
-    # --------------------------------------------------------------
-    # Convert numeric columns
-    # --------------------------------------------------------------
-
-    for col in df.columns:
-
-        if col in ["Rank", "Name", "Nat."]:
-            continue
-
-        df[col] = (
-            df[col]
-            .astype("string")
-            .str.strip()
-            .str.replace("(", "", regex=False)
-            .str.replace(")", "", regex=False)
-            .replace("", pd.NA)
-        )
-
-        df[col] = pd.to_numeric(
-            df[col],
-            errors="coerce"
-        )
-
-    # --------------------------------------------------------------
-    # Remove duplicates
-    # --------------------------------------------------------------
-
-    duplicate_columns = [
-        col for col in ["Rank", "Name", "Nat."]
-        if col in df.columns
-    ]
-
-    if duplicate_columns:
-        df = df.drop_duplicates(
-            subset=duplicate_columns,
-            keep="first"
-        )
-
-    # --------------------------------------------------------------
-    # Sort
-    # --------------------------------------------------------------
-
-    if "Rank" in df.columns:
-        df = df.sort_values(
-            by="Rank"
-        ).reset_index(drop=True)
-
-    # --------------------------------------------------------------
-    # Automatically create CSV path if not provided
-    # --------------------------------------------------------------
-
-    if csv_path is None:
-        csv_path = pdf_path.rsplit(".", 1)[0] + ".csv"
-
-    df.to_csv(
-        csv_path,
-        index=False,
-        encoding="utf-8-sig"
-    )
-
-    print(f"Saved {len(df)} fencers to:")
-    print(csv_path)
-
-    return df
-
-
 @app.cell
-def _(os):
-    cats = ["ME", "MF", "WF", "WS", "MS" ]
+def _(fie_ranking_to_csv, mo, os):
+    # Check if all 6 FIE CSV files already exist on disk to prevent slow web requests
+    _rankings_definitions = {
+        "ME": ("E", "M"),
+        "MF": ("F", "M"),
+        "MS": ("S", "M"),
+        "WE": ("E", "F"),
+        "WF": ("F", "F"),
+        "WS": ("S", "F"),
+    }
 
-    for c in cats:
-        input_path = f"rankings/{c}-detailed-ranking-2026.pdf"
-        #output_path = f"rankings/{c}-detailed-ranking-2026.csv"
-        if os.path.exists(input_path):
-            try:
-                df = pdf_ranking_to_csv(str(input_path))
-            except Exception as e:
-                print(f"Error processing {input_path}: {e}. Skipping this file.")
-        else:
-            print(f"File not found: {input_path}")
-    return (c,)
+    _missing_any_files = False
+    for _code in _rankings_definitions.keys():
+        _path = f"rankings/{_code}-detailed-ranking-2026.csv"
+        if not os.path.exists(_path):
+            _missing_any_files = True
+            break
 
+    if not _missing_any_files:
+        # Skip download completely
+        download_status_message = mo.md("✅ **FIE Rankings CSV files already exist on disk. Skipping slow web downloads.**")
+    else:
+        # Ensure directory exists
+        os.makedirs("rankings", exist_ok=True)
+    
+        # Download ONLY the missing files
+        for _code, (_weapon, _gender) in _rankings_definitions.items():
+            _path = f"rankings/{_code}-detailed-ranking-2026.csv"
+            if not os.path.exists(_path):
+                _url = (
+                    "https://fie.org/athletes/detailed-ranking"
+                    f"?season=2026"
+                    f"&weapon={_weapon}"
+                    f"&gender={_gender}"
+                    f"&category=S"
+                    f"&type=I"
+                )
+                try:
+                    fie_ranking_to_csv(_url, _path)
+                except Exception as _e:
+                    print(f"Error downloading {_code} from FIE: {_e}")
+                
+        download_status_message = mo.md("📥 **Completed: Missing FIE Ranking files downloaded and cached successfully!**")
 
-@app.cell
-def _(os):
+    download_status_message
 
-    print(os.getcwd())
-    print(os.path.exists(r"rankings\ME-detailed-ranking-2026.pdf"))
-    return
+    return (download_status_message,)
 
 
 @app.cell(hide_code=True)
@@ -672,7 +488,7 @@ def _(all_fencing_bouts, mo):
         ),
         'secondary': mo.ui.dropdown(
             options=['None', 'Weapon', 'Age Category', 'Gender', 'Season', 'Host Country'],
-            value='None',
+            value='Gender',
             label="Subdivide By (Optional):"
         )
     })
@@ -1306,55 +1122,111 @@ def _(mo):
 
 
 @app.cell
-def _(c, df_fencer_scores, mo, np, os, pd, pearsonr, spearmanr, unicodedata):
-    # Helper to clean and sort fencer names safely
-    def _clean_name(name):
+def _(mo):
+    # Define the rank limit slider to let the user widen the validation filter
+    rank_limit_slider = mo.ui.slider(start=50, stop=2000, step=50, value=200, label="Max FIE Rank Filter")
+    mo.vstack([
+        mo.md("### ⚙️ Adjust Validation Strictness"),
+        mo.md("If your tournament dataset contains fewer top elite athletes, widen this slider to capture unranked/lower-ranked fencers:"),
+        rank_limit_slider
+    ])
+    return (rank_limit_slider,)
+
+
+@app.cell
+def _(
+    df_fencer_scores,
+    download_status_message,
+    mo,
+    np,
+    os,
+    pd,
+    rank_limit_slider,
+    st,
+    unicodedata,
+):
+    # Robust Self-Contained Alignment & Calculations (No re-imports to avoid cycles)
+    _ = download_status_message # 👈 FORCE Marimo to re-run this cell whenever the downloader cell runs!
+
+    _loaded_fie_dfs = {}
+    _missing_files = []
+    _corrupted_files = []
+
+    # Local helper functions defined inside this cell scope to prevent global namespace collisions
+    def _local_clean_name(name):
         if not isinstance(name, str):
             return ""
+        # unicodedata is already globally imported upstream, so we just use it directly
         _norm = unicodedata.normalize('NFD', name)
-        _stripped = "".join(c for _c in _norm if unicodedata.category(_c) != 'Mn')
-        _clean = "".join(c for c in _stripped.lower() if c.isalnum() or c.isspace())
-        return " ".join(sorted(_clean.split()))
+        _stripped = "".join(_char for _char in _norm if unicodedata.category(_char) != 'Mn')
+        _clean_str = "".join(_char for _char in _stripped.lower() if _char.isalnum() or _char.isspace())
+        return " ".join(sorted(_clean_str.split()))
 
-    # Helper to map league names to FIE category codes
-    def _get_fie_code(league_name):
+    def _local_get_fie_code(league_name):
         _name_lower = str(league_name).lower()
-        _g = "M" if " / m" in _name_lower or "men" in _name_lower else "W" if " / f" in _name_lower or "women" in _name_lower else None
+        _g = "W" if " / f" in _name_lower or "women" in _name_lower or "ladies" in _name_lower else "M" if " / m" in _name_lower or "men" in _name_lower or "mens" in _name_lower else None
         _w = "E" if "epee" in _name_lower or "épée" in _name_lower else "F" if "foil" in _name_lower else "S" if "sabre" in _name_lower else None
         return f"{_g}{_w}" if _g and _w else None
 
-    # Clean and match SpringRank scores to FIE detailed files
+    # Load FIE CSVs directly using globally imported 'os' and 'pd'
     _fie_categories = ["ME", "MF", "MS", "WE", "WF", "WS"]
-    _fie_dfs = {}
 
     for _cat in _fie_categories:
         _path = f"rankings/{_cat}-detailed-ranking-2026.csv"
         if os.path.exists(_path):
             try:
                 _df = pd.read_csv(_path)
-                if "Name" in _df.columns and "Rank" in _df.columns:
-                    # Dynamically locate the Points column
-                    _pts_col = next((_col for _col in _df.columns if "point" in _col.lower() or "pts" in _col.lower()), None)
-                    _cols_to_keep = ["Rank", "Name", "Nat."]
+                _df.columns = [str(_col).strip() for _col in _df.columns]
+            
+                _rank_col = next((_c for _c in _df.columns if _c.lower() == "rank"), None)
+                _name_col = next((_c for _c in _df.columns if _c.lower() == "name"), None)
+                _nat_col = next((_c for _c in _df.columns if "nat" in _c.lower()), None)
+                _pts_col = next((_c for _c in _df.columns if "point" in _c.lower() or "pts" in _c.lower()), None)
+            
+                if _rank_col and _name_col:
+                    _cols_to_keep = [_rank_col, _name_col]
+                    if _nat_col:
+                        _cols_to_keep.append(_nat_col)
                     if _pts_col:
                         _cols_to_keep.append(_pts_col)
+                    
+                    _cleaned_df = _df[_cols_to_keep].dropna(subset=[_rank_col, _name_col]).copy()
                 
-                    _cleaned_df = _df[_cols_to_keep].dropna(subset=["Rank", "Name"])
-                    _cleaned_df["match_key"] = _cleaned_df["Name"].apply(_clean_name)
-                    _fie_dfs[_cat] = (_cleaned_df, _pts_col)
-            except Exception:
-                continue
+                    _rename_map = {_rank_col: "Rank", _name_col: "Name"}
+                    if _nat_col:
+                        _rename_map[_nat_col] = "Nat."
+                    if _pts_col:
+                        _rename_map[_pts_col] = "FIE_Points"
+                    _cleaned_df = _cleaned_df.rename(columns=_rename_map)
+                
+                    _cleaned_df["match_key"] = _cleaned_df["Name"].apply(_local_clean_name)
+                    _loaded_fie_dfs[_cat] = (_cleaned_df, "FIE_Points" if _pts_col else None)
+                else:
+                    _corrupted_files.append((_cat, f"Missing columns. Columns found: {_df.columns.tolist()}"))
+            except Exception as _e:
+                _corrupted_files.append((_cat, str(_e)))
+        else:
+            _missing_files.append(_path)
 
+    _diagnostics = {
+        "fencer_scores_exists": 'df_fencer_scores' in globals() and not df_fencer_scores.empty,
+        "fie_files_loaded": len(_loaded_fie_dfs) > 0,
+        "sample_calculated_names": []
+    }
+
+    if _diagnostics["fencer_scores_exists"]:
+        _diagnostics["sample_calculated_names"] = list(df_fencer_scores["Fencer"].dropna().unique()[:5])
+
+    # Align Scores
     _matched_records = []
-
-    if 'df_fencer_scores' in globals() and not df_fencer_scores.empty:
+    if _diagnostics["fencer_scores_exists"] and _diagnostics["fie_files_loaded"]:
         for _, _row in df_fencer_scores.iterrows():
             _league = _row["League"]
-            _cat_code = _get_fie_code(_league)
+            _cat_code = _local_get_fie_code(_league)
         
-            if _cat_code in _fie_dfs:
-                _fie_df, _pts_col = _fie_dfs[_cat_code]
-                _fencer_clean = _clean_name(_row["Fencer"])
+            if _cat_code in _loaded_fie_dfs:
+                _fie_df, _pts_col_name = _loaded_fie_dfs[_cat_code]
+                _fencer_clean = _local_clean_name(_row["Fencer"])
             
                 _match = _fie_df[_fie_df["match_key"] == _fencer_clean]
                 if not _match.empty:
@@ -1364,58 +1236,245 @@ def _(c, df_fencer_scores, mo, np, os, pd, pearsonr, spearmanr, unicodedata):
                         "Category": _cat_code,
                         "Calculated_Score": _row["Calculated_Score"],
                         "Official_Rank": _match.iloc[0]["Rank"],
-                        "Country": _match.iloc[0]["Nat."]
+                        "Country": _match.iloc[0]["Nat."] if "Nat." in _match.columns else "N/A"
                     }
-                    if _pts_col:
-                        _rec["FIE_Points"] = pd.to_numeric(_match.iloc[0][_pts_col], errors="coerce")
+                    if _pts_col_name and "FIE_Points" in _match.columns:
+                        _rec["FIE_Points"] = pd.to_numeric(_match.iloc[0]["FIE_Points"], errors="coerce")
                     _matched_records.append(_rec)
 
     df_matched_validation = pd.DataFrame(_matched_records)
 
-    # Calculate Rank and Points Correlations
+    # Filter and Compute Correlations Reactively
+    _rank_limit = rank_limit_slider.value
+    if not df_matched_validation.empty:
+        df_elite = df_matched_validation[df_matched_validation["Official_Rank"] <= _rank_limit].copy()
+    else:
+        df_elite = pd.DataFrame()
+
     _correlations = []
 
-    if not df_matched_validation.empty and len(df_matched_validation) >= 3:
-        for _league_name, _sub_grp in df_matched_validation.groupby("League"):
+    if not df_elite.empty and len(df_elite) >= 3:
+        # Global Elite Correlations (using globally imported 'st' for scipy.stats)
+        _glob_s_rank, _glob_s_rank_p = st.spearmanr(df_elite["Calculated_Score"], df_elite["Official_Rank"])
+        _glob_k_rank, _glob_k_rank_p = st.kendalltau(df_elite["Calculated_Score"], df_elite["Official_Rank"])
+    
+        _res_glob = {
+            "League / Category": f"GLOBAL Elite (Top {_rank_limit})",
+            "Elite Fencers": len(df_elite),
+            "Spearman ρ (vs Rank)": _glob_s_rank,
+            "Spearman p-value": _glob_s_rank_p,
+            "Kendall τ (vs Rank)": _glob_k_rank,
+            "Kendall p-value": _glob_k_rank_p,
+        }
+    
+        if "FIE_Points" in df_elite.columns and df_elite["FIE_Points"].notna().sum() >= 3:
+            _sub_pts_glob = df_elite.dropna(subset=["FIE_Points"])
+            _s_pts, _ = st.spearmanr(_sub_pts_glob["Calculated_Score"], _sub_pts_glob["FIE_Points"])
+            _k_pts, _ = st.kendalltau(_sub_pts_glob["Calculated_Score"], _sub_pts_glob["FIE_Points"])
+            _res_glob["Spearman ρ (vs Points)"] = _s_pts
+            _res_glob["Kendall τ (vs Points)"] = _k_pts
+        else:
+            _res_glob["Spearman ρ (vs Points)"] = np.nan
+            _res_glob["Kendall τ (vs Points)"] = np.nan
+        
+        _correlations.append(_res_glob)
+
+        # League-specific correlations
+        for _league_name, _sub_grp in df_elite.groupby("League"):
             if len(_sub_grp) >= 3:
-                _s_rank_corr, _ = spearmanr(_sub_grp["Calculated_Score"], _sub_grp["Official_Rank"])
-                _p_rank_corr, _ = pearsonr(_sub_grp["Calculated_Score"], _sub_grp["Official_Rank"])
+                _s_rank, _s_rank_p = st.spearmanr(_sub_grp["Calculated_Score"], _sub_grp["Official_Rank"])
+                _k_rank, _k_rank_p = st.kendalltau(_sub_grp["Calculated_Score"], _sub_grp["Official_Rank"])
             
                 _res = {
                     "League / Category": _league_name,
-                    "Fencers Matched": len(_sub_grp),
-                    "Spearman (vs Rank)": _s_rank_corr,
-                    "Pearson (vs Rank)": _p_rank_corr,
+                    "Elite Fencers": len(_sub_grp),
+                    "Spearman ρ (vs Rank)": _s_rank,
+                    "Spearman p-value": _s_rank_p,
+                    "Kendall τ (vs Rank)": _k_rank,
+                    "Kendall p-value": _k_rank_p,
                 }
             
-                # Points correlations (if points exist)
                 if "FIE_Points" in _sub_grp.columns and _sub_grp["FIE_Points"].notna().sum() >= 3:
                     _sub_pts = _sub_grp.dropna(subset=["FIE_Points"])
-                    _s_pts_corr, _ = spearmanr(_sub_pts["Calculated_Score"], _sub_pts["FIE_Points"])
-                    _p_pts_corr, _ = pearsonr(_sub_pts["Calculated_Score"], _sub_pts["FIE_Points"])
-                    _res["Spearman (vs Points)"] = _s_pts_corr
-                    _res["Pearson (vs Points)"] = _p_pts_corr
+                    _s_pts, _ = st.spearmanr(_sub_pts["Calculated_Score"], _sub_pts["FIE_Points"])
+                    _k_pts, _ = st.kendalltau(_sub_pts["Calculated_Score"], _sub_pts["FIE_Points"])
+                    _res["Spearman ρ (vs Points)"] = _s_pts
+                    _res["Kendall τ (vs Points)"] = _k_pts
                 else:
-                    _res["Spearman (vs Points)"] = np.nan
-                    _res["Pearson (vs Points)"] = np.nan
+                    _res["Spearman ρ (vs Points)"] = np.nan
+                    _res["Kendall τ (vs Points)"] = np.nan
                 
                 _correlations.append(_res)
             
         df_correlations_summary = pd.DataFrame(_correlations)
-        _output = mo.vstack([
-            mo.md("### 📊 Correlation: Calculated Scores vs. Official FIE Metrics"),
-            mo.md(
-                "Calculations matched strictly within weapons and genders: \n\n"
-                "* **vs. Rank:** Expect a **negative** correlation (better fencer = high score, lower rank number e.g. 1st).\n"
-                "* **vs. Points:** Expect a **positive** correlation (better fencer = high score, higher FIE points)."
-            ),
+    
+        _output_display = mo.vstack([
+            mo.md(f"### 📊 Dynamic Validation Correlation (Top {_rank_limit})"),
             mo.ui.table(df_correlations_summary)
         ])
     else:
-        _output = mo.md("⚠️ **No overlapping fencers matched.** Check your rankings CSV files.")
+        # 4. Detailed Diagnostic Report
+        _diagnostics_report = []
+        _diagnostics_report.append("### 🔍 Validation Alignment Diagnostics")
+    
+        if not _diagnostics["fencer_scores_exists"]:
+            _diagnostics_report.append("❌ **Error:** `df_fencer_scores` is empty. Please run your ranking model first.")
+        else:
+            _diagnostics_report.append("✅ `df_fencer_scores` is calculated.")
+        
+        if not _diagnostics["fie_files_loaded"]:
+            _diagnostics_report.append("❌ **Error:** No FIE detailed ranking files could be loaded.")
+            if _missing_files:
+                _diagnostics_report.append(f"  * **Missing files:** `{_missing_files}`")
+            if _corrupted_files:
+                _diagnostics_report.append(f"  * **Corrupted or unparseable files:** `{_corrupted_files}`")
+        else:
+            _diagnostics_report.append(f"✅ Successfully loaded {len(_loaded_fie_dfs)} FIE ranking files on the fly.")
+        
+        if _diagnostics["fencer_scores_exists"] and _diagnostics["fie_files_loaded"]:
+            if df_matched_validation.empty:
+                _diagnostics_report.append("❌ **Error:** Name alignment failed completely (0 overlap matches).")
+                _diagnostics_report.append(f"  * Sample calculated fencers in your dataset: `{_diagnostics['sample_calculated_names']}`")
+                _first_loaded_cat = list(_loaded_fie_dfs.keys())[0]
+                _sample_fie_names = list(_loaded_fie_dfs[_first_loaded_cat][0]["Name"].unique()[:5])
+                _diagnostics_report.append(f"  * Sample fencers in loaded FIE files: `{_sample_fie_names}`")
+                _diagnostics_report.append("⚠️ *Check spelling formats. Your cleaning function may need updating if formats are mismatched.*")
+            else:
+                _diagnostics_report.append(f"✅ Found **{len(df_matched_validation)}** overlapping matches overall.")
+                _diagnostics_report.append(f"❌ However, **0** matched fencers had an official FIE Rank of $$\\le {_rank_limit}$$.")
+                _diagnostics_report.append(f"  * Best matched rank in your dataset: **FIE Rank {df_matched_validation['Official_Rank'].min()}**")
+                _diagnostics_report.append("👉 **Use the slider above to widen the FIE Rank filter (e.g., to 500 or 1000) to capture your athletes!**")
+            
+        _output_display = mo.vstack([
+            mo.md("\n".join(_diagnostics_report))
+        ])
 
-    _output
-    return (df_matched_validation,)
+    _output_display
+    return df_elite, df_matched_validation
+
+
+@app.cell
+def _(df_elite, mo, model_choice, pd, plt, sns):
+    # Binned Rank Boxplot for Top 200 (Proves the strong Monotonic Trend)
+
+    if 'df_elite' in globals() and not df_elite.empty:
+        # Create rank bins specifically for the top 200
+        df_elite['Rank_Bin'] = pd.cut(
+            df_elite['Official_Rank'], 
+            bins=[0, 50, 100, 150, 200], 
+            labels=['1-50', '51-100', '101-150', '151-200']
+        )
+    
+        plt.figure(figsize=(10, 6))
+        sns.boxplot(
+            data=df_elite, 
+            x='Rank_Bin', 
+            y='Calculated_Score', 
+            hue='Rank_Bin',  # Fixes the deprecated warning
+            palette='viridis', 
+            legend=False
+        )
+        plt.title('Elite Top 200: SpringRank Score Distribution by FIE Rank Bin', fontweight='bold')
+        plt.xlabel('Official FIE Rank Bin', fontweight='bold')
+        plt.ylabel(f'Calculated Score ({model_choice})', fontweight='bold')
+        plt.grid(axis='y', linestyle=':', alpha=0.6)
+        plt.show()
+
+    else:
+        mo.md("Run the alignment cell first to generate df_elite.")
+    return
+
+
+@app.cell
+def _(df_elite, pd, plt, sns):
+    # Create rank bins
+    df_elite['Rank_Bin'] = pd.cut(df_elite['Official_Rank'], bins=[0, 100, 500, 1000], labels=['1-100', '101-500', '501-1000'])
+
+    plt.figure(figsize=(10, 6))
+    sns.boxplot(data=df_elite, x='Rank_Bin', y='Calculated_Score', palette='viridis')
+    plt.title('Distribution of SpringRank Scores across FIE Rank Bins')
+    plt.xlabel('Official FIE Rank Bin')
+    plt.ylabel('Calculated Score')
+    plt.show()
+    return
+
+
+@app.cell
+def _(df_elite, mo, model_choice, pd, plt, sns):
+    # Cell 45: Boxplot Distribution across Ranks
+    if 'df_elite' in globals() and not df_elite.empty:
+        # Copy the dataframe so we don't modify the global df_elite permanently
+        _df_plot = df_elite.copy()
+    
+        # Dynamically bin FIE ranks into logical categories (adjusts automatically based on your slider)
+        _max_rank = _df_plot['Official_Rank'].max()
+        _bins = [0, 50, 100, max(200, _max_rank)]
+        _labels = ['1-50', '51-100', f'101-{int(_max_rank)}']
+    
+        _df_plot['Rank_Bin'] = pd.cut(
+            _df_plot['Official_Rank'], 
+            bins=_bins, 
+            labels=_labels
+        )
+    
+        # Drop fencers outside the binned range
+        _df_plot = _df_plot.dropna(subset=['Rank_Bin'])
+    
+        if not _df_plot.empty:
+            _fig, _ax = plt.subplots(figsize=(8, 5))
+        
+            # Draw the boxplot safely
+            sns.boxplot(
+                data=_df_plot, 
+                x='Rank_Bin', 
+                y='Calculated_Score', 
+                hue='Rank_Bin',
+                palette='viridis',
+                legend=False,
+                ax=_ax
+            )
+        
+            # Aesthetics
+            _ax.set_title('Distribution of Calculated Scores across FIE Rank Bins', fontsize=12, fontweight='bold', pad=15)
+            _ax.set_xlabel('Official FIE Rank Bin', fontweight='bold')
+            _ax.set_ylabel(f'Calculated Score ({model_choice})', fontweight='bold')
+            _ax.grid(axis='y', linestyle=':', alpha=0.5)
+        
+            plt.tight_layout()
+            _box_viz = plt.gca()
+        else:
+            _box_viz = mo.md("No fencers fit into the rank bins. Try widening your FIE rank slider.")
+    else:
+        _box_viz = mo.md("Calculate elite scores first to view distribution.")
+
+    _box_viz
+    return
+
+
+@app.cell
+def _(df_fencer_scores, os):
+    # 1. Check if the FIE files exist on disk
+
+    for _cat in ["ME", "MF", "MS", "WE", "WF", "WS"]:
+        _path = f"rankings/{_cat}-detailed-ranking-2026.csv"
+        print(f"{_cat} exists: {os.path.exists(_path)}")
+
+    # 2. Check what leagues are in your source data
+    if 'df_fencer_scores' in globals():
+        print("\nLeague names in your source data:")
+        print(df_fencer_scores["League"].unique())
+
+    # 3. Test the mapping function against your specific names
+    def _get_fie_code(league_name):
+        _name_lower = str(league_name).lower()
+        _g = "M" if " / m" in _name_lower or "men" in _name_lower else "W" if " / f" in _name_lower or "women" in _name_lower else None
+        _w = "E" if "epee" in _name_lower or "épée" in _name_lower else "F" if "foil" in _name_lower else "S" if "sabre" in _name_lower else None
+        return f"{_g}{_w}" if _g and _w else None
+
+    print("\nTest mapping:")
+    for _league in df_fencer_scores["League"].unique():
+        print(f"{_league} -> {_get_fie_code(_league)}")
+    return
 
 
 @app.cell
