@@ -15,7 +15,7 @@ Ranking from pairwise comparisons_CoC_data.py  # ranking pipeline (Marimo notebo
 requirements.txt
 ```
 ## Next Steps
-- pull official FIE rankings for each category and compare to calculated scores
+- pull official FIE rankings for each category and compare to calculated scores [completed]
 
 ## Acknowledgments
 
