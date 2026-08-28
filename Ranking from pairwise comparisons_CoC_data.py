@@ -431,7 +431,7 @@ def _(fie_ranking_to_csv, mo, os):
     else:
         # Ensure directory exists
         os.makedirs("rankings", exist_ok=True)
-    
+
         # Download ONLY the missing files
         for _code, (_weapon, _gender) in _rankings_definitions.items():
             _path = f"rankings/{_code}-detailed-ranking-2026.csv"
@@ -448,11 +448,10 @@ def _(fie_ranking_to_csv, mo, os):
                     fie_ranking_to_csv(_url, _path)
                 except Exception as _e:
                     print(f"Error downloading {_code} from FIE: {_e}")
-                
+
         download_status_message = mo.md("📥 **Completed: Missing FIE Ranking files downloaded and cached successfully!**")
 
     download_status_message
-
     return (download_status_message,)
 
 
@@ -676,25 +675,25 @@ def _(df_fencer_scores, mo):
 
     if 'df_fencer_scores' in globals() and not df_fencer_scores.empty:
         _unique_leagues = sorted(df_fencer_scores['League'].unique())
-    
+
         for _league in _unique_leagues:
             # Filter and sort by calculated score
             _sub_df = df_fencer_scores[df_fencer_scores['League'] == _league].sort_values(
                 by='Calculated_Score', ascending=False
             ).reset_index(drop=True)
-        
+
             # Add a local rank column
             _sub_df.insert(0, 'Rank', range(1, len(_sub_df) + 1))
-        
+
             # Save to the league dictionary
             league_dfs[_league] = _sub_df
-        
+
             # Add to the visual tab selector
             _tabs_dict[_league] = mo.vstack([
                 mo.md(f"### 🏆 {_league} Rankings ({len(_sub_df)} fencers)"),
                 mo.ui.table(_sub_df[["Rank", "Fencer", "Calculated_Score"]])
             ])
-        
+
         _tabs_display = mo.ui.tabs(_tabs_dict)
     else:
         _tabs_display = mo.md("Calculate scores to generate league rankings.")
@@ -1177,28 +1176,28 @@ def _(
             try:
                 _df = pd.read_csv(_path)
                 _df.columns = [str(_col).strip() for _col in _df.columns]
-            
+
                 _rank_col = next((_c for _c in _df.columns if _c.lower() == "rank"), None)
                 _name_col = next((_c for _c in _df.columns if _c.lower() == "name"), None)
                 _nat_col = next((_c for _c in _df.columns if "nat" in _c.lower()), None)
                 _pts_col = next((_c for _c in _df.columns if "point" in _c.lower() or "pts" in _c.lower()), None)
-            
+
                 if _rank_col and _name_col:
                     _cols_to_keep = [_rank_col, _name_col]
                     if _nat_col:
                         _cols_to_keep.append(_nat_col)
                     if _pts_col:
                         _cols_to_keep.append(_pts_col)
-                    
+
                     _cleaned_df = _df[_cols_to_keep].dropna(subset=[_rank_col, _name_col]).copy()
-                
+
                     _rename_map = {_rank_col: "Rank", _name_col: "Name"}
                     if _nat_col:
                         _rename_map[_nat_col] = "Nat."
                     if _pts_col:
                         _rename_map[_pts_col] = "FIE_Points"
                     _cleaned_df = _cleaned_df.rename(columns=_rename_map)
-                
+
                     _cleaned_df["match_key"] = _cleaned_df["Name"].apply(_local_clean_name)
                     _loaded_fie_dfs[_cat] = (_cleaned_df, "FIE_Points" if _pts_col else None)
                 else:
@@ -1223,11 +1222,11 @@ def _(
         for _, _row in df_fencer_scores.iterrows():
             _league = _row["League"]
             _cat_code = _local_get_fie_code(_league)
-        
+
             if _cat_code in _loaded_fie_dfs:
                 _fie_df, _pts_col_name = _loaded_fie_dfs[_cat_code]
                 _fencer_clean = _local_clean_name(_row["Fencer"])
-            
+
                 _match = _fie_df[_fie_df["match_key"] == _fencer_clean]
                 if not _match.empty:
                     _rec = {
@@ -1257,7 +1256,7 @@ def _(
         # Global Elite Correlations (using globally imported 'st' for scipy.stats)
         _glob_s_rank, _glob_s_rank_p = st.spearmanr(df_elite["Calculated_Score"], df_elite["Official_Rank"])
         _glob_k_rank, _glob_k_rank_p = st.kendalltau(df_elite["Calculated_Score"], df_elite["Official_Rank"])
-    
+
         _res_glob = {
             "League / Category": f"GLOBAL Elite (Top {_rank_limit})",
             "Elite Fencers": len(df_elite),
@@ -1266,7 +1265,7 @@ def _(
             "Kendall τ (vs Rank)": _glob_k_rank,
             "Kendall p-value": _glob_k_rank_p,
         }
-    
+
         if "FIE_Points" in df_elite.columns and df_elite["FIE_Points"].notna().sum() >= 3:
             _sub_pts_glob = df_elite.dropna(subset=["FIE_Points"])
             _s_pts, _ = st.spearmanr(_sub_pts_glob["Calculated_Score"], _sub_pts_glob["FIE_Points"])
@@ -1276,7 +1275,7 @@ def _(
         else:
             _res_glob["Spearman ρ (vs Points)"] = np.nan
             _res_glob["Kendall τ (vs Points)"] = np.nan
-        
+
         _correlations.append(_res_glob)
 
         # League-specific correlations
@@ -1284,7 +1283,7 @@ def _(
             if len(_sub_grp) >= 3:
                 _s_rank, _s_rank_p = st.spearmanr(_sub_grp["Calculated_Score"], _sub_grp["Official_Rank"])
                 _k_rank, _k_rank_p = st.kendalltau(_sub_grp["Calculated_Score"], _sub_grp["Official_Rank"])
-            
+
                 _res = {
                     "League / Category": _league_name,
                     "Elite Fencers": len(_sub_grp),
@@ -1293,7 +1292,7 @@ def _(
                     "Kendall τ (vs Rank)": _k_rank,
                     "Kendall p-value": _k_rank_p,
                 }
-            
+
                 if "FIE_Points" in _sub_grp.columns and _sub_grp["FIE_Points"].notna().sum() >= 3:
                     _sub_pts = _sub_grp.dropna(subset=["FIE_Points"])
                     _s_pts, _ = st.spearmanr(_sub_pts["Calculated_Score"], _sub_pts["FIE_Points"])
@@ -1303,11 +1302,11 @@ def _(
                 else:
                     _res["Spearman ρ (vs Points)"] = np.nan
                     _res["Kendall τ (vs Points)"] = np.nan
-                
+
                 _correlations.append(_res)
-            
+
         df_correlations_summary = pd.DataFrame(_correlations)
-    
+
         _output_display = mo.vstack([
             mo.md(f"### 📊 Dynamic Validation Correlation (Top {_rank_limit})"),
             mo.ui.table(df_correlations_summary)
@@ -1316,12 +1315,12 @@ def _(
         # 4. Detailed Diagnostic Report
         _diagnostics_report = []
         _diagnostics_report.append("### 🔍 Validation Alignment Diagnostics")
-    
+
         if not _diagnostics["fencer_scores_exists"]:
             _diagnostics_report.append("❌ **Error:** `df_fencer_scores` is empty. Please run your ranking model first.")
         else:
             _diagnostics_report.append("✅ `df_fencer_scores` is calculated.")
-        
+
         if not _diagnostics["fie_files_loaded"]:
             _diagnostics_report.append("❌ **Error:** No FIE detailed ranking files could be loaded.")
             if _missing_files:
@@ -1330,7 +1329,7 @@ def _(
                 _diagnostics_report.append(f"  * **Corrupted or unparseable files:** `{_corrupted_files}`")
         else:
             _diagnostics_report.append(f"✅ Successfully loaded {len(_loaded_fie_dfs)} FIE ranking files on the fly.")
-        
+
         if _diagnostics["fencer_scores_exists"] and _diagnostics["fie_files_loaded"]:
             if df_matched_validation.empty:
                 _diagnostics_report.append("❌ **Error:** Name alignment failed completely (0 overlap matches).")
@@ -1344,7 +1343,7 @@ def _(
                 _diagnostics_report.append(f"❌ However, **0** matched fencers had an official FIE Rank of $$\\le {_rank_limit}$$.")
                 _diagnostics_report.append(f"  * Best matched rank in your dataset: **FIE Rank {df_matched_validation['Official_Rank'].min()}**")
                 _diagnostics_report.append("👉 **Use the slider above to widen the FIE Rank filter (e.g., to 500 or 1000) to capture your athletes!**")
-            
+
         _output_display = mo.vstack([
             mo.md("\n".join(_diagnostics_report))
         ])
@@ -1364,7 +1363,7 @@ def _(df_elite, mo, model_choice, pd, plt, sns):
             bins=[0, 50, 100, 150, 200], 
             labels=['1-50', '51-100', '101-150', '151-200']
         )
-    
+
         plt.figure(figsize=(10, 6))
         sns.boxplot(
             data=df_elite, 
@@ -1405,24 +1404,24 @@ def _(df_elite, mo, model_choice, pd, plt, sns):
     if 'df_elite' in globals() and not df_elite.empty:
         # Copy the dataframe so we don't modify the global df_elite permanently
         _df_plot = df_elite.copy()
-    
+
         # Dynamically bin FIE ranks into logical categories (adjusts automatically based on your slider)
         _max_rank = _df_plot['Official_Rank'].max()
         _bins = [0, 50, 100, max(200, _max_rank)]
         _labels = ['1-50', '51-100', f'101-{int(_max_rank)}']
-    
+
         _df_plot['Rank_Bin'] = pd.cut(
             _df_plot['Official_Rank'], 
             bins=_bins, 
             labels=_labels
         )
-    
+
         # Drop fencers outside the binned range
         _df_plot = _df_plot.dropna(subset=['Rank_Bin'])
-    
+
         if not _df_plot.empty:
             _fig, _ax = plt.subplots(figsize=(8, 5))
-        
+
             # Draw the boxplot safely
             sns.boxplot(
                 data=_df_plot, 
@@ -1433,13 +1432,13 @@ def _(df_elite, mo, model_choice, pd, plt, sns):
                 legend=False,
                 ax=_ax
             )
-        
+
             # Aesthetics
             _ax.set_title('Distribution of Calculated Scores across FIE Rank Bins', fontsize=12, fontweight='bold', pad=15)
             _ax.set_xlabel('Official FIE Rank Bin', fontweight='bold')
             _ax.set_ylabel(f'Calculated Score ({model_choice})', fontweight='bold')
             _ax.grid(axis='y', linestyle=':', alpha=0.5)
-        
+
             plt.tight_layout()
             _box_viz = plt.gca()
         else:
@@ -1482,17 +1481,17 @@ def _(colors, df_matched_validation, mo, model_choice, np, plt):
     # Dynamic Visual Validation (Ranks and Points side-by-side)
     if 'df_matched_validation' in globals() and not df_matched_validation.empty and len(df_matched_validation) >= 3:
         _has_points = "FIE_Points" in df_matched_validation.columns and df_matched_validation["FIE_Points"].notna().sum() > 2
-    
+
         _fig, _axs = plt.subplots(1, 2 if _has_points else 1, figsize=(14, 6) if _has_points else (8, 6))
         _ax_rank = _axs[0] if _has_points else _axs
-    
+
         _unique_categories = sorted(df_matched_validation["Category"].unique())
-    
+
         # Plot 1: Ranks
         for _idx, _cat in enumerate(_unique_categories):
             _sub = df_matched_validation[df_matched_validation["Category"] == _cat]
             _color = colors[_idx % len(colors)]
-        
+
             _ax_rank.scatter(
                 _sub["Calculated_Score"], _sub["Official_Rank"], 
                 label=f"{_cat} (n={len(_sub)})", alpha=0.75, s=60, edgecolors='black', linewidths=0.5, color=_color
@@ -1501,21 +1500,21 @@ def _(colors, df_matched_validation, mo, model_choice, np, plt):
                 _m, _b = np.polyfit(_sub["Calculated_Score"], _sub["Official_Rank"], 1)
                 _x_dom = np.linspace(_sub["Calculated_Score"].min(), _sub["Calculated_Score"].max(), 100)
                 _ax_rank.plot(_x_dom, _m * _x_dom + _b, color=_color, linestyle="--", alpha=0.5)
-            
+
         _ax_rank.set_xlabel(f"Calculated Score ({model_choice})", fontweight='bold')
         _ax_rank.set_ylabel("Official FIE World Rank", fontweight='bold')
         _ax_rank.set_title("Validation vs. Official Rank (Inverted)", fontweight='bold')
         _ax_rank.invert_yaxis()
         _ax_rank.grid(True, linestyle=":", alpha=0.6)
         _ax_rank.legend()
-    
+
         # Plot 2: Points (If available)
         if _has_points:
             _ax_pts = _axs[1]
             for _idx, _cat in enumerate(_unique_categories):
                 _sub = df_matched_validation[(df_matched_validation["Category"] == _cat) & (df_matched_validation["FIE_Points"].notna())]
                 _color = colors[_idx % len(colors)]
-            
+
                 _ax_pts.scatter(
                     _sub["Calculated_Score"], _sub["FIE_Points"], 
                     label=f"{_cat} (n={len(_sub)})", alpha=0.75, s=60, edgecolors='black', linewidths=0.5, color=_color
@@ -1524,7 +1523,7 @@ def _(colors, df_matched_validation, mo, model_choice, np, plt):
                     _m, _b = np.polyfit(_sub["Calculated_Score"], _sub["FIE_Points"], 1)
                     _x_dom = np.linspace(_sub["Calculated_Score"].min(), _sub["Calculated_Score"].max(), 100)
                     _ax_pts.plot(_x_dom, _m * _x_dom + _b, color=_color, linestyle="--", alpha=0.5)
-                
+
             _ax_pts.set_xlabel(f"Calculated Score ({model_choice})", fontweight='bold')
             _ax_pts.set_ylabel("Official FIE World Points", fontweight='bold')
             _ax_pts.set_title("Validation vs. Total FIE Points", fontweight='bold')
@@ -1535,8 +1534,183 @@ def _(colors, df_matched_validation, mo, model_choice, np, plt):
         _viz_output = plt.gca()
     else:
         _viz_output = mo.md("Nothing to plot. Check loaded fencer dataset.")
-    
+
     _viz_output
+    return
+
+
+@app.cell
+def _(df_elite, mo, pd, st):
+    # Relative Rankings Alignment & Correlation Computation
+    _relative_records = []
+    _league_relative_stats = []
+
+    if 'df_elite' in globals() and not df_elite.empty:
+        # Loop through each weapon/gender league separately
+        for _league_name, _sub_df in df_elite.groupby("League"):
+            if len(_sub_df) >= 3:
+                # 1. Sort by FIE Official Rank ascending to get relative FIE order (1 is best in intersection)
+                _sorted_fie = _sub_df.sort_values(by="Official_Rank", ascending=True).copy()
+                _sorted_fie["Relative_FIE_Rank"] = range(1, len(_sorted_fie) + 1)
+            
+                # 2. Sort by SpringRank score descending to get relative SpringRank order (1 is best in intersection)
+                _sorted_sr = _sorted_fie.sort_values(by="Calculated_Score", ascending=False).copy()
+                _sorted_sr["Relative_SR_Rank"] = range(1, len(_sorted_sr) + 1)
+            
+                # Save records
+                for _, _row in _sorted_sr.iterrows():
+                    _relative_records.append({
+                        "Fencer": _row["Fencer"],
+                        "League": _league_name,
+                        "Category": _row["Category"],
+                        "Relative_SR_Rank": _row["Relative_SR_Rank"],
+                        "Relative_FIE_Rank": _row["Relative_FIE_Rank"]
+                    })
+                
+                # Compute correlations on these relative rank numbers
+                _s_corr, _s_p = st.spearmanr(_sorted_sr["Relative_SR_Rank"], _sorted_sr["Relative_FIE_Rank"])
+                _k_corr, _k_p = st.kendalltau(_sorted_sr["Relative_SR_Rank"], _sorted_sr["Relative_FIE_Rank"])
+            
+                _league_relative_stats.append({
+                    "League / Category": _league_name,
+                    "Intersecting Fencers": len(_sorted_sr),
+                    "Spearman ρ (Ordinal)": _s_corr,
+                    "Spearman p-value": _s_p,
+                    "Kendall τ (Ordinal)": _k_corr,
+                    "Kendall p-value": _k_p
+                })
+            
+        df_relative_ranks = pd.DataFrame(_relative_records)
+        df_relative_stats = pd.DataFrame(_league_relative_stats)
+    
+        _relative_output = mo.vstack([
+            mo.md("### 📊 Relative Order Alignment Summary"),
+            mo.md(
+                "This table displays the correlation after **isolating the intersection of fencers** "
+                "and re-ranking them relatively. \n\n"
+                "* **Relative FIE Rank 1** is the highest-ranked FIE athlete in the intersection.\n"
+                "* **Relative SpringRank Rank 1** is the athlete with the highest SpringRank score in the intersection.\n"
+                "* We expect a **positive correlation (approaching +1.0)** because Relative Rank 1 should align with Relative Rank 1."
+            ),
+            mo.ui.table(df_relative_stats)
+        ])
+    else:
+        df_relative_ranks = pd.DataFrame()
+        _relative_output = mo.md("Ensure elite scores are calculated first.")
+
+    _relative_output
+    return (df_relative_ranks,)
+
+
+@app.cell
+def _():
+    import plotly.express as px
+    import plotly.graph_objects as go
+    from plotly.subplots import make_subplots
+
+    return go, make_subplots
+
+
+@app.cell
+def _(colors, df_elite, df_relative_ranks, go, make_subplots, mo, np):
+    # Plot Relative Rank Alignment
+    if 'df_relative_ranks' in globals() and not df_relative_ranks.empty:
+
+    
+        # Merge to get scores and official ranks
+        _df_plot = df_relative_ranks.merge(
+            df_elite[['Fencer', 'Calculated_Score', 'Official_Rank']].drop_duplicates(subset=['Fencer']), 
+            on='Fencer', 
+            how='left'
+        )
+    
+        _unique_cats = sorted(_df_plot["Category"].dropna().unique())
+        _num_plots = len(_unique_cats)
+    
+        _fig = make_subplots(
+            rows=_num_plots, cols=1, 
+            subplot_titles=[f"Relative Rank Alignment: {_cat}" for _cat in _unique_cats],
+            vertical_spacing=0.08
+        )
+    
+        for _idx, _cat in enumerate(_unique_cats):
+            _sub = _df_plot[_df_plot["Category"] == _cat]
+            _max_rank = int(max(_sub["Relative_SR_Rank"].max(), _sub["Relative_FIE_Rank"].max())) if not _sub.empty else 10
+        
+            _rgba = colors[_idx % len(colors)]
+            _color_str = f"rgba({int(_rgba[0]*255)}, {int(_rgba[1]*255)}, {int(_rgba[2]*255)}, {_rgba[3]})"
+        
+            # Diagonal line first so it's in the background
+            _fig.add_trace(
+                go.Scatter(
+                    x=[1, _max_rank],
+                    y=[1, _max_rank],
+                    mode='lines',
+                    line=dict(color='red', width=1.5, dash='dash'),
+                    name="Perfect Order Alignment",
+                    hoverinfo='skip',
+                    showlegend=True if _idx == 0 else False
+                ),
+                row=_idx + 1, col=1
+            )
+        
+            # Scatter plot of relative ranks
+            _fig.add_trace(
+                go.Scatter(
+                    x=_sub["Relative_SR_Rank"],
+                    y=_sub["Relative_FIE_Rank"],
+                    mode='markers',
+                    marker=dict(
+                        size=10,
+                        color=_color_str,
+                        line=dict(width=0.5, color='black')
+                    ),
+                    name="Fencers",
+                    text=_sub["Fencer"],
+                    customdata=np.stack((
+                        _sub["Calculated_Score"].fillna(0), 
+                        _sub["Official_Rank"].fillna(0)
+                    ), axis=-1),
+                    hovertemplate=(
+                        "<b>%{text}</b><br><br>" +
+                        "Relative SR Rank: %{x}<br>" +
+                        "Relative FIE Rank: %{y}<br>" +
+                        "SpringRank Score: %{customdata[0]:.3f}<br>" +
+                        "Official FIE Rank: %{customdata[1]:.0f}<br>" +
+                        "<extra></extra>"
+                    ),
+                    showlegend=True if _idx == 0 else False
+                ),
+                row=_idx + 1, col=1
+            )
+        
+            _fig.update_xaxes(
+                title_text="Relative SpringRank Rank (1 is Best)", 
+                range=[0, _max_rank + 2], 
+                row=_idx + 1, col=1,
+                gridcolor='rgba(0,0,0,0.1)',
+                zeroline=False
+            )
+            _fig.update_yaxes(
+                title_text="Relative FIE Rank (1 is Best)", 
+                range=[0, _max_rank + 2], 
+                row=_idx + 1, col=1,
+                gridcolor='rgba(0,0,0,0.1)',
+                zeroline=False
+            )
+        
+        _fig.update_layout(
+            height=450 * _num_plots,
+            width=700,
+            plot_bgcolor='white',
+            paper_bgcolor='white',
+            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+        )
+        _rank_plot = _fig
+    else:
+        _rank_plot = mo.md("Nothing to plot. Calculate relative rankings first.")
+    
+    _rank_plot
     return
 
 
