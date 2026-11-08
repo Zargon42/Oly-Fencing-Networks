@@ -1,0 +1,4 @@
+# Public viewer: matches its inline browser-compatible dependency ranges.
+marimo==0.23.10
+pandas>=2.2,<3
+matplotlib>=3.9,<4

@@ -1,0 +1,11 @@
+# Public-app build settings. Used only when exporting from this directory.
+# Keep the published display consistent and independent of personal settings.
+[display]
+theme = "light"
+default_width = "medium"
+
+[save]
+autosave = "off"
+
+[package_management]
+manager = "pip"

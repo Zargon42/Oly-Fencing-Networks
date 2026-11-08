@@ -1,0 +1,70 @@
+name: Publish fencing analysis to Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'pages/**'
+      - 'scripts/check_pages.py'
+      - 'scripts/build_pages.py'
+      - 'scripts/validate_public_snapshot.py'
+      - 'requirements-pages.txt'
+      - '.github/workflows/pages.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'pages/**'
+      - 'scripts/check_pages.py'
+      - 'scripts/build_pages.py'
+      - 'scripts/validate_public_snapshot.py'
+      - 'requirements-pages.txt'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements-pages.txt
+      - name: Install viewer dependencies
+        run: python -m pip install -r requirements-pages.txt
+      - name: Validate actual-results snapshot
+        run: python scripts/validate_public_snapshot.py
+      - name: Run public notebook smoke check
+        run: python scripts/check_pages.py
+      - name: Check WebAssembly compatibility
+        run: python -m marimo check pages/fencing_app.py --select MW
+      - name: Export interactive browser app
+        run: python scripts/build_pages.py
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

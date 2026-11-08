@@ -1,0 +1,51 @@
+"""Validate the public data artifact without access to raw datasets or SciPy."""
+import argparse
+import hashlib
+import json
+import math
+from pathlib import Path
+
+import pandas as pd
+
+
+def validate(path):
+    snapshot = json.loads(path.read_text(encoding='utf-8'))
+    assert snapshot['schema_version'] == 1
+    assert snapshot['data_kind'] == 'actual_research_outputs'
+    assert snapshot['model'] == 'SpringRank'
+    assert snapshot['audit']['raw_bouts'] >= snapshot['audit']['fenced_valid_bouts'] > 0
+    assert len(snapshot['variants']) == 36
+    assert len({(v['population'], v['minimum_bouts'], v['category']) for v in snapshot['variants']}) == 36
+    athletes = snapshot['athletes']
+    assert len({(a['category'], a['name']) for a in athletes}) == len(athletes)
+    assert all(a['name'] and a['category'] in snapshot['category_labels'] for a in athletes)
+    for variant in snapshot['variants']:
+        rows = variant['rows']
+        assert len(rows) == variant['fencers'] > 0
+        assert len({r[0] for r in rows}) == len(rows)
+        assert all(0 <= r[0] < len(athletes) and athletes[r[0]]['category'] == variant['category'] for r in rows)
+        assert all(len(r) == 5 and math.isfinite(r[1]) and r[2] >= 1 and r[3] > 0 for r in rows)
+        assert all(r[4] is None or isinstance(r[4], int) and r[4] > 0 for r in rows)
+        assert sum(r[3] for r in rows) == 2 * variant['retained_bouts']
+        assert abs(sum(r[1] for r in rows) / len(rows)) < 1e-8
+        assert variant['equation_residual'] < 1e-7
+        assert variant['input_bouts'] >= variant['retained_bouts']
+        for label, matches in [('all', [r for r in rows if r[4] is not None]),
+                               ('top200', [r for r in rows if r[4] is not None and r[4] <= 200])]:
+            result = variant['comparison'][label]
+            assert result['n'] == len(matches)
+            if len(matches) >= 3:
+                frame = pd.DataFrame(matches, columns=snapshot['row_columns'])
+                recomputed = float(frame['score'].rank().corr(frame['fie_rank'].rank()))
+                assert abs(recomputed - result['spearman']) < 1e-6, (variant['category'], label, recomputed, result)
+    for source in snapshot['source_files']:
+        assert len(source['sha256']) == 64
+    print(f'Validated all 36 real analysis variants ({path.stat().st_size:,} bytes).')
+    print('Snapshot SHA256:', hashlib.sha256(path.read_bytes()).hexdigest())
+    return snapshot
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('snapshot', nargs='?', type=Path, default=Path(__file__).resolve().parents[1]/'pages/public/analysis.json')
+    validate(parser.parse_args().snapshot)
