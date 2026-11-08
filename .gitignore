@@ -1,11 +1,78 @@
-/.venv
+# Python bytecode and interpreter caches
+__pycache__/
+*.py[cod]
+*$py.class
 
-/docs
-/progress_notebooks
-rankings/ME-detailed-ranking-2026.pdf
-rankings/MF-detailed-ranking-2026.pdf
-rankings/ME-detailed-ranking-2027.pdf
-rankings/WE-detailed-ranking-2026.pdf
-rankings/WF-detailed-ranking-2026.pdf
-rankings/MS-detailed-ranking-2026.pdf
-rankings/WS-detailed-ranking-2026.pdf
+# Virtual environments (commit dependency manifests and lockfiles instead)
+.venv/
+venv/
+env/
+ENV/
+.Python
+
+# Python packaging and build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+pip-wheel-metadata/
+
+# Test, lint, type-checking, and coverage caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pytype/
+.pyre/
+.hypothesis/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+junit.xml
+
+# marimo session state and Jupyter checkpoints; keep notebook .py/.ipynb sources
+__marimo__/
+.ipynb_checkpoints/
+
+# Local secrets; sanitized configuration examples may be committed
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+.envrc
+
+# Logs, temporary files, and scratch work
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+/work/
+
+# Downloaded third-party inputs, FIE biographies, and generated data caches
+# Keep import code and data acquisition instructions in version control.
+# Do not ignore all CSV/JSON/PDF files: reviewed examples may be committed elsewhere.
+/data/
+/rankings/
+
+# Local drafts and reports awaiting manual review
+/Analysis/
+/docs/
+/progress_notebooks/
+
+# Local editor settings and operating-system metadata
+.idea/
+.vscode/
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+
+# Generated GitHub Pages export (rebuilt by Actions)
+/_site/
