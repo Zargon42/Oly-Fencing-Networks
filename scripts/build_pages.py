@@ -32,8 +32,14 @@ html = (output/'index.html').read_text(encoding='utf-8')
 marker = '"configOverrides": {}'
 assert html.count(marker) == 1, 'Unexpected marimo export configuration schema'
 html = html.replace(marker, '"configOverrides": {"runtime": {"auto_instantiate": true}}')
+# The worker also consumes userConfig directly on a fresh origin. Keep both
+# representations consistent; relying on only configOverrides can leave the
+# first published visit blank even though a warm localhost origin works.
+assert html.count('"auto_instantiate": false') == 1, 'Unexpected serialized runtime defaults'
+html = html.replace('"auto_instantiate": false', '"auto_instantiate": true', 1)
 (output/'index.html').write_text(html, encoding='utf-8')
 assert '"auto_instantiate": true' in html, 'The exported app must start automatically'
+assert '"auto_instantiate": false' not in html
 assert (output/'public/analysis.json').read_bytes() == (root/'pages/public/analysis.json').read_bytes()
 assert (output/'assets').is_dir()
 assert {p.name for p in (output/'public').iterdir()} == {'analysis.json'}, 'Unexpected public data bundled'
