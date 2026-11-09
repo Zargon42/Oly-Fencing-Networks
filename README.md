@@ -13,6 +13,9 @@ synthetic examples, and compares the inferred ordering with archived FIE ranks.
 The browser app lets visitors select the category, senior-only or combined-age
 events, and minimum participation of 1, 5, or 10 bouts. They can inspect rankings,
 search athletes, compare FIE ordering, view charts, and download the displayed table.
+It now leads with six-category noise comparisons, tournament-bootstrap uncertainty,
+regional ranking discrepancies and held-out prediction results. Fantasy matchups
+include an explicit hypothetical comparison caveat for disconnected categories.
 
 `pages/public/analysis.json` contains the compact derived-results snapshot needed
 by the app. Visitors do not need to upload source data. Raw bouts, FIE biography
@@ -50,12 +53,15 @@ are described in [DATA.md](DATA.md). With the local source files available:
 
 ```sh
 python -m pip install -r requirements-analysis.txt
-python scripts/check_analysis.py
-python scripts/export_public_snapshot.py
+python -m marimo edit notebooks/research_analysis.py
 python scripts/validate_public_snapshot.py
 ```
 
-The research notebook remains `Ranking from pairwise comparisons_CoC_data.py`.
+The formal research notebook is `notebooks/research_analysis.py`; see
+[its instructions](notebooks/README.md). Run the statistical cells and final export
+there. The legacy CLI exporter must not overwrite the schema-2 research snapshot.
+
+The original exploratory notebook remains `Ranking from pairwise comparisons_CoC_data.py`.
 It supports local exploration and resumable FIE biography enrichment. Its original
 broader dependency list is retained in `requirements.txt`; install those additional
 dependencies if you use the full historical research environment. The lightweight

@@ -168,4 +168,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    raise SystemExit('Legacy schema-1 exporter retired. Open notebooks/research_analysis.py and run its visible analysis/export cells.')

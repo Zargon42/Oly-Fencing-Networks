@@ -65,11 +65,18 @@ Obtain the source inputs described in `DATA.md`, then run locally:
 
 ```sh
 python -m pip install -r requirements-analysis.txt
-python scripts/check_analysis.py
-python scripts/export_public_snapshot.py
+python -m marimo edit notebooks/research_analysis.py
 python scripts/validate_public_snapshot.py
 python scripts/check_pages.py
 ```
+
+Run the visible bootstrap/model controls and final export cells in the research
+notebook. The notebook calls published helpers in `src/research.py`; all substantive
+analysis runs are owned by notebook cells. The legacy schema-1 CLI exporter is not
+the research workflow. See [notebook instructions](notebooks/README.md).
+
+The schema-2 snapshot adds beta estimates, uncertainty, Holm comparisons, regional
+summaries and prediction-validation outputs. The local report remains ignored.
 
 Review the changed snapshot and commit `pages/public/analysis.json` to publish
 the updated results. The Pages workflow builds from that committed artifact and

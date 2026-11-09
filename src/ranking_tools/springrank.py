@@ -7,6 +7,7 @@ License: GNU GPL v3.0; see the repository root LICENSE file.
 import numpy as np
 from scipy.sparse import spdiags, csr_matrix, eye
 from scipy.optimize import brentq
+from scipy.special import expit
 import scipy.sparse.linalg
 import warnings
 from scipy.sparse import SparseEfficiencyWarning
@@ -65,6 +66,9 @@ class SpringRank:
             raise ValueError("Adjacency matrix cannot contain negative entries")
 
         self.A = A
+        self.beta = None
+        self.is_fitted_beta_ = False
+        self.beta_status = 'not_fitted'
 
         if self.alpha == 0:
             self.ranks = self._solve_springrank()
@@ -136,20 +140,39 @@ class SpringRank:
         Memory-efficient version of eqs39 that works with sparse matrices.
         Instead of converting to dense matrix, we iterate over nonzero elements.
         """
-        x = 0
-        rows, cols = A.nonzero()
-        for idx in range(len(rows)):
-            i, j = rows[idx], cols[idx]
-            a_ij = A[i,j]
-            a_ji = A[j,i] 
-            x += (s[i] - s[j]) * (a_ij - (a_ij + a_ji) / 
-                                 (1 + np.exp(-2 * beta * (s[i] - s[j]))))
-        return x
+        # Evaluate each observed unordered pair once, including zero wins in
+        # one direction. Iterating only A.nonzero() double-weights reciprocal
+        # pairs relative to one-direction-only pairs.
+        from scipy.sparse import triu
+        matrix = csr_matrix(A)
+        pairs = triu(matrix + matrix.T, k=1).tocoo()
+        difference = np.asarray(s).ravel()[pairs.row] - np.asarray(s).ravel()[pairs.col]
+        wins = np.asarray(matrix[pairs.row, pairs.col]).ravel()
+        return float(np.dot(difference, wins - pairs.data * expit(2 * beta * difference)))
     
     def _get_inverse_temperature(self):
         """Calculate inverse temperature parameter"""
-        MLE = brentq(self._eqs39, 0.01, 20, args=(self.ranks, self.A))
-        return MLE
+        from scipy.sparse import triu
+        matrix = csr_matrix(self.A)
+        pairs = triu(matrix + matrix.T, k=1).tocoo()
+        difference = self.ranks[pairs.row] - self.ranks[pairs.col]
+        wins = np.asarray(matrix[pairs.row, pairs.col]).ravel()
+        informative = np.abs(difference) > 1e-12
+        if not informative.any():
+            self.beta_status = 'unidentified'
+            return np.nan
+        if self._eqs39(0, self.ranks, matrix) <= 1e-12:
+            self.beta_status = 'boundary_zero'
+            return 0.0
+        reversals = np.where(difference > 0, pairs.data - wins, wins)
+        if not np.any(reversals[informative] > 0):
+            self.beta_status = 'separated_infinite'
+            return np.inf
+        upper = 1.0
+        while self._eqs39(upper, self.ranks, matrix) > 0 and upper < 1e12:
+            upper *= 2
+        self.beta_status = 'finite'
+        return brentq(self._eqs39, 0, upper, args=(self.ranks, matrix))
     
     def get_beta(self):
         if self.is_fitted_beta_ == False:
@@ -178,7 +201,11 @@ class SpringRank:
             self.beta = self._get_inverse_temperature()
             self.is_fitted_beta_ = True
         diff = self.ranks[i] - self.ranks[j]
-        return 1 / (1 + np.exp(-2 * self.beta * diff))
+        if i == j:
+            return 0.5
+        if not np.isfinite(self.beta):
+            raise ValueError('No finite identified beta is available for prediction')
+        return float(expit(2 * self.beta * diff))
 
     def get_n_levels(self, q: float = 0.75, method: str = 'min-max'):
         '''

@@ -14,5 +14,10 @@ assert len(definitions['rankings']) == definitions['selected_variant']['fencers'
 assert len(definitions['comparison']) == definitions['selected_variant']['comparison']['all']['n']
 assert abs(definitions['rank_correlation'] - definitions['selected_variant']['comparison']['all']['spearman']) < 1e-6
 assert definitions['snapshot']['data_kind'] == 'actual_research_outputs'
-assert sum('<svg' in str(getattr(output, 'text', '')) for output in outputs) == 2, 'Both charts must render actual SVG content'
+assert '<svg' in definitions['noise_panel'].text
+assert '<svg' in definitions['differences_panel'].text
+chance = definitions['fantasy_chance']
+assert chance(.3, 1.4, .3, 1.4) == .5
+assert abs(chance(.3, 1.4, -.2, 1.8) + chance(-.2, 1.8, .3, 1.4) - 1) < 1e-12
+assert 0 <= definitions['fantasy_probability'] <= 1
 print('Public notebook ran successfully with actual senior women\'s foil results.')

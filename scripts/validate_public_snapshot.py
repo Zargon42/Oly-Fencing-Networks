@@ -10,17 +10,33 @@ import pandas as pd
 
 def validate(path):
     snapshot = json.loads(path.read_text(encoding='utf-8'))
-    assert snapshot['schema_version'] == 1
+    assert snapshot['schema_version'] == 2
     assert snapshot['data_kind'] == 'actual_research_outputs'
     assert snapshot['model'] == 'SpringRank'
     assert snapshot['audit']['raw_bouts'] >= snapshot['audit']['fenced_valid_bouts'] > 0
     assert len(snapshot['variants']) == 36
     assert len({(v['population'], v['minimum_bouts'], v['category']) for v in snapshot['variants']}) == 36
     athletes = snapshot['athletes']
+    research = snapshot['research']
+    assert research['bootstrap']['replicates'] == 2000
+    assert research['bootstrap']['seed'] == 42
+    assert len(research['primary']) == 6
+    for key in ['beta', 'rho']:
+        result = research[key]
+        assert result['requested'] == 2000
+        assert len(result['intervals']) == 6 and len(result['pairs']) == 15
+        assert result['formal_inference_enabled'] == (result['valid_fraction'] >= .9)
+        for row in result['pairs']:
+            assert row['low'] <= row['high']
+            assert (row['p_holm'] is not None) == result['formal_inference_enabled']
+    assert len(research['region_intervals']) == 30
+    assert research['discrepancy_prediction']['metrics']
+    assert research['bout_prediction']['status'] == 'complete'
     assert len({(a['category'], a['name']) for a in athletes}) == len(athletes)
     assert all(a['name'] and a['category'] in snapshot['category_labels'] for a in athletes)
     for variant in snapshot['variants']:
         rows = variant['rows']
+        assert math.isfinite(variant['beta']) and variant['beta'] >= 0
         assert len(rows) == variant['fencers'] > 0
         assert len({r[0] for r in rows}) == len(rows)
         assert all(0 <= r[0] < len(athletes) and athletes[r[0]]['category'] == variant['category'] for r in rows)
@@ -40,6 +56,8 @@ def validate(path):
                 assert abs(recomputed - result['spearman']) < 1e-6, (variant['category'], label, recomputed, result)
     for source in snapshot['source_files']:
         assert len(source['sha256']) == 64
+    serialized = json.dumps(snapshot).lower()
+    assert not any(key in serialized for key in ['"datebirth"', '"dob"', '"license"', '"birth_date"'])
     print(f'Validated all 36 real analysis variants ({path.stat().st_size:,} bytes).')
     print('Snapshot SHA256:', hashlib.sha256(path.read_bytes()).hexdigest())
     return snapshot
