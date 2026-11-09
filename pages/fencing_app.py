@@ -134,7 +134,7 @@ def _(comparison, io, mo, plt):
         _fig.tight_layout()
         _buffer = io.StringIO()
         _fig.savefig(_buffer, format='svg', bbox_inches='tight')
-        _svg = _buffer.getvalue().replace('<svg ', '<svg role="img" aria-label="SpringRank score versus archived FIE rank" ', 1)
+        _svg = _buffer.getvalue().replace('<svg ', '<svg style="max-width:100%;height:auto" role="img" aria-label="SpringRank score versus archived FIE rank" ', 1)
         _plot = mo.Html(_svg)
         plt.close(_fig)
     else:
@@ -169,7 +169,7 @@ def _(io, mo, plt, top_count, visible_rankings):
         _fig.tight_layout()
         _buffer = io.StringIO()
         _fig.savefig(_buffer, format='svg', bbox_inches='tight')
-        _svg = _buffer.getvalue().replace('<svg ', '<svg role="img" aria-label="Highest calculated scores in the current athlete search" ', 1)
+        _svg = _buffer.getvalue().replace('<svg ', '<svg style="max-width:100%;height:auto" role="img" aria-label="Highest calculated scores in the current athlete search" ', 1)
         _chart = mo.Html(_svg)
         plt.close(_fig)
     else:
@@ -238,7 +238,7 @@ def _(io, mo, plt):
     import math
     def public_svg(fig,label):
         buffer=io.StringIO();fig.savefig(buffer,format='svg',bbox_inches='tight');plt.close(fig)
-        return mo.Html(buffer.getvalue().replace('<svg ',f'<svg role="img" aria-label="{label}" ',1))
+        return mo.Html(buffer.getvalue().replace('<svg ',f'<svg style="max-width:100%;height:auto" role="img" aria-label="{label}" ',1))
     def fantasy_chance(a,ba,b,bb,ma=0.,mb=0.):
         z=2*ba*(a-ma)-2*bb*(b-mb)
         return 1/(1+math.exp(-z)) if z>=0 else math.exp(z)/(1+math.exp(z))
