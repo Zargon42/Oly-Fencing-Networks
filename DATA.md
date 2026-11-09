@@ -1,5 +1,21 @@
 # Data sources and reproducibility
 
+## Primary geographic level
+
+Primary inference uses four equivalent championship zones: Africa, Americas,
+Asia-Oceania and Europe. Five-confederation outputs are secondary and remain
+explicitly labelled in the snapshot. Oceania confederation membership is retained
+in a separate field and is combined with Asia only for the championship-zone
+analysis. The final notebook export stores this primary analysis under
+`research.four_zone_primary`; `research.zonal_points` preserves the earlier
+five-confederation sensitivity. Internal zone code `Asia` means Asia-Oceania in
+the four-zone analysis, as documented by `zone_code_labels`.
+
+The direct reward comparison uses non-zonal SpringRank strength, evidenced zonal
+participants and four-zone common support. Country-clustered conditional models
+and coverage are published with a sparse-cell sensitivity. These estimates do
+not establish true ability or the causal effect of participation.
+
 ## Reconciled zonal points
 
 The research notebook now reconciles all 5,303 athlete/category records in the six

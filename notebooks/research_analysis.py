@@ -920,6 +920,382 @@ def research_points_export(
     mo.vstack([mo.md(research_points_discussion),
      mo.ui.table(pd.DataFrame([{'category':r['category'],**r['rho_change']} for r in research_points_correlation_intervals]),selection=None,label='Paired correlation changes; six-test Holm family'),
      mo.md('Updated public snapshot and local report exported from this notebook. Cleaned per-athlete point tables stay local; public output contains summaries and the event dictionary.')])
+    return (research_points_discussion,)
+
+
+@app.cell
+def research_four_zone_setup(
+    mo,
+    np,
+    pd,
+    ranking_points,
+    research,
+    research_discrepancy_data,
+    research_nozonal_fits,
+    research_points_tables,
+    research_primary_fits,
+    research_primary_leagues,
+    research_regions,
+):
+    from dataclasses import replace as _replace
+    research_four_zone_names=['Africa','Americas','Asia','Europe']
+    research_zone_labels={'Africa':'Africa','Americas':'Americas','Asia':'Asia-Oceania','Europe':'Europe','Unknown':'Unknown'}
+    research_four_zone_lookup={c:{**row,'confederation_region':row['region'],'championship_zone':('Asia' if row['region']=='Oceania' else row['region'])} for c,row in research_regions.items()}
+    research_four_zone_leagues={c:_replace(l,region=np.where(l.region=='Oceania','Asia',l.region)) for c,l in research_primary_leagues.items()}
+    research_four_zone_fits={}
+    for _c,(_f,_s) in research_primary_fits.items():
+        _frame=_f.copy();_frame['confederation_region']=_frame['region'];_frame['region']=_frame['region'].replace({'Oceania':'Asia'})
+        research_four_zone_fits[_c]=(_frame,_s)
+    research_four_zone_frames={c:ranking_points.attach_points(f[0],research_points_tables[c]) for c,f in research_four_zone_fits.items()}
+    research_four_zone_joined=pd.concat(research_four_zone_frames.values(),ignore_index=True)
+    research_four_zone_contrasts,research_four_zone_correlations=ranking_points.summarize(list(research_four_zone_frames.values()))
+    research_four_zone_category_means=research_four_zone_joined.groupby(['category','region']).agg(n=('name','size'),mean=('D_original','mean'),with_zonal=('D_total_ties','mean'),without_zonal=('D_without_zonal','mean'),zonal_points=('zonal_points','mean')).reset_index()
+    research_four_zone_adjusted={}
+    for _target in ['D_original','D_total_ties','D_without_zonal','D_change']:
+        _features=research_discrepancy_data.drop(columns=['D']).copy()
+        _features['region']=_features['region'].replace({'Oceania':'Asia'})
+        _features=_features.merge(research_four_zone_joined[['category','name',_target]],on=['category','name'],validate='one_to_one')
+        _features['D']=_features[_target]
+        research_four_zone_adjusted[_target]={'basic':research.clustered_adjustment(_features,False),'participation':research.clustered_adjustment(_features,True)}
+    research_four_zone_region_summary=research_four_zone_joined.groupby('region').agg(n=('name','size'),mean_original_D=('D_original','mean'),mean_total_ties_D=('D_total_ties','mean'),mean_without_zonal_D=('D_without_zonal','mean'),mean_change=('D_change','mean'),mean_zonal_points=('zonal_points','mean'),mean_zonal_fraction=('zonal_fraction','mean'),mean_global_rank_change=('global_rank_change','mean')).reset_index()
+    research_four_zone_sensitivities=[]
+    for _label,_fits,_elite in [('Primary',research_primary_fits,False),('Exclude zonal bouts',research_nozonal_fits,False),('FIE top 200',research_primary_fits,True)]:
+        _frames=[]
+        for _c,(_frame,_summary) in _fits.items():
+            _frame=_frame.copy();_frame['region']=_frame['region'].replace({'Oceania':'Asia'})
+            if _elite:
+                _frame=_frame.query('fie_rank <= 200').copy();_frame['D']=research.discrepancy(_frame['score'],_frame['fie_rank'])
+            _frames.append(ranking_points.attach_points(_frame,research_points_tables[_c]))
+        _contrasts,_correlations=ranking_points.summarize(_frames)
+        research_four_zone_sensitivities.append({'analysis':_label,'n':sum(len(f) for f in _frames),'contrasts':_contrasts,'correlations':_correlations})
+    mo.vstack([mo.md('## Primary hypothesis: four equivalent championship zones\nAfrica, Americas, Asia-Oceania and Europe. Oceania retains its confederation identity in a separate field; it shares the Asian zonal championship points pool. The prespecified contrast is (Africa + Americas - Asia-Oceania - Europe)/2, with equal weighting of zone means. Here "weaker" is a hypothesis about observed SpringRank strength, not a fixed intrinsic label.\n\nHypothesis: the zonal points slot improves FIE placement relative to SpringRank more for Africa/Americas than Asia-Oceania/Europe. The main estimand is the between-zone difference in the mechanical rank benefit, with shared tournament resampling and consistent point ties. Independent evidence about strength requires conditioning on SpringRank estimated without zonal bouts.'),
+     mo.ui.table(research_four_zone_category_means,selection=None,label='Four-zone category samples and discrepancies'),
+     mo.ui.table([research_four_zone_contrasts],selection=None,label='Four-zone point estimates')])
+    return (
+        research_four_zone_adjusted,
+        research_four_zone_category_means,
+        research_four_zone_contrasts,
+        research_four_zone_correlations,
+        research_four_zone_frames,
+        research_four_zone_joined,
+        research_four_zone_leagues,
+        research_four_zone_lookup,
+        research_four_zone_names,
+        research_four_zone_region_summary,
+        research_four_zone_sensitivities,
+        research_zone_labels,
+    )
+
+
+@app.cell
+def research_four_zone_bootstrap(
+    mo,
+    np,
+    ranking_points,
+    research_four_zone_contrasts,
+    research_four_zone_joined,
+    research_four_zone_leagues,
+    research_four_zone_names,
+    research_points_joined,
+    research_points_tables,
+    research_points_valid,
+    research_root,
+    research_tournament_blocks,
+    research_zone_labels,
+):
+    with mo.status.progress_bar(total=2000,title='Four-zone hypothesis: paired tournament resampling',remove_on_exit=False) as _progress:
+        research_four_zone_bootstrap=ranking_points.paired_bootstrap(research_four_zone_leagues,research_points_tables,research_tournament_blocks,
+           replicates=2000,seed=42,workers=4,checkpoint=research_root/'data/research/four_zone_points_bootstrap.json',
+           progress=lambda completed,total:_progress.update(increment=1,subtitle=f'{completed:,}/{total:,} resamples'))
+    research_four_zone_valid=[r for r in research_four_zone_bootstrap['results'] if r.get('failure') is None]
+    research_four_zone_uncertainty={k:ranking_points.interval(v,[r['contrasts'][k] for r in research_four_zone_valid],2000) for k,v in research_four_zone_contrasts.items()}
+    research_four_zone_intervals=[]
+    for _i,_region in enumerate(research_four_zone_names):
+        _subset=research_four_zone_joined[research_four_zone_joined['region'].eq(_region)]
+        for _j,_metric in enumerate(['D_total_ties','D_without_zonal','D_change']):
+            research_four_zone_intervals.append({'region':research_zone_labels[_region],'metric':_metric,'n':len(_subset),**ranking_points.interval(float(_subset[_metric].mean()),[r['regional'][_i][_j] for r in research_four_zone_valid],2000)})
+    assert len(research_four_zone_joined)==len(research_points_joined)
+    assert not research_four_zone_joined['region'].eq('Oceania').any()
+    assert research_four_zone_joined['confederation_region'].eq('Oceania').sum()==research_points_joined['region'].eq('Oceania').sum()
+    assert np.allclose([r['correlations'][i]['rho_change'] for r in research_four_zone_valid for i in range(6)], [r['correlations'][i]['rho_change'] for r in research_points_valid for i in range(6)])
+    mo.ui.table([{'metric':k,**v} for k,v in research_four_zone_uncertainty.items()],selection=None,label='Primary four-zone inference; 2,000 paired draws')
+    return (
+        research_four_zone_bootstrap,
+        research_four_zone_intervals,
+        research_four_zone_uncertainty,
+        research_four_zone_valid,
+    )
+
+
+@app.cell
+def research_four_zone_strength(
+    mo,
+    np,
+    pd,
+    research,
+    research_discrepancy_data,
+    research_four_zone_joined,
+    research_four_zone_names,
+    research_nozonal_fits,
+    research_points_tables,
+):
+    # Conditional association at comparable strength, not a causal ability model.
+    from scipy import stats as _zone_stats
+    research_zone_strength=research_four_zone_joined.copy()
+    _ability=[]
+    for _category,(_frame,_summary) in research_nozonal_fits.items():
+        _frame=_frame[['category','name','score']].copy()
+        _frame['ability_percentile']=_frame['score'].rank(method='average',pct=True)
+        _ability.append(_frame.rename(columns={'score':'nonzonal_score'}))
+    research_zone_strength=research_zone_strength.merge(pd.concat(_ability),on=['category','name'],how='left',validate='one_to_one')
+    research_zone_strength=research_zone_strength.merge(research_discrepancy_data[['category','name','age','hand','zonal_share']],on=['category','name'],validate='one_to_one')
+    _records=[]
+    for _category,_table in research_points_tables.items():
+        _columns=[c for c in _table.columns if c.endswith('(CHZ)')]
+        _record=_table.loc[~_table['key'].duplicated(keep=False),['key']].copy()
+        _record['recorded_zonal_score']=_table.loc[_record.index,_columns].notna().any(axis=1)
+        _record['category']=_category;_records.append(_record)
+    research_zone_strength=research_zone_strength.merge(pd.concat(_records),on=['category','key'],validate='one_to_one')
+    research_zone_strength['participation_evidence']=research_zone_strength['recorded_zonal_score']|research_zone_strength['zonal_share'].gt(0)
+    research_zone_strength['rank_benefit']=research_zone_strength['D_total_ties']-research_zone_strength['D_without_zonal']
+    research_zone_strength['known_zone']=research_zone_strength['region'].isin(research_four_zone_names)
+    research_zone_strength_coverage=research_zone_strength.groupby('region').agg(matched=('name','size'),participation_evidence=('participation_evidence','sum'),nonzonal_strength_available=('nonzonal_score','count')).reset_index()
+    _eligible=research_zone_strength[research_zone_strength['known_zone']&research_zone_strength['participation_evidence']&research_zone_strength['ability_percentile'].notna()].copy()
+    research_zone_strength_summary=_eligible.groupby(['category','region']).agg(n=('name','size'),mean_strength_percentile=('ability_percentile','mean'),mean_zonal_points=('zonal_points','mean'),mean_rank_benefit=('rank_benefit','mean')).reset_index()
+    research_zone_support_audit=[]
+    _supported=[]
+    for _category,_frame in _eligible.groupby('category',sort=False):
+        _range=_frame.groupby('region')['ability_percentile'].agg(['count',lambda x:x.quantile(.05),lambda x:x.quantile(.95)]).reindex(research_four_zone_names)
+        _range.columns=['n','low','high']
+        _valid=bool(_range['n'].ge(5).all())
+        _low=float(_range['low'].max());_high=float(_range['high'].min())
+        _keep=_frame['ability_percentile'].between(_low,_high) if _valid and _low<_high else pd.Series(False,index=_frame.index)
+        _retained=_frame[_keep]
+        research_zone_support_audit.append({'category':_category,'eligible':len(_frame),'retained':len(_retained),'low':_low,'high':_high,'all_four_zones_have_five':_valid,
+            'retained_by_zone':_retained['region'].value_counts().to_dict()})
+        _supported.append(_retained)
+    research_zone_supported=pd.concat(_supported,ignore_index=True)
+    assert all(z in research_zone_supported['region'].unique() for z in research_four_zone_names)
+
+    def research_zone_conditioned_model(data,target):
+        _data=data.copy()
+        _data['region']=pd.Categorical(_data['region'],categories=['Europe','Africa','Americas','Asia'])
+        _data['hand']=pd.Categorical(_data['hand'].fillna('Unknown'),categories=['Right','Left','Ambidextrous','Unknown'])
+        _X=pd.get_dummies(_data[['region','category','hand']],drop_first=True,dtype=float)
+        _X['age_missing']=_data['age'].isna().astype(float)
+        _X['age']=(_data['age'].fillna(_data['age'].median())-25)/10
+        for _category in research.CATEGORIES:
+            for _power in [1,2,3]:
+                _X[f'{_category}_strength_power_{_power}']=_data['category'].eq(_category).astype(float)*(_data['ability_percentile']-.5)**_power
+        _X=_X.loc[:,_X.nunique()>1];_X.insert(0,'Intercept',1.)
+        _matrix=_X.to_numpy(float);_y=_data[target].to_numpy(float)
+        _inverse=np.linalg.pinv(_matrix.T@_matrix);_coef=_inverse@_matrix.T@_y;_residual=_y-_matrix@_coef
+        _countries=_data['country'].to_numpy();_unique=np.unique(_countries);_g=len(_unique);_n=len(_y);_rank=np.linalg.matrix_rank(_matrix)
+        assert _g>10 and _n>_rank
+        _meat=np.zeros_like(_inverse)
+        for _country in _unique:
+            _mask=_countries==_country;_score=_matrix[_mask].T@_residual[_mask];_meat+=np.outer(_score,_score)
+        _cov=_inverse@_meat@_inverse*(_g/(_g-1))*((_n-1)/(_n-_rank))
+        _contrast=np.zeros(len(_X.columns))
+        for _name,_weight in [('region_Africa',.5),('region_Americas',.5),('region_Asia',-.5)]:_contrast[_X.columns.get_loc(_name)]=_weight
+        _estimate=float(_contrast@_coef);_se=float(np.sqrt(max(_contrast@_cov@_contrast,0)));_critical=_zone_stats.t.ppf(.975,_g-1)
+        return {'outcome':target,'n':_n,'countries':_g,'estimate':_estimate,'low':float(_estimate-_critical*_se),'high':float(_estimate+_critical*_se),
+            'p':float(2*_zone_stats.t.sf(abs(_estimate/_se),_g-1)) if _se>0 else None,
+            'conditioning':'Category-specific cubic in non-zonal SpringRank strength percentile, category, age and hand; country-clustered conditional uncertainty.'}
+
+    research_zone_strength_models=[research_zone_conditioned_model(research_zone_supported,target) for target in ['zonal_points','rank_benefit']]
+    for _result,_p in zip(research_zone_strength_models,research.holm([r['p'] for r in research_zone_strength_models])):_result['p_holm']=float(_p)
+    mo.vstack([mo.md('## Are zonal rewards disproportionate at comparable SpringRank strength?\nWe use SpringRank fitted without zonal bouts, expressed as a within-category strength percentile. Participation evidence is a recorded CHZ score (including explicit zeros) or an observed zonal bout; missing both is not proof of nonparticipation. Each category is restricted to the intersection of the four zones\' 5th-to-95th percentile ranges among evidenced participants, with at least five per zone before restriction.\n\nWe compare zonal points and normalized rank benefit using category-specific cubic strength curves, category, age and hand, with country-clustered uncertainty and Holm adjustment for these two exploratory outcomes. This conditional model does not propagate all strength-estimation uncertainty; the separate paired tournament bootstrap addresses uncertainty in the primary discrepancy contrast.'),
+     mo.ui.table(research_zone_strength_coverage,selection=None,label='Participation evidence and non-zonal strength coverage'),
+     mo.ui.table(pd.DataFrame(research_zone_support_audit),selection=None,label='Common-strength support and exclusions'),
+     mo.ui.table(pd.DataFrame(research_zone_strength_models),selection=None,label='Africa/Americas minus Asia-Oceania/Europe at comparable strength')])
+    return (
+        research_zone_conditioned_model,
+        research_zone_strength_coverage,
+        research_zone_strength_models,
+        research_zone_strength_summary,
+        research_zone_support_audit,
+        research_zone_supported,
+    )
+
+
+@app.cell
+def research_four_zone_strength_sensitivity(
+    mo,
+    pd,
+    research_four_zone_names,
+    research_zone_conditioned_model,
+    research_zone_supported,
+):
+    _counts=research_zone_supported.groupby(['category','region']).size().unstack(fill_value=0).reindex(columns=research_four_zone_names,fill_value=0)
+    research_zone_dense_categories=_counts.index[_counts.min(axis=1)>=5].tolist()
+    _dense=research_zone_supported[research_zone_supported['category'].isin(research_zone_dense_categories)]
+    research_zone_strength_sensitivity=[research_zone_conditioned_model(_dense,target) for target in ['zonal_points','rank_benefit']]
+    mo.vstack([mo.md(f"**Sparse-support sensitivity:** restricting to categories with at least five retained participants in every zone keeps {research_zone_dense_categories} and {len(_dense):,} athletes. The pooled primary model assumes a shared zone association across categories; individual sparse category effects are not asserted."),
+     mo.ui.table(pd.DataFrame(research_zone_strength_sensitivity),selection=None,label='Sensitivity excluding categories with sparse retained zone cells')])
+    return research_zone_dense_categories, research_zone_strength_sensitivity
+
+
+@app.cell
+def research_four_zone_predictions(
+    mo,
+    pd,
+    research,
+    research_biographies,
+    research_discrepancy_data,
+    research_four_zone_leagues,
+    research_four_zone_lookup,
+):
+    research_four_zone_prediction_data=research_discrepancy_data.copy()
+    research_four_zone_prediction_data['region']=research_four_zone_prediction_data['region'].replace({'Oceania':'Asia'})
+    with mo.status.progress_bar(total=1,title='Four-zone features: country-grouped discrepancy prediction') as _progress:
+        research_four_zone_discrepancy_prediction=research.discrepancy_prediction(research_four_zone_prediction_data,seed=42)
+        _progress.update()
+    research_four_zone_federations={c:{**r,'region':r['championship_zone']} for c,r in research_four_zone_lookup.items()}
+    with mo.status.progress_bar(total=18,title='Four-zone features: chronological bout prediction') as _progress:
+        research_four_zone_bout_prediction=research.rolling_bout_prediction(research_four_zone_leagues,research_biographies,research_four_zone_federations,
+            seed=42,progress=lambda completed,total:_progress.update(increment=1))
+    mo.vstack([mo.ui.table(pd.DataFrame(research_four_zone_discrepancy_prediction['metrics']),selection=None,label='Four-zone discrepancy prediction'),
+     mo.ui.table(pd.DataFrame(research_four_zone_bout_prediction['metrics']),selection=None,label='Four-zone chronological bout prediction')])
+    return (
+        research_four_zone_bout_prediction,
+        research_four_zone_discrepancy_prediction,
+    )
+
+
+@app.cell
+def research_four_zone_export(
+    datetime,
+    json,
+    mo,
+    np,
+    pd,
+    ranking_points,
+    research,
+    research_beta_inference,
+    research_four_zone_adjusted,
+    research_four_zone_bootstrap,
+    research_four_zone_bout_prediction,
+    research_four_zone_category_means,
+    research_four_zone_correlations,
+    research_four_zone_discrepancy_prediction,
+    research_four_zone_frames,
+    research_four_zone_intervals,
+    research_four_zone_joined,
+    research_four_zone_leagues,
+    research_four_zone_lookup,
+    research_four_zone_names,
+    research_four_zone_region_summary,
+    research_four_zone_sensitivities,
+    research_four_zone_uncertainty,
+    research_four_zone_valid,
+    research_json_safe,
+    research_points_audit,
+    research_points_correlations,
+    research_points_discussion,
+    research_points_events,
+    research_points_joined,
+    research_points_rule_source,
+    research_points_tables,
+    research_report_path,
+    research_rho_inference,
+    research_root,
+    research_tournament_blocks,
+    research_zone_dense_categories,
+    research_zone_labels,
+    research_zone_strength_coverage,
+    research_zone_strength_models,
+    research_zone_strength_sensitivity,
+    research_zone_strength_summary,
+    research_zone_support_audit,
+    research_zone_supported,
+    timezone,
+):
+    # Depend on the original export so this primary section is applied last.
+    _prior=research_points_discussion
+    _valid=research_four_zone_valid
+    _correlation_intervals=[]
+    for _i,_point in enumerate(research_four_zone_correlations):
+        _row={'category':_point['category'],'n':_point['n']}
+        for _metric in ['rho_total_ties','rho_without_zonal','rho_change']:
+            _row[_metric]=ranking_points.interval(_point[_metric],[r['correlations'][_i][_metric] for r in _valid],2000)
+        _correlation_intervals.append(_row)
+    for _row,_p in zip(_correlation_intervals,research.holm([r['rho_change']['p'] for r in _correlation_intervals])):_row['rho_change']['p_holm']=float(_p)
+    _categories=[]
+    for _code,_frame in research_four_zone_frames.items():
+        _row={'category':_code,'n':len(_frame)}
+        for _metric in ['D_total_ties','D_without_zonal','D_change']:
+            _copy=_frame.copy();_copy['D']=_copy[_metric];_row[_metric]=research.regional_contrast(_copy)
+        _categories.append(_row)
+    _top=next(r for r in research_four_zone_sensitivities if r['analysis']=='FIE top 200')
+    _nozonal=next(r for r in research_four_zone_sensitivities if r['analysis']=='Exclude zonal bouts')
+    _checks={'four_zones_only':not research_four_zone_joined['region'].eq('Oceania').any(),
+     'cohort_preserved':len(research_four_zone_joined)==len(research_points_joined),
+     'confederation_identity_preserved':bool(research_four_zone_joined['confederation_region'].eq('Oceania').sum()==research_points_joined['region'].eq('Oceania').sum()),
+     'correlations_unchanged_by_region_relabel':all(np.isclose(a['rho_change'],b['rho_change']) for a,b in zip(research_four_zone_correlations,research_points_correlations))}
+    assert all(_checks.values())
+    with mo.status.progress_bar(total=5,title='Reproduce five four-zone resamples') as _progress:
+        _repeat=ranking_points.paired_bootstrap(research_four_zone_leagues,research_points_tables,research_tournament_blocks,
+            replicates=5,seed=42,workers=1,progress=lambda completed,total:_progress.update(increment=1))
+    assert _repeat['results']==research_four_zone_bootstrap['results'][:5]
+    _checks['five_resamples_reproduced']=True
+    _zonal=research_json_safe({'status':'complete','regional_level':'four_championship_zones',
+     'zone_labels':['Africa','Americas','Asia-Oceania','Europe'],'rule_source':research_points_rule_source,
+     'reconciliation':research_points_audit,'events':research_points_events,'contrasts':research_four_zone_uncertainty,
+     'regional_summary':research_four_zone_region_summary.replace({'region':research_zone_labels}).to_dict('records'),'regional_intervals':research_four_zone_intervals,
+     'correlations':_correlation_intervals,'adjusted':research_four_zone_adjusted,
+     'both_zonal_points_and_bouts_removed':_nozonal,'top200_sensitivity':_top,'category_regional_contrasts':_categories,
+     'bootstrap':{'replicates':2000,'seed':42,'joint_valid':len(_valid),'valid_fraction':len(_valid)/2000,'signature':research_four_zone_bootstrap['signature']},
+     'validation':_checks,'tie_policy':'Average point ties before and after within identical category-specific matched cohorts.',
+     'interpretation':'Mechanical points ablation with observed participation held fixed; not a causal estimate of athlete ability.'})
+    research_four_zone_public=research_json_safe({'regional_level':'four_championship_zones','zone_labels':_zonal['zone_labels'],'zone_code_labels':research_zone_labels,
+     'prediction':{'discrepancy':research_four_zone_discrepancy_prediction,'bout':research_four_zone_bout_prediction},
+     'hypothesis':'The zonal slot benefits FIE placement relative to SpringRank more for Africa/Americas than Asia-Oceania/Europe, with a secondary test at comparable non-zonal SpringRank strength.',
+     'category_means':research_four_zone_category_means[research_four_zone_category_means['region'].isin(research_four_zone_names)].replace({'region':research_zone_labels}).to_dict('records'),
+     'unknown_affiliation_rows':int(research_four_zone_joined['region'].eq('Unknown').sum()),
+     'original_rank_contrast':research_four_zone_uncertainty['D_original'],'adjusted':research_four_zone_adjusted,
+     'sensitivities':research_four_zone_sensitivities,'zonal_points':_zonal,
+     'strength_conditioned':{'sensitivity_models':research_zone_strength_sensitivity,'dense_categories':research_zone_dense_categories,'models':research_zone_strength_models,'coverage':research_zone_strength_coverage.replace({'region':research_zone_labels}).to_dict('records'),
+        'support_audit':research_zone_support_audit,'descriptives':research_zone_strength_summary.replace({'region':research_zone_labels}).to_dict('records'),
+        'caveat':'Exploratory conditional country-clustered associations; non-zonal strength is estimated from the same season, not true ability. Participation evidence is incomplete. Strength uncertainty is not fully propagated in this regression.'},
+     'federation_classification':research_four_zone_lookup,
+     'classification_sources':['https://www.ausfencing.org/team-announcement/2025-senior-asian-championships/','https://fie.org/tournaments/2024/1067/event/1067/pools','https://fie.org/federations/FCA']})
+    _path=research_root/'pages/public/analysis.json'
+    _snapshot=json.loads(_path.read_text(encoding='utf-8'))
+    _snapshot['generated_at_utc']=datetime.now(timezone.utc).isoformat()
+    _snapshot['research']['four_zone_primary']=research_four_zone_public
+    _snapshot['research']['zonal_points']['regional_level']='five_confederations_secondary'
+    _snapshot['research']['regional_classification_note']='Four championship zones are primary; previous five-confederation analyses are retained as secondary descriptive results.'
+    _path.write_text(json.dumps(_snapshot,ensure_ascii=False,separators=(',',':'),allow_nan=False),encoding='utf-8')
+    _before=research_four_zone_uncertainty['D_total_ties'];_after=research_four_zone_uncertainty['D_without_zonal'];_change=research_four_zone_uncertainty['D_change'];_fraction=research_four_zone_uncertainty['fraction_reduction']
+    _adjusted=research_four_zone_adjusted['D_without_zonal']['basic']['contrast']
+    research_four_zone_discussion=f"""# Fencing research: noise and four-zone ranking mechanisms
+
+    The six-category noise results remain current: beta omnibus p={research_beta_inference['omnibus']['p']:.3f}; correlation omnibus p={research_rho_inference['omnibus']['p']:.3f}. The descriptive noise ordering is not sufficient evidence of overall differences at the 5% level.
+
+    The primary geographic comparison now uses Africa, Americas, Asia-Oceania and Europe. Oceania remains a separate confederation attribute and is combined with Asia for the shared zonal-championship pool. The prior five-confederation results below are secondary; their 87.7% number is not the primary four-zone estimate.
+
+    The hypothesis is that zonal points improve FIE rank relative to SpringRank disproportionately for Africa/Americas. These are prespecified comparison groups from an exploratory observation, not intrinsic strength labels. A direct secondary test conditions rewards on strength inferred without zonal bouts.
+
+    The tie-controlled contrast is {_before['estimate']:.4f} before removing zonal points and {_after['estimate']:.4f} afterward. Paired change: {_change['estimate']:.4f}, 95% tournament interval [{_change['low']:.4f}, {_change['high']:.4f}], p={_change['p']:.6f}. Relative reduction: {_fraction['estimate']:.1%} (95% interval {_fraction['low']:.1%} to {_fraction['high']:.1%}). All {len(_valid):,}/2,000 paired draws are valid. The country-clustered category/age/hand-adjusted residual contrast is {_adjusted['estimate']:.4f} [{_adjusted['low']:.4f}, {_adjusted['high']:.4f}].
+
+    The direct strength comparison uses observed zonal-participation evidence and within-category strength percentiles from SpringRank fitted after excluding zonal bouts. Restricting every category to common four-zone 5th-to-95th percentile support retains {len(research_zone_supported):,} athletes. Two exploratory outcomes (zonal points and normalized rank benefit) use category-specific cubic strength curves, category/age/hand adjustment, country-clustered uncertainty and two-test Holm adjustment. Coverage and exclusions are reported. This regression does not fully propagate strength-estimation uncertainty; it is complementary to the primary resampling analysis.
+
+    Strength-conditioned results:\n{pd.DataFrame(research_zone_strength_models).to_string(index=False)}\n\nSparse-cell sensitivity (at least five retained athletes per zone in each included category):\n{pd.DataFrame(research_zone_strength_sensitivity).to_string(index=False)}
+
+    Interpretation: mechanical support for a zonal-point mechanism is distinct from proof of unfairness, true athlete strength or causal effects of participating. Entering zonals is selected, federation quotas constrain the field, and competition coverage is incomplete. Replication on independent seasons is required. Ranking ablation retains all matched athletes and average ties. Eligibility for other regional Games is a separate event-level attribute, not a fifth championship zone.
+
+    Prediction experiments were also rerun with four-zone features. Discrepancy prediction:
+    {pd.DataFrame(research_four_zone_discrepancy_prediction['metrics']).to_string(index=False)}
+    Chronological bout prediction (all categories):
+    {pd.DataFrame(research_four_zone_bout_prediction['metrics']).query('category == \"All\"').to_string(index=False)}
+
+    The executable marimo cells and published helpers produced all calculations. Cleaned tables remain local. Original data and original exploratory notebook edits are preserved.
+    """
+    _marker='\n\nARCHIVED FIVE-CONFEDERATION ANALYSIS\n'
+    _old=research_report_path.read_text(encoding='utf-8').split(_marker)[-1]
+    research_report_path.write_text(research_four_zone_discussion+'\n\nFOUR-ZONE FULL OUTPUT\n'+json.dumps(research_four_zone_public,ensure_ascii=False,indent=2)+_marker+_old,encoding='utf-8')
+    mo.vstack([mo.md(research_four_zone_discussion),mo.ui.table(pd.DataFrame(research_zone_strength_models),selection=None,label='Direct strength-conditioned hypothesis checks')])
     return
 
 

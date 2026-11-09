@@ -19,6 +19,9 @@ include an explicit hypothetical comparison caveat for disconnected categories.
 The FIE-differences section also shows the reconciled zonal-points counterfactual:
 all 5,303 supplied totals match the counting rule, with paired uncertainty for
 the change in regional discrepancies and SpringRank agreement.
+The primary comparison uses the four championship zones, combining Asia and
+Oceania. A complementary model compares zonal rewards at comparable SpringRank
+strength estimated without zonal bouts. Five-confederation results are secondary.
 
 `pages/public/analysis.json` contains the compact derived-results snapshot needed
 by the app. Visitors do not need to upload source data. Raw bouts, FIE biography

@@ -276,7 +276,8 @@ def _(mo,pd,plt,public_svg,snapshot):
 
 @app.cell
 def _(evidence,mo,pd,plt,public_svg,zonal_panel):
-    _regions=pd.DataFrame(evidence['region_intervals'])
+    _primary=evidence['four_zone_primary']
+    _regions=pd.DataFrame(_primary['category_means'])
     _fig,_ax=plt.subplots(figsize=(8,4))
     for _category,_rows in _regions.groupby('category',sort=False):
         _ax.plot(_rows['region'],_rows['mean'],marker='o',label=_category)
@@ -284,26 +285,28 @@ def _(evidence,mo,pd,plt,public_svg,zonal_panel):
     differences_panel=mo.vstack([
       mo.md('## FIE differences\nD = (SpringRank rank − FIE rank)/(n − 1), using the common matched cohort within each category and average ties. **Positive D means better placement under FIE.** This is disagreement between systems, not proof of true ability or unfairness.'),
       public_svg(_fig,'Regional ranking discrepancies'),
-      mo.md(f"Equal-weight contrast (Africa + Americas − Asia − Europe)/2 with tournament uncertainty: `{evidence['regional_contrast']}`. Oceania remains separate; unresolved affiliations stay explicit and are excluded from regional regressions."),
-      mo.ui.table(_regions,selection=None,label='Regional sample sizes and uncertainty'),
+      mo.md(f"**Primary classification: four championship zones.** Oceania shares the Asian championship pool and is included in Asia–Oceania. The equal-weight contrast is (Africa + Americas − Asia–Oceania − Europe)/2. Original-rank contrast with tournament uncertainty: `{_primary['original_rank_contrast']}`. Unresolved affiliations remain explicit; they are excluded from zone regressions."),
+      mo.md('The hypothesis is that the zonal points slot improves FIE placement relative to SpringRank more for Africa/Americas. These are comparison groups for an exploratory hypothesis, not fixed intrinsic strength labels.'),
+      mo.ui.table(_regions,selection=None,label='Four-zone category sample sizes and descriptive means'),
       zonal_panel,
-      mo.accordion({'Adjusted regional associations':mo.ui.table(pd.DataFrame(evidence['adjusted_basic']['coefficients']),selection=None),
-        'Participation and competition-mix adjustment':mo.ui.table(pd.DataFrame(evidence['adjusted_participation']['coefficients']),selection=None),
-        'Regional sensitivity analyses':mo.ui.table(pd.DataFrame(evidence['regional_sensitivities']),selection=None),
-        'Discrepancy prediction: country-grouped validation':mo.ui.table(pd.DataFrame(evidence['discrepancy_prediction']['metrics']),selection=None),
-        'Prediction errors by region':mo.ui.table(pd.DataFrame(evidence['discrepancy_prediction']['regional_errors']),selection=None),
-        'Later-bout prediction: chronological holdouts':mo.ui.table(pd.DataFrame(evidence['bout_prediction'].get('metrics',[])),selection=None),
-        'Chronological split and coverage audit':mo.ui.table(pd.DataFrame(evidence['bout_prediction'].get('folds',[])),selection=None),
-        'Calibration: training-only SpringRank':mo.ui.table(pd.DataFrame(evidence['bout_prediction'].get('calibration',{}).get('springrank',[])),selection=None),
-        'Calibration: biography-augmented model':mo.ui.table(pd.DataFrame(evidence['bout_prediction'].get('calibration',{}).get('biography',[])),selection=None)}),
-      mo.md(f"Later-bout coverage: {evidence['bout_prediction'].get('coverage',0):.1%}. Event-bootstrap Brier improvement: `{evidence['bout_prediction'].get('brier_improvement')}`. Invalid dates and current club/coach fields are excluded from historical prediction. Snapshot discrepancy prediction is not a forecast of future rankings."),
+      mo.accordion({'Adjusted four-zone associations':mo.ui.table(pd.DataFrame(_primary['adjusted']['D_original']['basic']['coefficients']),selection=None),
+        'Participation and competition-mix adjustment':mo.ui.table(pd.DataFrame(_primary['adjusted']['D_original']['participation']['coefficients']),selection=None),
+        'Four-zone sensitivity analyses':mo.ui.table(pd.DataFrame([{'analysis':r['analysis'],'n':r['n'],**r['contrasts']} for r in _primary['sensitivities']]),selection=None),
+        'Secondary five-confederation descriptive results':mo.ui.table(pd.DataFrame(evidence['region_intervals']),selection=None),
+        'Discrepancy prediction: country-grouped validation':mo.ui.table(pd.DataFrame(_primary['prediction']['discrepancy']['metrics']),selection=None),
+        'Prediction errors by zone':mo.ui.table(pd.DataFrame(_primary['prediction']['discrepancy']['regional_errors']).replace({'region':{'Asia':'Asia-Oceania'}}),selection=None),
+        'Later-bout prediction: chronological holdouts':mo.ui.table(pd.DataFrame(_primary['prediction']['bout'].get('metrics',[])),selection=None),
+        'Chronological split and coverage audit':mo.ui.table(pd.DataFrame(_primary['prediction']['bout'].get('folds',[])),selection=None),
+        'Calibration: training-only SpringRank':mo.ui.table(pd.DataFrame(_primary['prediction']['bout'].get('calibration',{}).get('springrank',[])),selection=None),
+        'Calibration: biography-augmented model':mo.ui.table(pd.DataFrame(_primary['prediction']['bout'].get('calibration',{}).get('biography',[])),selection=None)}),
+      mo.md(f"Later-bout coverage: {_primary['prediction']['bout'].get('coverage',0):.1%}. Event-bootstrap Brier improvement: `{_primary['prediction']['bout'].get('brier_improvement')}`. Invalid dates and current club/coach fields are excluded from historical prediction. Snapshot discrepancy prediction is not a forecast of future rankings."),
       mo.md('The logistic model also recalibrates the SpringRank coefficient, so any improvement cannot be attributed exclusively to biographies. Removing zonal bouts from SpringRank is a separate sensitivity from removing zonal ranking points. The geographic hypothesis remains exploratory and requires replication.')])
     return (differences_panel,)
 
 
 @app.cell
 def _(evidence,json,mo,pd,plt,public_svg):
-    zonal_evidence=evidence['zonal_points']
+    zonal_evidence=evidence['four_zone_primary']['zonal_points']
     _before=zonal_evidence['contrasts']['D_total_ties']
     _after=zonal_evidence['contrasts']['D_without_zonal']
     _change=zonal_evidence['contrasts']['D_change']
@@ -315,7 +318,7 @@ def _(evidence,json,mo,pd,plt,public_svg):
         _x=[i+_offset for i in range(len(_rows))]
         _ax.vlines(_x,_rows['low'],_rows['high'],color=_color)
         _ax.scatter(_x,_rows['estimate'],label=_label,color=_color)
-    _ax.set_xticks(range(5),['Africa','Americas','Asia','Europe','Oceania'])
+    _ax.set_xticks(range(4),zonal_evidence['zone_labels'])
     _ax.axhline(0,color='gray',linewidth=.7);_ax.set_ylabel('Mean rank discrepancy D');_ax.legend();_fig.tight_layout()
     _correlations=[]
     for _row in zonal_evidence['correlations']:
@@ -326,6 +329,8 @@ def _(evidence,json,mo,pd,plt,public_svg):
     _adjusted=[{'target':target,'adjustment':kind,**model['contrast']} for target,models in zonal_evidence['adjusted'].items() for kind,model in models.items()]
     _valid=zonal_evidence['bootstrap']['valid_fraction']
     _p=f"{_change['p']:.4g}" if _change.get('p') is not None else 'suppressed: too few valid draws'
+    _strength=evidence['four_zone_primary']['strength_conditioned']
+    _points_model=next(r for r in _strength['models'] if r['outcome']=='zonal_points')
     zonal_panel=mo.vstack([
       mo.md('### What changes without zonal ranking points?\nAll **5,303 athlete/category totals reconcile exactly**: five best ordinary-event results, plus world/Olympic and zonal points. The cleaned headers identify every tournament. Zonal points occupy a separate slot, so deleting them does not promote a sixth ordinary result.'),
       public_svg(_fig,'Regional discrepancies with and without zonal ranking points'),
@@ -333,11 +338,18 @@ def _(evidence,json,mo,pd,plt,public_svg):
       mo.md('Both orders use average point ties in the same matched cohort; the original official-rank result remains above. This isolates removing points from changing tie handling. It is a **mechanical points ablation**, with observed participation fixed. The percentage reduction is not a causal proportion explained, and the counterfactual is not an exact official FIE ordering: complete placement tie-breaks are unavailable.'),
       mo.ui.table(pd.DataFrame(_correlations),selection=None,label='Change in FIE agreement; paired intervals and six-test Holm adjustment'),
       mo.md('More negative score-versus-rank correlation means stronger agreement. Correlation intervals are unadjusted 95% paired bootstrap intervals; the six change tests use Holm-adjusted p-values.'),
+      mo.md('#### Rewards at comparable strength\nThis complementary check uses SpringRank estimated **without zonal bouts**. It compares zonal points and normalized rank benefit among athletes with evidence of zonal participation, restricted to overlapping strength ranges in all four zones. Models adjust for category-specific cubic strength curves, category, age and handedness, with country-clustered uncertainty and Holm adjustment for two exploratory outcomes.'),
+      mo.md(f"At comparable estimated strength, the equal-zone Africa/Americas versus Asia–Oceania/Europe contrast is **{_points_model['estimate']:+.1f} zonal points**, 95% country-clustered interval [{_points_model['low']:.1f}, {_points_model['high']:.1f}], across {_points_model['n']:,} athletes. This is a conditional association among evidenced participants, not a causal effect of entering zonals."),
+      mo.ui.table(pd.DataFrame(_strength['models'])[['outcome','n','countries','estimate','low','high','p_holm']],selection=None,label='Conditional zonal-point and normalized rank-benefit contrasts'),
+      mo.md(evidence['four_zone_primary']['strength_conditioned']['caveat']),
       mo.accordion({'Every-row points reconciliation':mo.ui.table(pd.DataFrame(zonal_evidence['reconciliation']),selection=None),
         'Cleaned event dictionary':mo.ui.table(pd.DataFrame(zonal_evidence['events']),selection=None),
         'Adjusted contrasts before, after and for the paired change':mo.ui.table(pd.DataFrame(_adjusted),selection=None),
         'Regional paired changes':mo.ui.table(_regions,selection=None),
         'Regional contrasts within each category':mo.ui.table(pd.DataFrame(zonal_evidence['category_regional_contrasts']),selection=None),
+        'Strength comparison coverage':mo.ui.table(pd.DataFrame(evidence['four_zone_primary']['strength_conditioned']['coverage']),selection=None),
+        'Common-strength support and exclusions':mo.ui.table(pd.DataFrame(evidence['four_zone_primary']['strength_conditioned']['support_audit']),selection=None),
+        'Sensitivity excluding sparse retained zone/category cells':mo.ui.table(pd.DataFrame(_strength['sensitivity_models']),selection=None),
         'Fixed FIE top-200 cohort sensitivity':mo.ui.table([zonal_evidence['top200_sensitivity']['contrasts']],selection=None),
         'Remove both zonal points and zonal bouts':mo.ui.table([zonal_evidence['both_zonal_points_and_bouts_removed']['contrasts']],selection=None)}),
       mo.md(f"[FIE counting and tie rules, o.108]({zonal_evidence['rule_source']}). Tournament resampling captures bout-network uncertainty conditional on the archived points snapshot; it does not represent uncertainty across independent FIE seasons."),

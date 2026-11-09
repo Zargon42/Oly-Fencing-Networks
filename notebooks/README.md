@@ -44,3 +44,18 @@ reproduce every official placement tie-break. Another 2,000 paired tournament
 resamples (seed 42) quantify regional-contrast and correlation changes. The final
 point export extends the public snapshot and local report. Run the point cells
 after the core research cells when reproducing the full export.
+
+## Four-zone primary hypothesis
+
+The final four-zone cells combine Asia and Oceania for the shared championship
+points pool. Confederation membership is retained separately; five-confederation
+results are secondary. Run these cells and their final export after the earlier
+ranking-points section. Another 2,000 paired tournament draws (seed 42) give the
+correct four-zone contrasts and intervals.
+
+The complementary strength-conditioned test fits SpringRank without zonal bouts,
+then compares recorded zonal rewards among evidenced participants within common
+four-zone strength support. Country-clustered regressions use category-specific
+cubic strength-percentile curves, category, age and hand. These are exploratory
+conditional associations; missing participation evidence and estimated strength
+limit causal interpretation. The public app shows coverage and support exclusions.

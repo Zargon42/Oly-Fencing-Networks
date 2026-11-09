@@ -50,6 +50,23 @@ def validate(path):
         assert (item['p'] is not None) == item['formal_inference_enabled']
     assert abs(zonal['contrasts']['D_without_zonal']['estimate'] - zonal['contrasts']['D_total_ties']['estimate']
                - zonal['contrasts']['D_change']['estimate']) < 1e-10
+    primary_zones = research['four_zone_primary']
+    assert primary_zones['regional_level'] == 'four_championship_zones'
+    assert primary_zones['zone_labels'] == ['Africa','Americas','Asia-Oceania','Europe']
+    assert zonal['regional_level'] == 'five_confederations_secondary'
+    four = primary_zones['zonal_points']
+    assert len(four['regional_intervals']) == 12
+    assert all(row['region'] in primary_zones['zone_labels'] for row in four['regional_intervals'])
+    assert all(four['validation'].values())
+    assert four['bootstrap']['replicates'] == 2000 and four['bootstrap']['seed'] == 42
+    assert abs(four['contrasts']['D_without_zonal']['estimate'] - four['contrasts']['D_total_ties']['estimate']
+               - four['contrasts']['D_change']['estimate']) < 1e-10
+    assert all(row['championship_zone'] == 'Asia' for row in primary_zones['federation_classification'].values()
+               if row['confederation_region'] == 'Oceania')
+    assert len(primary_zones['strength_conditioned']['models']) == 2
+    assert all(0 <= row['p_holm'] <= 1 for row in primary_zones['strength_conditioned']['models'])
+    assert primary_zones['prediction']['bout']['status'] == 'complete'
+    assert not any(row['region'] == 'Oceania' for row in primary_zones['prediction']['discrepancy']['regional_errors'])
     assert len({(a['category'], a['name']) for a in athletes}) == len(athletes)
     assert all(a['name'] and a['category'] in snapshot['category_labels'] for a in athletes)
     for variant in snapshot['variants']:

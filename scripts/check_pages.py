@@ -18,6 +18,8 @@ assert '<svg' in definitions['noise_panel'].text
 assert '<svg' in definitions['differences_panel'].text
 assert '<svg' in definitions['zonal_panel'].text
 assert '5,303' in definitions['zonal_panel'].text
+assert definitions['zonal_evidence']['regional_level'] == 'four_championship_zones'
+assert 'Asia-Oceania' in definitions['zonal_evidence']['zone_labels']
 chance = definitions['fantasy_chance']
 assert chance(.3, 1.4, .3, 1.4) == .5
 assert abs(chance(.3, 1.4, -.2, 1.8) + chance(-.2, 1.8, .3, 1.4) - 1) < 1e-12
