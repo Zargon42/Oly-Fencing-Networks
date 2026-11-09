@@ -1,5 +1,26 @@
 # Data sources and reproducibility
 
+## Reconciled zonal points
+
+The research notebook now reconciles all 5,303 athlete/category records in the six
+archived detailed rankings, with zero point-total error. It repairs 77 reversed
+tournament headers and keeps the original-to-clean dictionary and input SHA256s.
+The cleaned wide tables and event dictionary remain local in
+`data/research/clean_rankings/`; original CSVs are never overwritten.
+
+The applicable reconstruction is the best five ordinary-event scores plus the
+world/Olympic and zonal championship slots (FIE Organisation Rules, December 2025,
+o.108.1(a)). Event values already include multipliers. The counterfactual removes
+the zonal slot without promoting another ordinary result. Average point ranks
+are used consistently before and after within the same matched cohort. Exact
+official tie-break ordering, which depends on event placings, is not asserted.
+It is a mechanical points ablation with participation held fixed, not a causal
+simulation. The public snapshot contains reconciliation summaries, the event
+dictionary, adjusted contrasts and 2,000 paired tournament-bootstrap outputs;
+individual raw event-point tables are not bundled.
+
+Rule source: [FIE Organisation Rules, December 2025](https://static.fie.org/uploads/38/190670-Organisation%20rules%20ang.pdf).
+
 ## Run the public app without raw data
 
 The repository includes a compact derived-results artifact at

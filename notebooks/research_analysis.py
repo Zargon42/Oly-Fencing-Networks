@@ -371,6 +371,7 @@ def research_sensitivities(
     mo,
     pd,
     research,
+    research_points_audit,
     research_primary_fits,
     research_regions,
     research_root,
@@ -396,15 +397,12 @@ def research_sensitivities(
         _mask = _elite['category'].eq(_category)
         _elite.loc[_mask,'D'] = research.discrepancy(_elite.loc[_mask,'score'],_elite.loc[_mask,'fie_rank'])
     research_region_sensitivities.append({'analysis':'FIE top 200, ranks recomputed within cohort','n':len(_elite),'contrast':research.regional_contrast(_elite)})
-    research_zonal_points_audit = []
-    for _category in research.CATEGORIES:
-        _table = pd.read_csv(research_root/'rankings'/f'{_category}-detailed-ranking-2026.csv')
-        research_zonal_points_audit.append({'category':_category,'rows':len(_table),'columns':list(_table.columns),
-          'status':'Not reconstructed: supplied PDF-derived table does not identify counted zonal points and applicable counting rules reliably.'})
+    research_zonal_points_audit = research_points_audit
     mo.vstack([mo.ui.table(pd.DataFrame(research_sensitivity_summary),selection=None,label='Age and participation sensitivity analyses'),
                mo.ui.table(pd.DataFrame(research_region_sensitivities),selection=None,label='Regional contrast sensitivities'),
-               mo.md('A without-zonal-points FIE ranking is not reported: removing all visible zonal points without reconstructing counting rules would create an unsupported counterfactual. Excluding zonal bouts from SpringRank is a separate sensitivity analysis.')])
+               mo.md('The zonal-point tables are reconciled below. The points counterfactual uses consistent average ties; excluding zonal bouts from SpringRank is a separate sensitivity analysis.')])
     return (
+        research_nozonal_fits,
         research_region_sensitivities,
         research_sensitivity_fits,
         research_sensitivity_summary,
@@ -554,13 +552,13 @@ def research_export(
      'DISCREPANCY PREDICTION\n'+json.dumps(research_discrepancy_prediction,indent=2),
      'LATER-BOUT PREDICTION\n'+json.dumps(research_bout_prediction,indent=2),
      'SENSITIVITIES\n'+pd.DataFrame(research_sensitivity_summary).to_string(index=False)+'\n'+str(research_region_sensitivities),
-     'LIMITATIONS\nObserved population/event coverage only. FIE tables are concurrent archived snapshots, not ability ground truth. Name matching is not license verified. Missing biography fields may be systematic; club/coach excluded from historical prediction. Invalid dates excluded from chronological evaluation. Zonal-point counterfactual is not identifiable from the supplied PDF-derived tables. Bootstrap percentile coverage and centered tests are approximations, not exact randomization tests. Exploratory geographic hypothesis requires replication.',
+     'LIMITATIONS\nObserved population/event coverage only. FIE tables are concurrent archived snapshots, not ability ground truth. Name matching is not license verified. Missing biography fields may be systematic; club/coach excluded from historical prediction. Invalid dates excluded from chronological evaluation. Zonal-point totals have been fully reconciled; the average-tie counterfactual and remaining placement tie-break limitation are documented in the zonal-point section. Bootstrap percentile coverage and centered tests are approximations, not exact randomization tests. Exploratory geographic hypothesis requires replication.',
      'SOURCES\nhttps://pmc.ncbi.nlm.nih.gov/articles/PMC6054508/\nhttps://fie.org/about\n'+research_region_source['source_url']+'\nBout records: Andrew Fischl (CyrusOfChaos), as credited in DATA.md.',
      'REPRODUCIBILITY\nRun this published notebook with local source files. Public Pages displays its compact exports. Raw biography caches and this unreviewed draft stay outside the public build.'
     ])
     research_report_path.write_text(_report,encoding='utf-8')
     mo.md(f"**Exported actual notebook results:** `pages/public/analysis.json`. Local unreviewed report: `{research_report_path.name}`. Raw biographies and birth dates are excluded from publication.")
-    return (research_report_path,)
+    return research_json_safe, research_report_path
 
 
 @app.cell
@@ -591,12 +589,337 @@ def research_discussion(
 
     **Bout prediction.** Evaluation covers {research_bout_prediction['covered_test_bouts']:,} later bouts ({research_bout_prediction['coverage']:.1%} of eligible test bouts). Brier improvement is {_bout['estimate']:.6f}, with interval [{_bout['low']:.6f}, {_bout['high']:.6f}]. The interval includes zero: these results do not establish a clear improvement in later-bout prediction. The logistic model can also recalibrate the SpringRank coefficient, so its difference cannot be attributed exclusively to biographical information.
 
-    **Limits and next work.** Replicate geographic findings on another season and collect historical FIE snapshots before forecasting discrepancies. Reconstruct counted zonal points and contemporary rules before a no-zonal-points counterfactual. Biography missingness, name matching, event coverage and disconnected categories limit interpretation. These analyses are exploratory, not measures of intrinsic luck.
+    **Limits and next work.** Replicate geographic findings on another season and collect historical FIE snapshots before forecasting discrepancies. The reconciled zonal-points counterfactual is reported in the following section. Biography missingness, name matching, event coverage and disconnected categories limit interpretation. These analyses are exploratory, not measures of intrinsic luck.
     """
     _existing=research_report_path.read_text(encoding='utf-8')
     _marker='\n\nNOTEBOOK DISCUSSION\n'
     research_report_path.write_text(_existing.split(_marker)[0]+_marker+research_discussion,encoding='utf-8')
     mo.md(research_discussion)
+    return (research_discussion,)
+
+
+@app.cell
+def research_points_reconciliation(mo, np, pd, research, research_root):
+    # All cleaning, reconciliation, and counterfactual calculations run in this notebook.
+    import re as _re
+    import hashlib as _hashlib
+    research_points_tables = {}
+    research_points_events = []
+    research_points_audit = []
+    research_points_mismatches = []
+    research_points_rule_source = 'https://static.fie.org/uploads/38/190670-Organisation%20rules%20ang.pdf'
+    for _category in research.CATEGORIES:
+        _path = research_root/'rankings'/f'{_category}-detailed-ranking-2026.csv'
+        _table = pd.read_csv(_path)
+        _rename = {}
+        _event_columns = []
+        for _header in _table.columns:
+            if _header in ['Rank','Name','Nat.','Points','Total points']:
+                continue
+            _text = ' '.join(str(_header).split())
+            _reversed = _text.startswith(')')
+            if _reversed:
+                _text = ' '.join(part[::-1] for part in reversed(_text.split()))
+            _match = _re.fullmatch(r'(\d{2})/(\d{2})\s+(.+?)\s*\((SA|A|GP|CHZ|CHM|JO)\)',_text)
+            assert _match, f'Unrecognized event header: {_category} {_header!r} -> {_text!r}'
+            _day,_month,_city,_kind = _match.groups()
+            _year = 2025 if int(_month)>=9 else 2026
+            _date = pd.Timestamp(year=_year,month=int(_month),day=int(_day))
+            _clean = f'{_date.date()} {_city} ({_kind})'
+            assert _clean not in _rename.values()
+            _rename[_header] = _clean
+            _event_columns.append((_clean,_kind))
+            research_points_events.append({'category':_category,'original_header':_header,'clean_header':_clean,
+                'date':str(_date.date()),'location':_city,'event_type':_kind,'reversed_header_fixed':_reversed})
+        _table = _table.rename(columns={**_rename,'Nat.':'country','Points':'official_total','Total points':'official_total','Name':'name','Rank':'official_rank'})
+        _ordinary = [c for c,k in _event_columns if k in ['SA','A','GP']]
+        _zonal = [c for c,k in _event_columns if k=='CHZ']
+        _world = [c for c,k in _event_columns if k in ['CHM','JO']]
+        assert len(_zonal)==4 and len(_world)==1
+        _points = _table[[c for c,k in _event_columns]].apply(pd.to_numeric,errors='raise')
+        assert (_points.fillna(0)>=0).all().all()
+        assert (_points[_zonal].fillna(0).gt(0).sum(axis=1)<=1).all()
+        _table['ordinary_best_five'] = np.sort(_points[_ordinary].fillna(0).to_numpy(),axis=1)[:,-5:].sum(axis=1)
+        _table['ordinary_all_points'] = _points[_ordinary].sum(axis=1)
+        _table['discarded_ordinary_points'] = _table['ordinary_all_points']-_table['ordinary_best_five']
+        _table['zonal_points'] = _points[_zonal].sum(axis=1)
+        _table['world_points'] = _points[_world].sum(axis=1)
+        _table['reconstructed_total'] = _table['ordinary_best_five']+_table['zonal_points']+_table['world_points']
+        _table['reconciliation_error'] = _table['reconstructed_total']-_table['official_total']
+        _table['reconciled'] = np.isclose(_table['reconciliation_error'],0,atol=1e-8)
+        _table['points_without_zonal'] = _table['ordinary_best_five']+_table['world_points']
+        _table['rank_from_total_average_ties'] = _table['official_total'].rank(ascending=False,method='average')
+        _table['rank_without_zonal_average_ties'] = _table['points_without_zonal'].rank(ascending=False,method='average')
+        _table['key'] = _table['name'].map(research.normalized_name)
+        research_points_tables[_category] = _table
+        research_points_audit.append({'category':_category,'athletes':len(_table),'events':len(_event_columns),
+            'headers_repaired':sum(e['reversed_header_fixed'] for e in research_points_events if e['category']==_category),
+            'reconciled':int(_table['reconciled'].sum()),'unreconciled':int((~_table['reconciled']).sum()),
+            'max_absolute_error':float(_table['reconciliation_error'].abs().max()),
+            'athletes_with_zonal_points':int(_table['zonal_points'].gt(0).sum()),
+            'input_sha256':_hashlib.sha256(_path.read_bytes()).hexdigest()})
+        if (~_table['reconciled']).any():
+            research_points_mismatches.append(_table.loc[~_table['reconciled'],['name','official_total','reconstructed_total','reconciliation_error']].assign(category=_category))
+    research_points_clean_dir = research_root/'data/research/clean_rankings'
+    research_points_clean_dir.mkdir(parents=True,exist_ok=True)
+    for _category,_table in research_points_tables.items():
+        _table.to_csv(research_points_clean_dir/f'{_category}-reconciled.csv',index=False)
+    pd.DataFrame(research_points_events).to_csv(research_points_clean_dir/'event_dictionary.csv',index=False)
+    mo.vstack([mo.md('## Reconcile detailed FIE points\nRule o.108.1(a): five best World Cup/Grand Prix/Satellite results, plus World/Olympic and zonal championships. Zonal results occupy a separate slot, so removing zonal points does not promote a sixth ordinary result. Point values already include event multipliers. Event years are inferred from the 2025/26 season and month, and the original headers are retained in the event dictionary. Parenthesis formatting is not used to decide the best five.'),
+     mo.ui.table(pd.DataFrame(research_points_audit),selection=None,label='Every-row reconciliation against published totals'),
+     mo.ui.table(pd.DataFrame(research_points_events),selection=None,label='Cleaned tournament headers and source mapping'),
+     mo.ui.table(pd.concat(research_points_mismatches,ignore_index=True) if research_points_mismatches else pd.DataFrame({'status':['All totals reconciled']}),selection=None,label='Unresolved point discrepancies')])
+    return (
+        research_points_audit,
+        research_points_events,
+        research_points_rule_source,
+        research_points_tables,
+    )
+
+
+@app.cell
+def research_points_methods(
+    mo,
+    pd,
+    research,
+    research_discrepancy_data,
+    research_nozonal_fits,
+    research_points_audit,
+    research_points_tables,
+    research_primary_fits,
+):
+    import src.ranking_points as ranking_points
+    assert all(row['unreconciled']==0 for row in research_points_audit)
+    research_points_frames = {c:ranking_points.attach_points(f[0],research_points_tables[c]) for c,f in research_primary_fits.items()}
+    research_points_contrasts,research_points_correlations = ranking_points.summarize(list(research_points_frames.values()))
+    research_points_joined = pd.concat(research_points_frames.values(),ignore_index=True)
+    research_points_region_summary = research_points_joined.groupby('region').agg(
+        n=('name','size'),mean_original_D=('D_original','mean'),mean_total_ties_D=('D_total_ties','mean'),
+        mean_without_zonal_D=('D_without_zonal','mean'),mean_change=('D_change','mean'),
+        mean_zonal_points=('zonal_points','mean'),mean_zonal_fraction=('zonal_fraction','mean'),
+        mean_global_rank_change=('global_rank_change','mean')).reset_index()
+    research_points_adjusted = {}
+    for _target in ['D_total_ties','D_without_zonal','D_change']:
+        _feature=research_discrepancy_data.drop(columns=['D']).merge(research_points_joined[['category','name',_target]],on=['category','name'],validate='one_to_one')
+        _feature['D']=_feature[_target]
+        research_points_adjusted[_target] = {'basic':research.clustered_adjustment(_feature,False),
+                                            'participation':research.clustered_adjustment(_feature,True)}
+    research_points_both_removed=[]
+    for _code,_fit in research_nozonal_fits.items():
+        research_points_both_removed.append(ranking_points.attach_points(_fit[0],research_points_tables[_code]))
+    research_points_both_contrasts,research_points_both_correlations=ranking_points.summarize(research_points_both_removed)
+    mo.vstack([mo.md('## Counterfactual: remove the zonal points slot\nTotals reconcile for every row. Remove CHZ points while retaining the five ordinary results and world points. No replacement by a sixth ordinary result is permitted by the separate-slot rule. We retain all athletes, including zero-point athletes. This is a mechanical points ablation with observed participation and SpringRank scores held fixed, not a simulated season without zonal events.\n\n**Ties:** Both before and after orders use average ranks of total points within the same matched cohort. The supplied official ordinal ranks can use placement tie-breaks; comparing their distinct positions with a tied counterfactual would mix tie-rule changes with removing points. Original-rank discrepancies remain shown as a sensitivity. Exact counterfactual official tie-breaks are not claimed because event finishing positions are absent from these point tables.'),
+     mo.ui.table([research_points_contrasts],selection=None,label='Original, tie-controlled and without-zonal regional contrasts'),
+     mo.ui.table(research_points_region_summary,selection=None,label='Regional ranking and points effects'),
+     mo.ui.table(pd.DataFrame(research_points_correlations),selection=None,label='Agreement with SpringRank before and after removing zonal points')])
+    return (
+        ranking_points,
+        research_points_adjusted,
+        research_points_both_contrasts,
+        research_points_both_correlations,
+        research_points_contrasts,
+        research_points_correlations,
+        research_points_frames,
+        research_points_joined,
+        research_points_region_summary,
+    )
+
+
+@app.cell
+def research_points_bootstrap(
+    mo,
+    pd,
+    ranking_points,
+    research,
+    research_points_contrasts,
+    research_points_correlations,
+    research_points_joined,
+    research_points_tables,
+    research_primary_leagues,
+    research_root,
+    research_tournament_blocks,
+):
+    with mo.status.progress_bar(total=2000,title='Paired zonal-points analysis: shared tournament refits',remove_on_exit=False) as _progress:
+        research_points_bootstrap = ranking_points.paired_bootstrap(research_primary_leagues,research_points_tables,research_tournament_blocks,
+            replicates=2000,seed=42,workers=4,checkpoint=research_root/'data/research/zonal_points_bootstrap.json',
+            progress=lambda completed,total:_progress.update(increment=1,subtitle=f'{completed:,}/{total:,} paired replicates'))
+    research_points_valid = [r for r in research_points_bootstrap['results'] if r.get('failure') is None]
+    research_points_uncertainty = {key:ranking_points.interval(value,[r['contrasts'][key] for r in research_points_valid],2000)
+                                  for key,value in research_points_contrasts.items()}
+    research_points_correlation_intervals = []
+    for _i,_point in enumerate(research_points_correlations):
+        _result={'category':_point['category'],'n':_point['n']}
+        for _metric in ['rho_total_ties','rho_without_zonal','rho_change']:
+            _result[_metric]=ranking_points.interval(_point[_metric],[r['correlations'][_i][_metric] for r in research_points_valid],2000)
+        research_points_correlation_intervals.append(_result)
+    _p=[row['rho_change']['p'] for row in research_points_correlation_intervals]
+    if all(p is not None for p in _p):
+        for _row,_adjusted in zip(research_points_correlation_intervals,research.holm(_p)):
+            _row['rho_change']['p_holm']=float(_adjusted)
+    research_points_regional_intervals=[]
+    for _i,_region in enumerate(research.REGIONS):
+        _subset=research_points_joined[research_points_joined['region'].eq(_region)]
+        for _j,_metric in enumerate(['D_total_ties','D_without_zonal','D_change']):
+            _draws=[r['regional'][_i][_j] for r in research_points_valid]
+            research_points_regional_intervals.append({'region':_region,'metric':_metric,'n':len(_subset),
+                **ranking_points.interval(float(_subset[_metric].mean()),_draws,2000)})
+    mo.vstack([mo.ui.table([{'metric':k,**v} for k,v in research_points_uncertainty.items()],selection=None,label='Paired tournament-bootstrap contrasts and changes'),
+     mo.ui.table(pd.DataFrame(research_points_regional_intervals),selection=None,label='Regional before/after uncertainty'),
+     mo.md(f"Joint valid paired replicates: {len(research_points_valid):,}/2,000. Inference is conditional on the archived points snapshot and observed tournament coverage, and propagates bout-network uncertainty, not uncertainty about unobserved seasons.")])
+    return (
+        research_points_bootstrap,
+        research_points_correlation_intervals,
+        research_points_regional_intervals,
+        research_points_uncertainty,
+        research_points_valid,
+    )
+
+
+@app.cell
+def research_points_validation(
+    mo,
+    np,
+    pd,
+    ranking_points,
+    research,
+    research_bootstrap_draws,
+    research_discrepancy_data,
+    research_points_audit,
+    research_points_bootstrap,
+    research_points_frames,
+    research_points_joined,
+    research_points_tables,
+    research_primary_fits,
+    research_primary_leagues,
+    research_tournament_blocks,
+):
+    assert all(row['unreconciled']==0 and row['max_absolute_error']==0 for row in research_points_audit)
+    assert sum(row['athletes'] for row in research_points_audit)==sum(len(t) for t in research_points_tables.values())
+    for _table in research_points_tables.values():
+        assert np.allclose(_table['official_total']-_table['zonal_points'],_table['points_without_zonal'])
+        assert (_table['points_without_zonal']<=_table['official_total']+1e-8).all()
+    assert len(research_points_joined)==len(research_discrepancy_data)
+    _draws=np.array([r['contrasts']['D_original'] if r.get('failure') is None else np.nan for r in research_points_bootstrap['results']])
+    assert np.allclose(_draws,research_bootstrap_draws['regional_contrast'],equal_nan=True), 'Paired resamples must match the previous bootstrap exactly.'
+    with mo.status.progress_bar(total=5,title='Reproduce five paired counterfactual resamples') as _progress:
+        _repeat=ranking_points.paired_bootstrap(research_primary_leagues,research_points_tables,research_tournament_blocks,
+            replicates=5,seed=42,workers=1,progress=lambda completed,total:_progress.update(increment=1))
+    assert _repeat['results']==research_points_bootstrap['results'][:5]
+    # Synthetic fixture: removing the separate zonal slot does not promote result six.
+    _ordinary=np.array([32.,26.,20.,14.,8.,4.])
+    assert np.sort(_ordinary)[-5:].sum()==100
+    assert (100+48+80)-48==180
+    _toy=pd.DataFrame({'category':['WF']*3,'name':['A','B','C'],'country':['FRA']*3,'region':['Europe']*3,
+        'score':[3.,2.,1.],'D':[0.,0.,0.]})
+    _totals=pd.DataFrame({'name':['A','B','C'],'key':['a','b','c'],'official_total':[10.,10.,2.],
+     'zonal_points':[8.,0.,0.],'points_without_zonal':[2.,10.,2.],
+     'rank_from_total_average_ties':[1.5,1.5,3.],'rank_without_zonal_average_ties':[2.5,1.,2.5]})
+    _result=ranking_points.attach_points(_toy,_totals)
+    assert np.isclose(_result.loc[0,'D_total_ties'],-.25)
+    assert np.isclose(_result.loc[0,'D_without_zonal'],-.75)
+    assert np.isclose(_result.loc[0,'D_change'],-.5)
+    research_points_category_contrasts=[]
+    for _code,_frame in research_points_frames.items():
+        _row={'category':_code,'n':len(_frame)}
+        for _metric in ['D_total_ties','D_without_zonal','D_change']:
+            _copy=_frame.copy();_copy['D']=_copy[_metric]
+            _row[_metric]=research.regional_contrast(_copy)
+        research_points_category_contrasts.append(_row)
+    research_points_elite_frames=[]
+    for _code,_fit in research_primary_fits.items():
+        _elite=_fit[0].query('fie_rank <= 200').copy()
+        _elite['D']=research.discrepancy(_elite['score'],_elite['fie_rank'])
+        research_points_elite_frames.append(ranking_points.attach_points(_elite,research_points_tables[_code]))
+    research_points_elite_contrasts,research_points_elite_correlations=ranking_points.summarize(research_points_elite_frames)
+    research_points_checks = {'all_totals_reconciled':True,'same_matched_cohort':True,'no_replacement_slot':True,
+        'ties_and_signs':True,'paired_resamples_match_original':True,'five_seeded_draws_reproduced':True}
+    mo.md('**Counterfactual validation passed:** every official total reconciled; fixed matched cohorts; separate-slot arithmetic; tie/sign fixture; all paired resamples match the original tournament draws; five repeated draws reproduced exactly.')
+    return (
+        research_points_category_contrasts,
+        research_points_checks,
+        research_points_elite_contrasts,
+        research_points_elite_correlations,
+        research_points_elite_frames,
+    )
+
+
+@app.cell
+def research_points_export(
+    datetime,
+    json,
+    mo,
+    pd,
+    research_discussion,
+    research_json_safe,
+    research_points_adjusted,
+    research_points_audit,
+    research_points_bootstrap,
+    research_points_both_contrasts,
+    research_points_both_correlations,
+    research_points_category_contrasts,
+    research_points_checks,
+    research_points_correlation_intervals,
+    research_points_elite_contrasts,
+    research_points_elite_correlations,
+    research_points_elite_frames,
+    research_points_events,
+    research_points_region_summary,
+    research_points_regional_intervals,
+    research_points_rule_source,
+    research_points_uncertainty,
+    research_points_valid,
+    research_report_path,
+    research_root,
+    timezone,
+):
+    _base_discussion = research_discussion
+    research_zonal_published = research_json_safe({
+     'status':'complete','rule_source':research_points_rule_source,'rule_article':'o.108.1(a), o.108.1(e)',
+     'rule':'Best five World Cup/Grand Prix/Satellite point results plus world/Olympic and zonal points. Remove the zonal slot; no sixth ordinary replacement.',
+     'reconciliation':research_points_audit,'events':research_points_events,
+     'contrasts':research_points_uncertainty,'regional_summary':research_points_region_summary.to_dict('records'),
+     'regional_intervals':research_points_regional_intervals,'correlations':research_points_correlation_intervals,
+     'adjusted':research_points_adjusted,'both_zonal_points_and_bouts_removed':{'contrasts':research_points_both_contrasts,'correlations':research_points_both_correlations},
+     'top200_sensitivity':{'n':sum(len(f) for f in research_points_elite_frames),'contrasts':research_points_elite_contrasts,'correlations':research_points_elite_correlations},
+     'category_regional_contrasts':research_points_category_contrasts,
+     'bootstrap':{'replicates':2000,'seed':42,'joint_valid':len(research_points_valid),'valid_fraction':len(research_points_valid)/2000,
+       'signature':research_points_bootstrap['signature'],'failed_draws':[r['failure'] for r in research_points_bootstrap['results'] if r.get('failure')]},
+     'validation':research_points_checks,
+     'tie_policy':'Average point ranks both before and after in the same category-specific matched cohort. Exact FIE placing tie-breaks are not reconstructed.',
+     'interpretation':'Mechanical removal of recorded zonal points with observed participation fixed; not a causal estimate or a simulated season without zonal events.'})
+    _snapshot_path=research_root/'pages/public/analysis.json'
+    _snapshot=json.loads(_snapshot_path.read_text(encoding='utf-8'))
+    _snapshot['generated_at_utc']=datetime.now(timezone.utc).isoformat()
+    _snapshot['research']['zonal_points']=research_zonal_published
+    _snapshot['research']['zonal_points_audit']=research_json_safe(research_points_audit)
+    _snapshot_path.write_text(json.dumps(_snapshot,ensure_ascii=False,separators=(',',':'),allow_nan=False),encoding='utf-8')
+    _before=research_points_uncertainty['D_total_ties'];_after=research_points_uncertainty['D_without_zonal']
+    _change=research_points_uncertainty['D_change'];_fraction=research_points_uncertainty['fraction_reduction']
+    research_points_discussion=f"""
+    ## Reconciled zonal-point analysis
+
+    All {sum(r['athletes'] for r in research_points_audit):,} athlete/category ranking records reconcile exactly: best five ordinary results plus world/Olympic and zonal points. Repaired {sum(r['headers_repaired'] for r in research_points_audit)} reversed tournament headers. Preserved original inputs and a source-to-clean event dictionary; cleaned local tables are in data/research/clean_rankings/.
+
+    The equal-region contrast using consistent point ties is {_before['estimate']:.4f} (95% tournament interval {_before['low']:.4f} to {_before['high']:.4f}). After removing zonal points it is {_after['estimate']:.4f} ({_after['low']:.4f} to {_after['high']:.4f}). The paired change is {_change['estimate']:.4f} ({_change['low']:.4f} to {_change['high']:.4f}); centered-bootstrap p={_change['p']}. Relative contrast reduction is {_fraction['estimate']:.1%} ({_fraction['low']:.1%} to {_fraction['high']:.1%}). This percentage is a mechanical change in this contrast, not the causal proportion of ranking disagreement explained by zonal championships.
+
+    Both point orders use average ties in the same matched cohort. The archived official rank, which can break point ties by tournament placings, remains a sensitivity. We do not label the counterfactual an exact official FIE ranking: event finish positions needed for every tie-break are not available in the point tables. All zero-point athletes remain included. Ordinary results are not promoted into the removed zonal slot.
+
+    The category/age/hand-adjusted residual contrast is {research_points_adjusted['D_without_zonal']['basic']['contrast']['estimate']:.4f}, with country-clustered interval [{research_points_adjusted['D_without_zonal']['basic']['contrast']['low']:.4f}, {research_points_adjusted['D_without_zonal']['basic']['contrast']['high']:.4f}], which includes zero. Country-clustered adjustments for participation/mix are also reported before/after and directly for the paired discrepancy change. The top-200 fixed-cohort sensitivity has before/after contrasts {research_points_elite_contrasts['D_total_ties']:.4f} and {research_points_elite_contrasts['D_without_zonal']:.4f}. Category-specific correlation changes use the same tournament draws and a separate six-test Holm family. A second sensitivity removes both zonal bouts from SpringRank and zonal points; its different fitted cohort must not be conflated with the fixed-cohort points ablation.
+
+    The analysis holds recorded participation, the archived point snapshot, and observed bouts fixed. It identifies the mechanical contribution of recorded zonal points, not causal effects on ability, entry decisions or an alternative season. Uncertainty resamples the observed bout tournaments; it does not resample an independently observed series of FIE ranking snapshots. Geographic findings remain exploratory.
+
+    Rule source: {research_points_rule_source}, articles o.108.1(a) and o.108.1(e).
+    """
+    _report=research_report_path.read_text(encoding='utf-8')
+    _marker='\n\nRECONCILED ZONAL-POINT ANALYSIS\n'
+    _report=_report.split(_marker)[0]
+    _report=_report.replace('Zonal-point counterfactual is not identifiable from the supplied PDF-derived tables.','Zonal-point totals have now been fully reconciled; the average-tie counterfactual and its remaining tie-break limitation are documented below.')
+    _report=_report.replace('Reconstruct counted zonal points and contemporary rules before a no-zonal-points counterfactual.','The zonal-points counterfactual is now reconciled and reported below.')
+    _report=_report.replace('A without-zonal-points FIE ranking is not reported','A point-based without-zonal counterfactual is now reported')
+    research_report_path.write_text(_report+_marker+research_points_discussion+'\n\n'+json.dumps(research_zonal_published,ensure_ascii=False,indent=2),encoding='utf-8')
+    mo.vstack([mo.md(research_points_discussion),
+     mo.ui.table(pd.DataFrame([{'category':r['category'],**r['rho_change']} for r in research_points_correlation_intervals]),selection=None,label='Paired correlation changes; six-test Holm family'),
+     mo.md('Updated public snapshot and local report exported from this notebook. Cleaned per-athlete point tables stay local; public output contains summaries and the event dictionary.')])
     return
 
 

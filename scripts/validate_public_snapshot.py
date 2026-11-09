@@ -32,6 +32,24 @@ def validate(path):
     assert len(research['region_intervals']) == 30
     assert research['discrepancy_prediction']['metrics']
     assert research['bout_prediction']['status'] == 'complete'
+    zonal = research['zonal_points']
+    assert zonal['status'] == 'complete'
+    assert len(zonal['reconciliation']) == 6
+    assert all(row['athletes'] == row['reconciled'] and row['unreconciled'] == 0 and row['max_absolute_error'] == 0
+               for row in zonal['reconciliation'])
+    assert sum(row['athletes'] for row in zonal['reconciliation']) == 5303
+    assert len(zonal['events']) == sum(row['events'] for row in zonal['reconciliation'])
+    assert len({(r['category'], r['clean_header']) for r in zonal['events']}) == len(zonal['events'])
+    assert zonal['bootstrap']['replicates'] == 2000 and zonal['bootstrap']['seed'] == 42
+    assert zonal['bootstrap']['joint_valid'] <= 2000
+    assert all(zonal['validation'].values())
+    assert len(zonal['correlations']) == 6 and len(zonal['regional_intervals']) == 15
+    for item in zonal['contrasts'].values():
+        assert item['low'] <= item['high']
+        assert item['formal_inference_enabled'] == (item['valid'] >= 1800)
+        assert (item['p'] is not None) == item['formal_inference_enabled']
+    assert abs(zonal['contrasts']['D_without_zonal']['estimate'] - zonal['contrasts']['D_total_ties']['estimate']
+               - zonal['contrasts']['D_change']['estimate']) < 1e-10
     assert len({(a['category'], a['name']) for a in athletes}) == len(athletes)
     assert all(a['name'] and a['category'] in snapshot['category_labels'] for a in athletes)
     for variant in snapshot['variants']:

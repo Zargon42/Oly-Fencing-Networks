@@ -16,6 +16,8 @@ assert abs(definitions['rank_correlation'] - definitions['selected_variant']['co
 assert definitions['snapshot']['data_kind'] == 'actual_research_outputs'
 assert '<svg' in definitions['noise_panel'].text
 assert '<svg' in definitions['differences_panel'].text
+assert '<svg' in definitions['zonal_panel'].text
+assert '5,303' in definitions['zonal_panel'].text
 chance = definitions['fantasy_chance']
 assert chance(.3, 1.4, .3, 1.4) == .5
 assert abs(chance(.3, 1.4, -.2, 1.8) + chance(-.2, 1.8, .3, 1.4) - 1) < 1e-12

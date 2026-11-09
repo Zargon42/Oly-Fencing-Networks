@@ -28,3 +28,19 @@ viewer of those results. It does not repeat the expensive native analysis per vi
 The original exploratory notebook is preserved. The new notebook separates the
 formal analysis from that exploratory history. The archived public snapshot remains
 usable without downloading the original source data.
+
+## Reconciled tournament points
+
+The ranking-point cells repair reversed tournament headers and preserve an
+original-to-clean event dictionary. They reproduce every published total using
+FIE Organisation Rules, December 2025, o.108.1(a): best five World Cup/Grand Prix/
+Satellite results plus the world/Olympic and zonal slots. Clean tables stay local
+under `data/research/clean_rankings/`; original inputs are preserved.
+
+The zonal-point counterfactual removes the separate zonal slot without promoting
+a sixth ordinary result. It holds observed participation fixed and uses average
+point ties before and after within the same matched cohort. It does not claim to
+reproduce every official placement tie-break. Another 2,000 paired tournament
+resamples (seed 42) quantify regional-contrast and correlation changes. The final
+point export extends the public snapshot and local report. Run the point cells
+after the core research cells when reproducing the full export.

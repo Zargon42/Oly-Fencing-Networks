@@ -16,6 +16,9 @@ search athletes, compare FIE ordering, view charts, and download the displayed t
 It now leads with six-category noise comparisons, tournament-bootstrap uncertainty,
 regional ranking discrepancies and held-out prediction results. Fantasy matchups
 include an explicit hypothetical comparison caveat for disconnected categories.
+The FIE-differences section also shows the reconciled zonal-points counterfactual:
+all 5,303 supplied totals match the counting rule, with paired uncertainty for
+the change in regional discrepancies and SpringRank agreement.
 
 `pages/public/analysis.json` contains the compact derived-results snapshot needed
 by the app. Visitors do not need to upload source data. Raw bouts, FIE biography
