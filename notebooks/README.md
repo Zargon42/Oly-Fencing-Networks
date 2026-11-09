@@ -1,61 +1,61 @@
-# Executable research
+# Research notebook
 
-`research_analysis.py` is the source of the extended analysis: corrected beta
-estimation, six-category tournament bootstrap comparisons, ranking discrepancies,
-regional associations, held-out-country prediction and chronological bout prediction.
-All substantive runs and exports are initiated by visible marimo cells. Published
-helper implementations are in `src/research.py`; they contain no independent runner.
+`research_analysis.py` is one executable research narrative. It runs in reading
+order from local inputs, with the four championship zones primary throughout.
 
-From the repository root, create a Python 3.12 environment and install
-`requirements-analysis.txt`, then open:
+1. Input audits, point reconciliation and cohort definition.
+2. Six-category beta and FIE-correlation comparisons.
+3. Four-zone discrepancy, paired zonal-points ablation and adjusted associations.
+4. Rewards at comparable non-zonal SpringRank strength, with support checks.
+5. Country-grouped discrepancy prediction and chronological bout prediction.
+6. Age/participation, top-200, non-zonal-bout and confederation sensitivities.
+7. Validation, seeded reproducibility and interpretation.
+8. Review and a single export step.
+
+## Run
+
+Use Python 3.12 and the inputs described in `DATA.md`, including the enriched
+biography CSV at `data/fie_biographies/athletes_enriched.csv`.
 
 ```sh
+python -m pip install -r requirements-analysis.txt
 python -m marimo edit notebooks/research_analysis.py
 ```
 
-Supply the local bout files and archived rankings described in `DATA.md`, plus
-`data/fie_biographies/athletes_enriched.csv` for the biography models. The notebook
-shows the FIE region source, input audit and biography coverage. Run the two analysis
-buttons; the bootstrap defaults to 2,000 replicates and seed 42. Its input-keyed
-checkpoint is local in `data/research/`.
+The notebook executes automatically. Settings are together near the top. The
+primary protocol is senior events/minimum five bouts, 2,000 tournament draws,
+seed 42; other cohorts belong to the sensitivity section. Bootstrap functions
+resume only matching input-keyed checkpoints in `data/research/`. Prediction
+models and ordinary fits run in notebook cells.
 
-The final cells export the compact actual-results snapshot to
-`pages/public/analysis.json` and an unreviewed local draft to
-`Analysis/research_report.txt`. Raw biographies, licenses and dates of birth are not
-published. GitHub Pages serves `pages/fencing_app.py`, a browser-only interactive
-viewer of those results. It does not repeat the expensive native analysis per visitor.
+There are no independent old/new regional pipelines or intermediate report
+writers. Five-confederation results are a secondary description from the network
+bootstrap. The snapshot is built from the run's fits, without reading a previous
+`analysis.json`.
 
-The original exploratory notebook is preserved. The new notebook separates the
-formal analysis from that exploratory history. The archived public snapshot remains
-usable without downloading the original source data.
+## Review and export
 
-## Reconciled tournament points
+The last section provides a report preview/download and one **Write reviewed
+analysis outputs** button. It writes:
 
-The ranking-point cells repair reversed tournament headers and preserve an
-original-to-clean event dictionary. They reproduce every published total using
-FIE Organisation Rules, December 2025, o.108.1(a): best five World Cup/Grand Prix/
-Satellite results plus the world/Olympic and zonal slots. Clean tables stay local
-under `data/research/clean_rankings/`; original inputs are preserved.
+- `pages/public/analysis.json`: schema-3 actual results for the browser app.
+- `Analysis/research_report.md` and a compatible `.txt`: one concise local draft.
+- `data/research/clean_rankings/`: cleaned local rankings and event dictionary.
 
-The zonal-point counterfactual removes the separate zonal slot without promoting
-a sixth ordinary result. It holds observed participation fixed and uses average
-point ties before and after within the same matched cohort. It does not claim to
-reproduce every official placement tie-break. Another 2,000 paired tournament
-resamples (seed 42) quantify regional-contrast and correlation changes. The final
-point export extends the public snapshot and local report. Run the point cells
-after the core research cells when reproducing the full export.
+Raw inputs, biographies, licenses and birth dates are not published. The report
+stays ignored for manual review. Publishing remains a separate Git commit/Pages
+deployment. The original exploratory notebook is preserved.
 
-## Four-zone primary hypothesis
+## Published implementations
 
-The final four-zone cells combine Asia and Oceania for the shared championship
-points pool. Confederation membership is retained separately; five-confederation
-results are secondary. Run these cells and their final export after the earlier
-ranking-points section. Another 2,000 paired tournament draws (seed 42) give the
-correct four-zone contrasts and intervals.
+The notebook states research choices and owns every statistical run. Focused
+helpers keep its cells short:
 
-The complementary strength-conditioned test fits SpringRank without zonal bouts,
-then compares recorded zonal rewards among evidenced participants within common
-four-zone strength support. Country-clustered regressions use category-specific
-cubic strength-percentile curves, category, age and hand. These are exploratory
-conditional associations; missing participation evidence and estimated strength
-limit causal interpretation. The public app shows coverage and support exclusions.
+- `src/research.py`: network fitting, inference and prediction implementations.
+- `src/ranking_points.py`: paired tournament resampling and point comparisons.
+- `src/notebook_data.py`: parsing, classification and computed-result summaries.
+- `src/zonal_strength.py`: common support and conditional reward models.
+- `src/research_publication.py`: snapshot/report formatting and the export writer.
+
+These modules perform no analysis on import and have no analysis CLI. GitHub Pages
+serves the separate `pages/fencing_app.py` viewer of the committed results.

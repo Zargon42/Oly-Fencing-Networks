@@ -10,7 +10,7 @@ import pandas as pd
 
 def validate(path):
     snapshot = json.loads(path.read_text(encoding='utf-8'))
-    assert snapshot['schema_version'] == 2
+    assert snapshot['schema_version'] == 3
     assert snapshot['data_kind'] == 'actual_research_outputs'
     assert snapshot['model'] == 'SpringRank'
     assert snapshot['audit']['raw_bouts'] >= snapshot['audit']['fenced_valid_bouts'] > 0
@@ -30,9 +30,10 @@ def validate(path):
             assert row['low'] <= row['high']
             assert (row['p_holm'] is not None) == result['formal_inference_enabled']
     assert len(research['region_intervals']) == 30
-    assert research['discrepancy_prediction']['metrics']
-    assert research['bout_prediction']['status'] == 'complete'
-    zonal = research['zonal_points']
+    primary_zones = research['four_zone_primary']
+    assert primary_zones['prediction']['discrepancy']['metrics']
+    assert primary_zones['prediction']['bout']['status'] == 'complete'
+    zonal = primary_zones['zonal_points']
     assert zonal['status'] == 'complete'
     assert len(zonal['reconciliation']) == 6
     assert all(row['athletes'] == row['reconciled'] and row['unreconciled'] == 0 and row['max_absolute_error'] == 0
@@ -43,17 +44,16 @@ def validate(path):
     assert zonal['bootstrap']['replicates'] == 2000 and zonal['bootstrap']['seed'] == 42
     assert zonal['bootstrap']['joint_valid'] <= 2000
     assert all(zonal['validation'].values())
-    assert len(zonal['correlations']) == 6 and len(zonal['regional_intervals']) == 15
+    assert len(zonal['correlations']) == 6 and len(zonal['regional_intervals']) == 12
     for item in zonal['contrasts'].values():
         assert item['low'] <= item['high']
         assert item['formal_inference_enabled'] == (item['valid'] >= 1800)
         assert (item['p'] is not None) == item['formal_inference_enabled']
     assert abs(zonal['contrasts']['D_without_zonal']['estimate'] - zonal['contrasts']['D_total_ties']['estimate']
                - zonal['contrasts']['D_change']['estimate']) < 1e-10
-    primary_zones = research['four_zone_primary']
     assert primary_zones['regional_level'] == 'four_championship_zones'
     assert primary_zones['zone_labels'] == ['Africa','Americas','Asia-Oceania','Europe']
-    assert zonal['regional_level'] == 'five_confederations_secondary'
+    assert zonal['regional_level'] == 'four_championship_zones'
     four = primary_zones['zonal_points']
     assert len(four['regional_intervals']) == 12
     assert all(row['region'] in primary_zones['zone_labels'] for row in four['regional_intervals'])

@@ -64,8 +64,10 @@ python scripts/validate_public_snapshot.py
 ```
 
 The formal research notebook is `notebooks/research_analysis.py`; see
-[its instructions](notebooks/README.md). Run the statistical cells and final export
-there. The legacy CLI exporter must not overwrite the schema-2 research snapshot.
+[its instructions](notebooks/README.md). It runs one complete analysis in reading
+order; review the results and use the single final export button. The schema-3
+snapshot is constructed from those fits, without reading an earlier snapshot.
+The legacy CLI exporter must not overwrite it.
 
 The original exploratory notebook remains `Ranking from pairwise comparisons_CoC_data.py`.
 It supports local exploration and resumable FIE biography enrichment. Its original

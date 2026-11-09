@@ -7,8 +7,8 @@ Asia-Oceania and Europe. Five-confederation outputs are secondary and remain
 explicitly labelled in the snapshot. Oceania confederation membership is retained
 in a separate field and is combined with Asia only for the championship-zone
 analysis. The final notebook export stores this primary analysis under
-`research.four_zone_primary`; `research.zonal_points` preserves the earlier
-five-confederation sensitivity. Internal zone code `Asia` means Asia-Oceania in
+`research.four_zone_primary`; `research.region_intervals` contains the secondary
+five-confederation description. Internal zone code `Asia` means Asia-Oceania in
 the four-zone analysis, as documented by `zone_code_labels`.
 
 The direct reward comparison uses non-zonal SpringRank strength, evidenced zonal

@@ -40,7 +40,7 @@ async def _(Path, json, mo, sys):
         snapshot = await _response.json()
     else:
         snapshot = json.loads((Path(mo.notebook_location()) / 'public' / 'analysis.json').read_text(encoding='utf-8'))
-    if snapshot.get('schema_version') != 2 or snapshot.get('data_kind') != 'actual_research_outputs':
+    if snapshot.get('schema_version') != 3 or snapshot.get('data_kind') != 'actual_research_outputs':
         raise ValueError('Expected a supported snapshot of actual research outputs.')
     return (snapshot,)
 

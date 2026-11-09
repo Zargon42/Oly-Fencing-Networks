@@ -70,13 +70,15 @@ python scripts/validate_public_snapshot.py
 python scripts/check_pages.py
 ```
 
-Run the visible bootstrap/model controls and final export cells in the research
-notebook. The notebook calls published helpers in `src/research.py`; all substantive
-analysis runs are owned by notebook cells. The legacy schema-1 CLI exporter is not
+The notebook runs its analysis in reading order, resuming matching bootstrap
+checkpoints. Review the results and use its single final export button. Published
+helpers contain the implementations; all substantive analysis runs are owned by
+notebook cells. The legacy schema-1 CLI exporter is not
 the research workflow. See [notebook instructions](notebooks/README.md).
 
-The schema-2 snapshot adds beta estimates, uncertainty, Holm comparisons, regional
-summaries and prediction-validation outputs. The local report remains ignored.
+The schema-3 snapshot is constructed from that run's computed fits and results;
+it does not depend on an older snapshot. It contains beta uncertainty, Holm
+comparisons, four-zone analyses and prediction validation. The local report remains ignored.
 
 Review the changed snapshot and commit `pages/public/analysis.json` to publish
 the updated results. The Pages workflow builds from that committed artifact and
